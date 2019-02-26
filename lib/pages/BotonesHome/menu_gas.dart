@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-class Menu_dist extends StatefulWidget {
+class Menu_gas extends StatefulWidget {
 
   final Function() onPressed;
   final String tooltip;
   final IconData icon;
 
-  Menu_dist({this.onPressed, this.tooltip, this.icon});
+  Menu_gas({this.onPressed, this.tooltip, this.icon});
 
   @override
   _MenuFABState createState() => _MenuFABState();
 }
 
-class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin {
+class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin {
 
 
   bool isOpened = false;
@@ -24,7 +24,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
 
-  String name_gas_button = '95';
+  String name_gas_button = '50';
 
 
   @override
@@ -89,7 +89,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
         tooltip: 'Add',
         backgroundColor: Color.fromRGBO(222,37,37,10),
         child: Text(
-          text,
+          text + 'Km',
           style: TextStyle(
               color: Colors.white,
               fontSize: 18.0
@@ -106,7 +106,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
         onPressed: animate,
         tooltip: 'Toggle',
         child: Text(
-        name_gas_button,
+        name_gas_button + 'Km',
         style: TextStyle(
           color: Colors.white,
           fontSize: 18.0
@@ -131,7 +131,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
             0.0,
             0.0,
           ),
-          child: add(text: '91'),
+          child: add(text: '5'),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -139,7 +139,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
             0.0,
             0.0,
           ),
-          child: add(text: '93'),
+          child: add(text: '20'),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -147,7 +147,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
             0.0,
             0.0,
           ),
-          child: add(text: '95'),
+          child: add(text: '50'),
         ),
         toggle(),
       ],

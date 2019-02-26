@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_dist.dart';
+import '../BotonesHome/menu_gas.dart';
 import 'package:location/location.dart' as LocationManager;
 
 
@@ -35,12 +36,19 @@ class _MyHomePageState extends State<mapaHomePage> {
                 mapType: MapType.normal,
                 compassEnabled: true,
                 trackCameraPosition: true,
+                rotateGesturesEnabled: true, //Activar gestos de rotación
+                scrollGesturesEnabled: true, //Puede o no mover el mapa
             ),
           ),
           Positioned(
-            right: 16.0,
-            bottom: 16.0,
+            right: 10.0,
+            bottom: 20.0,
             child: Menu_dist(),
+          ),
+          Positioned(
+            right: 10.0,
+            bottom: 90.0,
+            child: Menu_gas(),
           ),
         ],
       ),
