@@ -1,3 +1,8 @@
+import 'package:bencineragofast/pages/Menu/AboutPage.dart';
+import 'package:bencineragofast/pages/Menu/FavoritesPage.dart';
+import 'package:bencineragofast/pages/Menu/HelpPage.dart';
+import 'package:bencineragofast/pages/Menu/OptionsPage.dart';
+import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_dist.dart';
@@ -15,14 +20,112 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   GoogleMapController mapController;
 
-  String buscarDireccion;
+  String buscarDirecccion;
 
-  AppBar appBar = new AppBar(title: new Text("GoFast Bencineras"), backgroundColor: Color.fromRGBO(11,87,56,100) ,); //#0B5738
+  AppBar appBar = new AppBar(
+    title: new Text("GoFast Bencineras"),
+    backgroundColor: Color.fromRGBO(11,87,56,100) ,
+    actions: <Widget>[
+
+      IconButton(
+        iconSize: 40,
+        icon: Icon(Icons.map),
+        tooltip: 'Lista de Gasolineras',
+        onPressed: () {
+
+        },
+      ),
+
+    ],
+  );
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
+      drawer: new Drawer(
+
+        child: new ListView(
+          children: <Widget>[
+            new UserAccountsDrawerHeader(
+                decoration: new BoxDecoration(color: Colors.teal[800]),
+
+                accountName: new Text('Nombre de Usuario'),
+                accountEmail: new Text('Vehiculo Registrado')),
+            new ListTile(
+              title: new Text('Registrarse'),
+              trailing: new Icon(Icons.directions_car),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (BuildContext context) => new  Registrarse()));
+              },
+            ),
+
+            new ListTile(
+              title: new Text("Opciones"),
+              trailing: new Icon(Icons.build),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) => new Registrarse()));
+              },
+
+            ),
+            new ListTile(
+              title: new Text("Favoritos"),
+              trailing: new Icon(Icons.star),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => favoritos(),
+                ),
+                );
+              },
+
+            ),
+            Divider(),
+
+
+            new ListTile(
+              title: new Text("Acerca de"),
+              trailing: new Icon(Icons.pages),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => AboutPage(),
+                ),
+                );
+              },
+
+            ),
+            new ListTile(
+              title: new Text("Ayuda"),
+              trailing: new Icon(Icons.help),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => Ayuda(),
+                ),
+                );
+              },
+
+            ),
+            new ListTile(
+              title: new Text("Cerrar"),
+              trailing: new Icon(Icons.close),
+              onTap: () => Navigator.of(context).pop(),
+
+            ),
+
+          ],
+        ),
+
+
+      ),
       body: Stack(
         children: <Widget>[
           GoogleMap(
