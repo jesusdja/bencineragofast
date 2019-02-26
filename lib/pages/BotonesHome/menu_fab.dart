@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dialogs.dart';
-import 'string_to_hex.dart';
-import 'bloc_provider.dart';
-import 'group_bloc.dart';
-import 'group.dart';
-import 'tick_overlay.dart';
 import 'package:flutter/foundation.dart';
 
 class MenuFAB extends StatefulWidget {
@@ -22,9 +16,9 @@ class _MenuFABState extends State<MenuFAB> with SingleTickerProviderStateMixin {
 
   TextEditingController _textEditingController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  int _defaultGroupColor = hexToInt("FF2B285A");
+  //int _defaultGroupColor = hexToInt("FF2B285A");
 
-  GroupBloc groupBloc;
+  //GroupBloc groupBloc;
 
   @override
   void initState() {
@@ -58,7 +52,7 @@ class _MenuFABState extends State<MenuFAB> with SingleTickerProviderStateMixin {
           );*/
         } else if (_deleteAll) {
           _deleteAll = false;
-          showDeleteDialog(context: context, callback: _deleteAllCallback, all: true);
+          //showDeleteDialog(context: context, callback: _deleteAllCallback, all: true);
         } else if (_aboutApp) {
           _aboutApp = false;
 
@@ -67,7 +61,7 @@ class _MenuFABState extends State<MenuFAB> with SingleTickerProviderStateMixin {
       }
     });
 
-    groupBloc = BlocProvider.of<GroupBloc>(context);
+    //groupBloc = BlocProvider.of<GroupBloc>(context);
   }
 
   @override
@@ -91,10 +85,10 @@ class _MenuFABState extends State<MenuFAB> with SingleTickerProviderStateMixin {
   }
 
   void _dialogCallback(int color) async {
-    await groupBloc.saveGroup(Group(_textEditingController.text, color));
+    //await groupBloc.saveGroup(Group(_textEditingController.text, color));
     _textEditingController.clear();
     Navigator.of(context).pop();
-    showTickOverlay(context);
+    //showTickOverlay(context);
   }
 
   void _deleteAllCallback() async {

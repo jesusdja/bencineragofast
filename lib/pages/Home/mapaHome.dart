@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../BotonesHome/menu_fab.dart';
-import '../BotonesHome/menu_distancia.dart';
 import '../BotonesHome/menu_dist.dart';
 import 'package:location/location.dart' as LocationManager;
 
@@ -39,16 +37,6 @@ class _MyHomePageState extends State<mapaHomePage> {
                 trackCameraPosition: true,
             ),
           ),
-          /*Positioned(
-            right: 16.0,
-            bottom: 90.0,
-            child: MenuFAB(),
-          ),
-          Positioned(
-            right: 16.0,
-            bottom: 16.0,
-            child: Menu_distancia(),
-          ),*/
           Positioned(
             right: 16.0,
             bottom: 16.0,
