@@ -3,11 +3,15 @@ import 'package:bencineragofast/pages/Menu/FavoritesPage.dart';
 import 'package:bencineragofast/pages/Menu/HelpPage.dart';
 import 'package:bencineragofast/pages/Menu/OptionsPage.dart';
 import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
+import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_dist.dart';
 import '../BotonesHome/menu_gas.dart';
 import 'package:location/location.dart' as LocationManager;
+
+
+import 'package:bencineragofast/pages/Listado/place_traker_app.dart';
 
 
 
@@ -36,7 +40,13 @@ class _MyHomePageState extends State<mapaHomePage> {
         icon: Icon(Icons.map),
         tooltip: 'Lista de Gasolineras',
         onPressed: () {
-
+       /*   AppState.updateWith(
+            context,
+            viewType:
+            AppState.of(context).viewType == PlaceTrackerViewType.map
+                ? PlaceTrackerViewType.list
+                : PlaceTrackerViewType.map,
+          );*/
         },
       ),
 
