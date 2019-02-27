@@ -13,7 +13,9 @@ class _opcionesState extends State<opciones> {
       appBar: new AppBar(
         backgroundColor: Color.fromRGBO(11,90,70,60),
         title: new Text('Opciones '),
+
       ),
+
     );
   }
 }
