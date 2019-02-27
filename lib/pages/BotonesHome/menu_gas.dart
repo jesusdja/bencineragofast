@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:bencineragofast/pages/Home/mapaHome.dart';
+import 'package:location/location.dart' as LocationManager;
 
 class Menu_gas extends StatefulWidget {
 
@@ -7,14 +10,17 @@ class Menu_gas extends StatefulWidget {
   final String tooltip;
   final IconData icon;
 
-  Menu_gas({this.onPressed, this.tooltip, this.icon});
+
+
+  Menu_gas({this.onPressed, this.tooltip, this.icon,this.mapController});
+
+  final GoogleMapController mapController;
 
   @override
   _MenuFABState createState() => _MenuFABState();
 }
 
 class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin {
-
 
   bool isOpened = false;
   AnimationController _animationController;
@@ -25,7 +31,6 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
   double _fabHeight = 56.0;
 
   String name_gas_button = '50';
-
 
   @override
   initState() {
@@ -39,8 +44,6 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
 
-
-
     _buttonColor = ColorTween(
       begin: Colors.red,
       end: Colors.red,
@@ -52,6 +55,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
         curve: Curves.linear,
       ),
     ));
+
     _translateButton = Tween<double>(
       begin: _fabHeight,
       end: -14.0,
@@ -82,10 +86,10 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
     isOpened = !isOpened;
   }
 
-  Widget add({String text, int tagg}) {
+  Widget add({String text, int tagg, double zoom}) {
     return Container(
       child: FloatingActionButton(
-        onPressed: (){animate(); name_gas_button = text;},
+        onPressed: (){animate(); name_gas_button = text;refresh(zoom);},
         tooltip: 'Add',
         heroTag: tagg,
         backgroundColor: Color.fromRGBO(222,37,37,10),
@@ -120,10 +124,6 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return Row (
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -133,7 +133,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
             0.0,
             0.0,
           ),
-          child: add(text: '5',tagg: 5),
+          child: add(text: '5',tagg: 5,zoom: 17),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -141,7 +141,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
             0.0,
             0.0,
           ),
-          child: add(text: '20',tagg: 6),
+          child: add(text: '20',tagg: 6,zoom: 16),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -149,11 +149,35 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
             0.0,
             0.0,
           ),
-          child: add(text: '50', tagg: 7),
+          child: add(text: '50', tagg: 7,zoom: 15),
         ),
         toggle(),
       ],
     );
+  }
+
+
+  void refresh(double zoomcam) async {
+
+    GoogleMapController mapController2 = widget.mapController;
+    final center = await getUserLocation();
+    mapController2.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: center == null ? LatLng(0, 0) : center, zoom: zoomcam)));
+  }
+
+  Future<LatLng> getUserLocation() async {
+    var currentLocation = <String, double>{};
+    final location = LocationManager.Location();
+    try {
+      currentLocation = await location.getLocation();
+      final lat = currentLocation["latitude"];
+      final lng = currentLocation["longitude"];
+      final center = LatLng(lat, lng);
+      return center;
+    } on Exception {
+      currentLocation = null;
+      return null;
+    }
   }
 
 }

@@ -13,7 +13,9 @@ import 'package:location/location.dart' as LocationManager;
 
 
 class mapaHomePage extends StatefulWidget {
+
   _MyHomePageState createState() => _MyHomePageState();
+
 }
 
 class _MyHomePageState extends State<mapaHomePage> {
@@ -46,23 +48,17 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: appBar,
-
       drawer: new Drawer(
-
-
-
         child: new ListView(
-
           children: <Widget>[
             new UserAccountsDrawerHeader(
                 decoration: new BoxDecoration(color: Colors.teal[800]),
-
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
             new ListTile(
-
               title: new Text('Registrarse'),
               trailing: new Icon(Icons.directions_car),
               onTap: () {
@@ -73,7 +69,6 @@ class _MyHomePageState extends State<mapaHomePage> {
                         builder: (BuildContext context) => new  Registrarse()));
               },
             ),
-
             new ListTile(
               title: new Text("Opciones"),
               trailing: new Icon(Icons.build),
@@ -82,7 +77,6 @@ class _MyHomePageState extends State<mapaHomePage> {
                 Navigator.push(context,
                     new MaterialPageRoute(builder: (context) => new opciones()));
               },
-
             ),
             new ListTile(
               title: new Text("Favoritos"),
@@ -94,11 +88,8 @@ class _MyHomePageState extends State<mapaHomePage> {
                 ),
                 );
               },
-
             ),
             Divider(),
-
-
             new ListTile(
               title: new Text("Acerca de"),
               trailing: new Icon(Icons.pages),
@@ -109,7 +100,6 @@ class _MyHomePageState extends State<mapaHomePage> {
                 ),
                 );
               },
-
             ),
             new ListTile(
               title: new Text("Ayuda"),
@@ -121,19 +111,14 @@ class _MyHomePageState extends State<mapaHomePage> {
                 ),
                 );
               },
-
             ),
             new ListTile(
               title: new Text("Cerrar"),
               trailing: new Icon(Icons.close),
               onTap: () => Navigator.of(context).pop(),
-
             ),
-
           ],
         ),
-
-
       ),
       body: Stack(
         children: <Widget>[
@@ -160,7 +145,7 @@ class _MyHomePageState extends State<mapaHomePage> {
          Positioned(
             right: 10.0,
             bottom: 90.0,
-            child: Menu_gas(),
+            child: Menu_gas(mapController: mapController),
           ),
         ],
       ),
@@ -168,10 +153,10 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   void refresh() async {
+
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: center == null ? LatLng(0, 0) : center, zoom: 15.0)));
-    //getNearbyPlaces(center);
   }
 
   Future<LatLng> getUserLocation() async {
