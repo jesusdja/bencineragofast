@@ -80,7 +80,7 @@ class _MyHomePageState extends State<mapaHomePage> {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) => new Registrarse()));
+                    new MaterialPageRoute(builder: (context) => new opciones()));
               },
 
             ),
