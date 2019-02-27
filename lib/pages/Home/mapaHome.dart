@@ -188,6 +188,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     setState(() {
       mapController = controller;
     });
+
     refresh();
   }
 }
