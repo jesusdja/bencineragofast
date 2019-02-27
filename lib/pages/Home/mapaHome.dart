@@ -167,12 +167,6 @@ class _MyHomePageState extends State<mapaHomePage> {
     );
   }
 
-
-  //Funcion que creamos para busqueda por direccion
-  barraBusqueda() {
-    //MenuFAB();
-  }
-
   void refresh() async {
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
