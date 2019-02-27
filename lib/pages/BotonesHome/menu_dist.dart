@@ -82,11 +82,12 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
     isOpened = !isOpened;
   }
 
-  Widget add({String text}) {
+  Widget add({String text, int tagg}) {
     return Container(
       child: FloatingActionButton(
         onPressed: (){animate(); name_gas_button = text;},
         tooltip: 'Add',
+        heroTag: tagg,
         backgroundColor: Color.fromRGBO(222,37,37,10),
         child: Text(
           text,
@@ -103,6 +104,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
     return Container(
       child: FloatingActionButton(
         backgroundColor: Color.fromRGBO(222,37,37,10),
+        heroTag: 0,
         onPressed: animate,
         tooltip: 'Toggle',
         child: Text(
@@ -126,12 +128,13 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Transform(
+
           transform: Matrix4.translationValues(
             _translateButton.value * 3.0,
             0.0,
             0.0,
           ),
-          child: add(text: '91'),
+          child: add(text: '91', tagg: 1),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -139,7 +142,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
             0.0,
             0.0,
           ),
-          child: add(text: '93'),
+          child: add(text: '93',tagg: 2),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -147,7 +150,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
             0.0,
             0.0,
           ),
-          child: add(text: '95'),
+          child: add(text: '95',tagg: 3),
         ),
         toggle(),
       ],

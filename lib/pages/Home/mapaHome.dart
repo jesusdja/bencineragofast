@@ -23,11 +23,15 @@ class _MyHomePageState extends State<mapaHomePage> {
   String buscarDirecccion;
 
   AppBar appBar = new AppBar(
+
     title: new Text("GoFast Bencineras"),
     backgroundColor: Color.fromRGBO(11,87,56,100) ,
+
     actions: <Widget>[
 
+
       IconButton(
+
         iconSize: 40,
         icon: Icon(Icons.map),
         tooltip: 'Lista de Gasolineras',
@@ -44,9 +48,13 @@ class _MyHomePageState extends State<mapaHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
+
       drawer: new Drawer(
 
+
+
         child: new ListView(
+
           children: <Widget>[
             new UserAccountsDrawerHeader(
                 decoration: new BoxDecoration(color: Colors.teal[800]),
@@ -54,6 +62,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
             new ListTile(
+
               title: new Text('Registrarse'),
               trailing: new Icon(Icons.directions_car),
               onTap: () {
@@ -148,7 +157,7 @@ class _MyHomePageState extends State<mapaHomePage> {
             bottom: 20.0,
             child: Menu_dist(),
           ),
-          Positioned(
+         Positioned(
             right: 10.0,
             bottom: 90.0,
             child: Menu_gas(),
