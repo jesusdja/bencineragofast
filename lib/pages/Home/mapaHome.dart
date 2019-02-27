@@ -55,6 +55,22 @@ class _MyHomePageState extends State<mapaHomePage> {
     ],
   );
 
+  void initState() {
+    //initMarker(8.2960045,-62.7330581,'hola');
+    //initMarker(8.2942766,-62.7355364,'hola2');
+  }
+
+
+  initMarker(double lat, double log, String name) {
+    mapController.clearMarkers().then((val) {
+      mapController.addMarker(MarkerOptions(
+          position:
+          LatLng(lat,log),
+          draggable: false,
+          infoWindowText: InfoWindowText(name, 'Cool')));
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -190,5 +206,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     });
 
     refresh();
+    initMarker(8.2960045,-62.7330581,'hola');
+    initMarker(8.2942766,-62.7355364,'hola2');
   }
 }
