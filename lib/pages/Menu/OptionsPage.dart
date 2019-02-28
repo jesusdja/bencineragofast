@@ -289,7 +289,7 @@ class _opcionesState extends State<opciones> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Establecer Configuracion'),
+                child: Center(child: Center(child: Text('Establecer Configuracion'))),
               ),
             ),
       ],
