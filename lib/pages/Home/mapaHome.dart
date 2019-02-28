@@ -6,9 +6,11 @@ import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:vector_math/vector_math_64.dart';
 import '../BotonesHome/menu_dist.dart';
 import '../BotonesHome/menu_gas.dart';
 import 'package:location/location.dart' as LocationManager;
+import 'dart:math' as math;
 
 
 import 'package:bencineragofast/pages/Listado/place_traker_app.dart';
@@ -80,7 +82,7 @@ class _MyHomePageState extends State<mapaHomePage> {
         child: new ListView(
           children: <Widget>[
             new UserAccountsDrawerHeader(
-                decoration: new BoxDecoration(color: Colors.teal[800]),
+                //decoration: new BoxDecoration(color: Colors.teal[800]),
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
             new ListTile(
@@ -191,6 +193,8 @@ class _MyHomePageState extends State<mapaHomePage> {
       currentLocation = await location.getLocation();
       final lat = currentLocation["latitude"];
       final lng = currentLocation["longitude"];
+
+      //final dist =
       final center = LatLng(lat, lng);
       return center;
     } on Exception {
@@ -205,7 +209,38 @@ class _MyHomePageState extends State<mapaHomePage> {
     });
 
     refresh();
-    initMarker(8.2960045,-62.7330581,'hola');
-    initMarker(8.2942766,-62.7355364,'hola2');
+    initMarkers();
+
   }
+
+  void initMarkers(){
+    initMarker(8.2960045,-62.7330581,'hola');
+
+    //double dist = LocationManager.Location().onLocationChanged().
+
+    initMarker(8.2942766,-62.7355364,'hola2');
+    debugPrint('SI');
+    calcularDistancia(8.2965626,-62.7356024,8.2874535,-62.7325768,5);
+
+  }
+
+  bool calcularDistancia(double lat1, double lg1, double lat2, double lg2, double distancia){
+    bool rango = false;
+    double d = 0.0;
+    double radio = 6378;
+    double SumLat = radians(lat2 - lat1);
+    double Sumlg = radians(lg2 - lg1);
+    double a =  math.pow((math.sin(SumLat / 2)),2) +
+                math.cos(radians(lat1)) *
+                math.cos(radians(lat2)) *
+                math.pow((math.sin(Sumlg / 2)),2) ;
+    double c = 2 * (math.atan2(math.sqrt(a),math.sqrt(1 - a)));
+    d = radio * c;
+    debugPrint('$d');
+    if(d <= distancia){rango = true;}
+    return rango;
+  }
+
+
+
 }
