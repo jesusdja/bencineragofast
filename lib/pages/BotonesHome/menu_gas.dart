@@ -160,7 +160,9 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
   void refresh(double zoomcam) async {
 
     GoogleMapController mapController2 = widget.mapController;
+
     final center = await getUserLocation();
+
     mapController2.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: center == null ? LatLng(0, 0) : center, zoom: zoomcam)));
   }

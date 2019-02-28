@@ -64,7 +64,10 @@ class _MyHomePageState extends State<mapaHomePage> {
       drawer: new Drawer(
         child: new ListView(
           children: <Widget>[
+
             new UserAccountsDrawerHeader(
+
+
                 decoration: new BoxDecoration(color: Colors.teal[800]),
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
@@ -122,11 +125,11 @@ class _MyHomePageState extends State<mapaHomePage> {
                 );
               },
             ),
-            new ListTile(
+           /* new ListTile(
               title: new Text("Cerrar"),
               trailing: new Icon(Icons.close),
               onTap: () => Navigator.of(context).pop(),
-            ),
+            ),*/
           ],
         ),
       ),
