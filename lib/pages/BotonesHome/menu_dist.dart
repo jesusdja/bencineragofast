@@ -88,7 +88,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
         onPressed: (){animate(); name_gas_button = text;},
         tooltip: 'Add',
         heroTag: tagg,
-        backgroundColor: Color.fromRGBO(222,37,37,10),
+        backgroundColor: Colors.red[900],
         child: Text(
           text,
           style: TextStyle(
@@ -103,7 +103,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
   Widget toggle() {
     return Container(
       child: FloatingActionButton(
-        backgroundColor: Color.fromRGBO(222,37,37,10),
+        backgroundColor: Colors.red[900],
         heroTag: 0,
         onPressed: animate,
         tooltip: 'Toggle',
@@ -120,9 +120,6 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-
-
-
 
     return Row (
       mainAxisAlignment: MainAxisAlignment.end,

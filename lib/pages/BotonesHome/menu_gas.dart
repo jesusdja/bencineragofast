@@ -92,7 +92,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
         onPressed: (){animate(); name_gas_button = text;refresh(zoom);},
         tooltip: 'Add',
         heroTag: tagg,
-        backgroundColor: Color.fromRGBO(222,37,37,10),
+        backgroundColor: Colors.red[900] ,
         child: Text(
           text + 'Km',
           style: TextStyle(
@@ -107,7 +107,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
   Widget toggle() {
     return Container(
       child: FloatingActionButton(
-        backgroundColor: Color.fromRGBO(222,37,37,10),
+        backgroundColor: Colors.red[900],
         onPressed: animate,
         heroTag: 4,
         tooltip: 'Toggle',

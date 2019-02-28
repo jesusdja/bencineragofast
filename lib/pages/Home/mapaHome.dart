@@ -55,19 +55,18 @@ class _MyHomePageState extends State<mapaHomePage> {
     ],
   );
 
-  void initState() {
-    //initMarker(8.2960045,-62.7330581,'hola');
-    //initMarker(8.2942766,-62.7355364,'hola2');
-  }
-
 
   initMarker(double lat, double log, String name) {
     mapController.clearMarkers().then((val) {
       mapController.addMarker(MarkerOptions(
-          position:
-          LatLng(lat,log),
-          draggable: false,
-          infoWindowText: InfoWindowText(name, 'Cool')));
+          visible: true,
+          draggable: true,
+          flat: false,
+          position: LatLng(lat,log),
+          infoWindowText: InfoWindowText(name, 'Cool'),
+          icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+      )
+      );
     });
   }
 
