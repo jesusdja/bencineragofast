@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as LocationManager;
+
+
 
 class opciones extends StatefulWidget {
+
+  opciones({this.mapController});
+
+  final GoogleMapController mapController;
+
   @override
   _opcionesState createState() => new _opcionesState();
 }
 
-enum Answers{YES,NO,MAYBE}
+
+enum TipodeMarca{todas,Copec,Petrobras,Shell,Terpel}
+enum TipodeMapa{Normal,Satelital,Otro}
 
 class _opcionesState extends State<opciones> {
-  String _value = '';
-  void _setValue(String value) => setState(() => _value = value);
 
-  Future _askUser() async { //cambiar Nombre para funcion de ventan emerrgente
+
+  String _valueMapa = '';
+  void _setValueMapa(String valueMapa) => setState(() => _valueMapa = valueMapa);
+
+
+  String _valueMarca = '';
+  void _setValueMarca(String value) => setState(() => _valueMarca = value);
+
+  Future _seleccionarMapa() async { //cambiar Nombre para funcion de ventan emerrgente
     switch(
     await showDialog(
         context: context,
@@ -19,29 +36,152 @@ class _opcionesState extends State<opciones> {
         created enums which we can use with switch statement, in this first switch
         will wait for the user to select the option which it can use with switch cases*/
         child: new SimpleDialog(
-          title: new Text('Do you like Flutter?'),
+          title: new Text('Tipo de mapa'),
           children: <Widget>[
-            new SimpleDialogOption(child: new Text('Yes!!!'),onPressed: (){Navigator.pop(context, Answers.YES);},),
-            new SimpleDialogOption(child: new Text('NO :('),onPressed: (){Navigator.pop(context, Answers.NO);},),
-            new SimpleDialogOption(child: new Text('Maybe :|'),onPressed: (){Navigator.pop(context, Answers.MAYBE);},),
+            new SimpleDialogOption(
+              child: new RaisedButton(
+
+                padding: const EdgeInsets.all(12.0),
+                textColor: Colors.white,
+                color: Colors.teal[500],
+                child: new Text("Satelital"),
+                  onPressed: (){Navigator.pop(context ,TipodeMapa.Satelital); CambiarmapaSatelital();refresh(15);},
+              ),
+
+            ),
+            new SimpleDialogOption(
+
+              child: new RaisedButton(
+                padding: const EdgeInsets.all(12.0),
+                textColor: Colors.white,
+                 color: Colors.teal[500],
+                child: new Text("Normal"),
+                onPressed: (){Navigator.pop(context, TipodeMapa.Normal) ; CambiarmapaNormal();refresh(15);
+                },
+              ),
+
+
+            ),
+            new SimpleDialogOption(
+              child: new RaisedButton(
+                padding: const EdgeInsets.all(12.0),
+                textColor: Colors.white,
+                color: Colors.teal[500],
+                child: new Text("Otro"),
+                onPressed: (){Navigator.pop(context, TipodeMapa.Otro);CambiarmapaOtro();refresh(15);
+                },
+              ),
+
+            ),
           ],
         )
     )
     ) {
-      case Answers.YES:
-        _setValue('Yes');
+      case TipodeMapa.Normal:
+        _setValueMapa('Normal');
         break;
-      case Answers.NO:
-        _setValue('No');
+      case TipodeMapa.Satelital:
+        _setValueMapa('Satelital');
         break;
-      case Answers.MAYBE:
-        _setValue('Maybe');
+      case TipodeMapa.Otro:
+        _setValueMapa('Otro');
+        break;
+    }
+  }
+  Future _seleccionarMarca() async { //cambiar Nombre para funcion de ventan emerrgente
+    switch(
+    await showDialog(
+        context: context,
+        /*it shows a popup with few options which you can select, for option we
+        created enums which we can use with switch statement, in this first switch
+        will wait for the user to select the option which it can use with switch cases*/
+        child: new SimpleDialog(
+          title: new Text('Tipo de Marca'),
+          children: <Widget>[
+            new SimpleDialogOption(
+              child: new RaisedButton(
+                padding: const EdgeInsets.all(12.0),
+                textColor: Colors.white,
+                color: Colors.teal[500],
+                child: new Text("Todas"),
+                onPressed: (){Navigator.pop(context, TipodeMarca.todas);},
+              ),
+
+            ),
+            new SimpleDialogOption(
+              child: new RaisedButton(
+                padding: const EdgeInsets.all(12.0),
+                textColor: Colors.white,
+                color: Colors.teal[500],
+                child: new Text("Copec"),
+                onPressed: (){Navigator.pop(context, TipodeMarca.Copec);},
+              ),
+
+            ),
+            new SimpleDialogOption(
+
+              child: new RaisedButton(
+                padding: const EdgeInsets.all(12.0),
+                textColor: Colors.white,
+                color: Colors.teal[500],
+                child: new Text("Petrobras"),
+                onPressed: (){Navigator.pop(context, TipodeMarca.Petrobras);
+                },
+              ),
+
+
+            ),
+            new SimpleDialogOption(
+              child: new RaisedButton(
+                padding: const EdgeInsets.all(12.0),
+                textColor: Colors.white,
+                color: Colors.teal[500],
+                child: new Text("Shell"),
+                onPressed: (){Navigator.pop(context, TipodeMarca.Shell);
+                },
+              ),
+
+            ),
+            new SimpleDialogOption(
+              child: new RaisedButton(
+                padding: const EdgeInsets.all(12.0),
+                textColor: Colors.white,
+                color: Colors.teal[500],
+                child: new Text("Terpel"),
+                onPressed: (){Navigator.pop(context, TipodeMarca.Terpel);
+                },
+              ),
+
+            ),
+          ],
+        )
+    )
+    ) {
+      case TipodeMarca.todas:
+        _setValueMarca('Todas');
+        break;
+      case TipodeMarca.Copec:
+        _setValueMarca('Copec');
+        break;
+      case TipodeMarca.Petrobras:
+        _setValueMarca('Petrobras');
+        break;
+      case TipodeMarca.Shell:
+        _setValueMarca('Shell');
+        break;
+      case TipodeMarca.Terpel:
+        _setValueMarca('Terpel');
         break;
     }
   }
   @override
   Widget build(BuildContext context) {
+
+
+
+
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         backgroundColor: Color.fromRGBO(11,90,70,60),
         title: new Text('Opciones '),
@@ -68,8 +208,8 @@ class _opcionesState extends State<opciones> {
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
-                onPressed: _askUser,
-                child: new Text("Seleccionar Mapa"),
+                onPressed: _seleccionarMapa,
+                child: new Text(_valueMapa),
 
 
             ),
@@ -92,8 +232,8 @@ class _opcionesState extends State<opciones> {
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
-                onPressed: _askUser,
-                child: new Text("Todas"),
+                onPressed: _seleccionarMarca,
+                child: new Text(_valueMarca),
 
               ),
             ),
@@ -108,12 +248,117 @@ class _opcionesState extends State<opciones> {
               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
 
             ),
+        new TextFormField(
+          autofocus: false,
+          decoration: new InputDecoration(labelText: "Entre 10-100"),
 
+          keyboardType: TextInputType.number,
+
+
+        )
       ],
 
     ),
 
     ),
+
+
+
     );
+
+
   }
+
+  void CambiarmapaOtro()  {
+
+    GoogleMapController mapController2 = widget.mapController;
+    print(mapController2);
+
+    mapController2.updateMapOptions(
+
+        GoogleMapOptions(
+
+          cameraPosition: CameraPosition(
+            target: LatLng(8.29609, -62.7355),
+          ),
+
+          mapType: MapType.terrain,
+
+        )
+    );
+
+
+
+
+  }
+  void CambiarmapaNormal()  {
+
+    GoogleMapController mapController2 = widget.mapController;
+    print(mapController2);
+
+    mapController2.updateMapOptions(
+
+        GoogleMapOptions(
+
+          cameraPosition: CameraPosition(
+            target: LatLng(8.29609, -62.7355),
+          ),
+
+          mapType: MapType.normal,
+
+        )
+    );
+
+
+
+
+  }
+
+  void CambiarmapaSatelital()  {
+
+      GoogleMapController mapController2 = widget.mapController;
+      print(mapController2);
+
+        mapController2.updateMapOptions(
+
+        GoogleMapOptions(
+
+          cameraPosition: CameraPosition(
+            target: LatLng(8.29609, -62.7355),
+          ),
+
+          mapType: MapType.satellite,
+
+        )
+      );
+
+
+
+
 }
+  void refresh(double zoomcam) async {
+
+    GoogleMapController mapController2 = widget.mapController;
+    final center = await getUserLocation();
+    mapController2.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: center == null ? LatLng(0, 0) : center, zoom: zoomcam)));
+  }
+
+  Future<LatLng> getUserLocation() async {
+    var currentLocation = <String, double>{};
+    final location = LocationManager.Location();
+    try {
+      currentLocation = await location.getLocation();
+      final lat = currentLocation["latitude"];
+      final lng = currentLocation["longitude"];
+      final center = LatLng(lat, lng);
+      return center;
+    } on Exception {
+      currentLocation = null;
+      return null;
+    }
+  }
+
+}
+
+

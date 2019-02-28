@@ -88,7 +88,7 @@ class _MyHomePageState extends State<mapaHomePage> {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) => new opciones()));//Modificacion
+                    new MaterialPageRoute(builder: (context) => new opciones(mapController: mapController)));//Modificacion
               },
             ),
             new ListTile(

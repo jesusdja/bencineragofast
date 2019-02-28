@@ -92,8 +92,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               }
             },
           ),
-          Divider(),
-          Divider(),
+          Divider(
+            height: 10.0,
+          ),
 
 
 
