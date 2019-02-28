@@ -92,21 +92,18 @@ class MyCustomFormState extends State<MyCustomForm> {
               }
             },
           ),
+
           Divider(
             height: 10.0,
           ),
 
-
-
-
-
-
-
-
           SizedBox(
+
               width: double.infinity,
               child: RaisedButton(
+
                 color: Colors.teal,
+                padding: const EdgeInsets.all(20.0),
                 elevation: 5.0,
                 splashColor: Colors.black,
                 onPressed: () {
@@ -120,7 +117,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                         .showSnackBar(SnackBar(content: Text('Processing Data')));
                   }
                 },
-                child: Text('Submit'),
+                child: Text('Registrar'),
               ),
             ),
 

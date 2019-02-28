@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
+import 'package:bencineragofast/pages/Home/mapaHome.dart';
 
 
 
@@ -19,6 +20,8 @@ enum TipodeMarca{todas,Copec,Petrobras,Shell,Terpel}
 enum TipodeMapa{Normal,Satelital,Otro}
 
 class _opcionesState extends State<opciones> {
+
+  final _formKey = GlobalKey<FormState>();
 
 
   String _valueMapa = '';
@@ -40,7 +43,7 @@ class _opcionesState extends State<opciones> {
           children: <Widget>[
             new SimpleDialogOption(
               child: new RaisedButton(
-
+                splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
@@ -52,6 +55,7 @@ class _opcionesState extends State<opciones> {
             new SimpleDialogOption(
 
               child: new RaisedButton(
+                splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                  color: Colors.teal[500],
@@ -64,6 +68,7 @@ class _opcionesState extends State<opciones> {
             ),
             new SimpleDialogOption(
               child: new RaisedButton(
+                splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
@@ -100,6 +105,7 @@ class _opcionesState extends State<opciones> {
           children: <Widget>[
             new SimpleDialogOption(
               child: new RaisedButton(
+                splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
@@ -110,6 +116,7 @@ class _opcionesState extends State<opciones> {
             ),
             new SimpleDialogOption(
               child: new RaisedButton(
+                splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
@@ -121,6 +128,7 @@ class _opcionesState extends State<opciones> {
             new SimpleDialogOption(
 
               child: new RaisedButton(
+                splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
@@ -133,6 +141,7 @@ class _opcionesState extends State<opciones> {
             ),
             new SimpleDialogOption(
               child: new RaisedButton(
+                splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
@@ -144,6 +153,7 @@ class _opcionesState extends State<opciones> {
             ),
             new SimpleDialogOption(
               child: new RaisedButton(
+                splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
@@ -181,6 +191,7 @@ class _opcionesState extends State<opciones> {
 
 
     return new Scaffold(
+      key: _formKey,
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         backgroundColor: Color.fromRGBO(11,90,70,60),
@@ -205,6 +216,7 @@ class _opcionesState extends State<opciones> {
               width: double.infinity,
               // height: double.infinity,
               child: new RaisedButton(
+                splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
@@ -229,6 +241,8 @@ class _opcionesState extends State<opciones> {
               width: double.infinity,
               // height: double.infinity,
               child: new RaisedButton(
+                elevation: 5.0,
+                splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
@@ -248,15 +262,39 @@ class _opcionesState extends State<opciones> {
               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
 
             ),
-        new TextFormField(
+        Divider(
+          height: 12.0,
+        ),
+
+        new TextField(
+
           autofocus: false,
-          decoration: new InputDecoration(labelText: "Entre 10-100"),
-
+          decoration: new InputDecoration(
+            labelText: "Entre 100-1000",border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.euro_symbol),
+          ),
           keyboardType: TextInputType.number,
+        ),
 
-
-        )
+        Divider(
+          height: 20,
+        ),
+            SizedBox(
+              width: double.infinity,
+              child: RaisedButton(
+                color: Colors.teal,
+                elevation: 5.0,
+                textColor: Colors.white,
+                splashColor: Colors.black,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Establecer Configuracion'),
+              ),
+            ),
       ],
+
+
 
     ),
 
