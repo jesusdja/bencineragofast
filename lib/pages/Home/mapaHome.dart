@@ -14,7 +14,7 @@ import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart' as mate;
 
 
-import 'package:bencineragofast/pages/Listado/place_traker_app.dart';
+
 
 
 
@@ -27,11 +27,13 @@ class mapaHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<mapaHomePage> {
 
+
+
   GoogleMapController mapController;
 
   String buscarDirecccion;
 
-  AppBar appBar = new AppBar(
+  /*AppBar appBar = new AppBar(
 
     title: new Text("GoFast Bencineras"),
     backgroundColor: Color.fromRGBO(11,87,56,100) ,
@@ -45,18 +47,14 @@ class _MyHomePageState extends State<mapaHomePage> {
         icon: Icon(Icons.map),
         tooltip: 'Lista de Gasolineras',
         onPressed: () {
-       /*   AppState.updateWith(
-            context,
-            viewType:
-            AppState.of(context).viewType == PlaceTrackerViewType.map
-                ? PlaceTrackerViewType.list
-                : PlaceTrackerViewType.map,
-          );*/
+          Navigator.of(context).push(MaterialPageRoute( //Error de Contex no esta declarado o recibido en la funcion....tiene que ser en el  build
+              builder: (BuildContext context) => ListadoGasolineras()),
+          );
         },
       ),
 
     ],
-  );
+  );*/
 
 
 
@@ -66,7 +64,30 @@ class _MyHomePageState extends State<mapaHomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: appBar,
+      appBar: new AppBar(
+
+        title: new Text("GoFast Bencineras"),
+        backgroundColor: Color.fromRGBO(11,87,56,100) ,
+          actions: <Widget>[
+            IconButton(
+
+              iconSize: 40,
+              icon: Icon(Icons.map),
+              tooltip: 'Lista de Gasolineras',
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => ListadoGasolineras()),
+                );
+              },
+            ),
+
+
+
+          ],
+
+
+
+      ),
       drawer: new Drawer(
         child: new ListView(
           children: <Widget>[
@@ -106,7 +127,9 @@ class _MyHomePageState extends State<mapaHomePage> {
                 );
               },
             ),
-            Divider(),
+            Divider(
+              height: .0,
+            ),
             new ListTile(
               title: new Text("Acerca de"),
               trailing: new Icon(Icons.pages),
