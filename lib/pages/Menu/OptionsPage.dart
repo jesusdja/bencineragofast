@@ -216,12 +216,13 @@ class _opcionesState extends State<opciones> {
               width: double.infinity,
               // height: double.infinity,
               child: new RaisedButton(
+                child: Icon(Icons.arrow_downward),
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: Colors.teal[500],
                 onPressed: _seleccionarMapa,
-                child: new Text(_valueMapa),
+              //  child: new Text(_valueMapa),
 
 
             ),

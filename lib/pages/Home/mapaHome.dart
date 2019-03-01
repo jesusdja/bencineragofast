@@ -123,7 +123,9 @@ class _MyHomePageState extends State<mapaHomePage> {
                 );
               },
             ),
-            Divider(),
+            Divider(
+              height: .0,
+            ),
             new ListTile(
               title: new Text("Acerca de"),
               trailing: new Icon(Icons.pages),
