@@ -222,7 +222,6 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     refresh();
     initMarkers();
-
   }
 
   //AGREGAR MARCADORES
