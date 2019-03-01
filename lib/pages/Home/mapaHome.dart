@@ -9,6 +9,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_dist.dart';
 import '../BotonesHome/menu_gas.dart';
 import 'package:location/location.dart' as LocationManager;
+import 'dart:math' as math;
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/material.dart' as mate;
 
 
 import 'package:bencineragofast/pages/Listado/place_traker_app.dart';
@@ -56,6 +59,9 @@ class _MyHomePageState extends State<mapaHomePage> {
   );
 
 
+
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -66,9 +72,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           children: <Widget>[
 
             new UserAccountsDrawerHeader(
-
-
-                decoration: new BoxDecoration(color: Colors.teal[800]),
+                decoration: new BoxDecoration(color: mate.Colors.teal[800]),
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
             new ListTile(
@@ -137,7 +141,6 @@ class _MyHomePageState extends State<mapaHomePage> {
         children: <Widget>[
           GoogleMap(
             onMapCreated: onMapCreated,
-
             options: GoogleMapOptions(
                 cameraPosition: CameraPosition(
                     target: LatLng(0,0),
@@ -169,7 +172,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: center == null ? LatLng(0, 0) : center, zoom: 15.0)));
+        target: center == null ? LatLng(0, 0) : center, zoom: 13.0)));
   }
 
   Future<LatLng> getUserLocation() async {
@@ -179,6 +182,8 @@ class _MyHomePageState extends State<mapaHomePage> {
       currentLocation = await location.getLocation();
       final lat = currentLocation["latitude"];
       final lng = currentLocation["longitude"];
+
+      //final dist =
       final center = LatLng(lat, lng);
       return center;
     } on Exception {
@@ -191,6 +196,48 @@ class _MyHomePageState extends State<mapaHomePage> {
     setState(() {
       mapController = controller;
     });
+
     refresh();
+    initMarkers();
+
+  }
+
+  //AGREGAR MARCADORES
+  void initMarkers() async {
+    var currentLocation = <String, double>{};
+    final location = LocationManager.Location();
+    currentLocation = await location.getLocation();
+    final lat = currentLocation["latitude"];
+    final lng = currentLocation["longitude"];
+
+    initMarker(8.2965626,-62.7356024,'- 2 km');
+    initMarker(8.270346,-62.7579366,'- 10 km');
+    initMarker(8.2081334,-62.8328788,'- 20 km');
+
+
+  }
+
+  initMarker(double lat, double log, String name) {
+    GoogleMapController mapController2 = mapController;
+
+    mapController.onInfoWindowTapped.add(_onInfoWindowTapped);
+    //mapController.onMarkerTapped.add(_onInfoWindowTapped);
+
+    mapController2.clearMarkers().then((val) {
+      mapController2.addMarker(MarkerOptions(
+        visible: true,
+        draggable: true,
+        flat: false,
+        position: LatLng(lat,log),
+        infoWindowText: InfoWindowText(name, 'Cool'),
+        icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+      )
+      );
+    });
+
+  }
+
+  void _onInfoWindowTapped(Marker marker) {
+    debugPrint('*******************************');
   }
 }
