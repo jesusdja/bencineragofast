@@ -219,6 +219,10 @@ class _MyHomePageState extends State<mapaHomePage> {
   initMarker(double lat, double log, String name) {
 
     GoogleMapController mapController2 = mapController;
+
+    mapController.onInfoWindowTapped.add(_onInfoWindowTapped);
+    //mapController.onMarkerTapped.add(_onInfoWindowTapped);
+
     mapController2.clearMarkers().then((val) {
       mapController2.addMarker(MarkerOptions(
         visible: true,
@@ -231,5 +235,9 @@ class _MyHomePageState extends State<mapaHomePage> {
       );
     });
 
+  }
+
+  void _onInfoWindowTapped(Marker marker) {
+    debugPrint('*******************************');
   }
 }
