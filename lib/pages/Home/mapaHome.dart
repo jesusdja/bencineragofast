@@ -6,11 +6,12 @@ import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:vector_math/vector_math_64.dart';
 import '../BotonesHome/menu_dist.dart';
 import '../BotonesHome/menu_gas.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'dart:math' as math;
+import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/material.dart' as mate;
 
 
 import 'package:bencineragofast/pages/Listado/place_traker_app.dart';
@@ -58,19 +59,7 @@ class _MyHomePageState extends State<mapaHomePage> {
   );
 
 
-  initMarker(double lat, double log, String name) {
-    mapController.clearMarkers().then((val) {
-      mapController.addMarker(MarkerOptions(
-          visible: true,
-          draggable: true,
-          flat: false,
-          position: LatLng(lat,log),
-          infoWindowText: InfoWindowText(name, 'Cool'),
-          icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
-      )
-      );
-    });
-  }
+
 
 
   @override
@@ -82,7 +71,7 @@ class _MyHomePageState extends State<mapaHomePage> {
         child: new ListView(
           children: <Widget>[
             new UserAccountsDrawerHeader(
-                //decoration: new BoxDecoration(color: Colors.teal[800]),
+                decoration: new BoxDecoration(color: mate.Colors.teal[800]),
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
             new ListTile(
@@ -151,7 +140,6 @@ class _MyHomePageState extends State<mapaHomePage> {
         children: <Widget>[
           GoogleMap(
             onMapCreated: onMapCreated,
-
             options: GoogleMapOptions(
                 cameraPosition: CameraPosition(
                     target: LatLng(0,0),
@@ -183,7 +171,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: center == null ? LatLng(0, 0) : center, zoom: 15.0)));
+        target: center == null ? LatLng(0, 0) : center, zoom: 13.0)));
   }
 
   Future<LatLng> getUserLocation() async {
@@ -213,34 +201,36 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   }
 
-  void initMarkers(){
-    initMarker(8.2960045,-62.7330581,'hola');
+  //AGREGAR MARCADORES
+  void initMarkers() async {
 
-    //double dist = LocationManager.Location().onLocationChanged().
+    var currentLocation = <String, double>{};
+    final location = LocationManager.Location();
+    currentLocation = await location.getLocation();
+    final lat = currentLocation["latitude"];
+    final lng = currentLocation["longitude"];
 
-    initMarker(8.2942766,-62.7355364,'hola2');
-    debugPrint('SI');
-    calcularDistancia(8.2965626,-62.7356024,8.2874535,-62.7325768,5);
+    initMarker(8.2965626,-62.7356024,'- 2 km');
+    initMarker(8.270346,-62.7579366,'- 10 km');
+    initMarker(8.2081334,-62.8328788,'- 20 km');
+
 
   }
 
-  bool calcularDistancia(double lat1, double lg1, double lat2, double lg2, double distancia){
-    bool rango = false;
-    double d = 0.0;
-    double radio = 6378;
-    double SumLat = radians(lat2 - lat1);
-    double Sumlg = radians(lg2 - lg1);
-    double a =  math.pow((math.sin(SumLat / 2)),2) +
-                math.cos(radians(lat1)) *
-                math.cos(radians(lat2)) *
-                math.pow((math.sin(Sumlg / 2)),2) ;
-    double c = 2 * (math.atan2(math.sqrt(a),math.sqrt(1 - a)));
-    d = radio * c;
-    debugPrint('$d');
-    if(d <= distancia){rango = true;}
-    return rango;
+  initMarker(double lat, double log, String name) {
+
+    GoogleMapController mapController2 = mapController;
+    mapController2.clearMarkers().then((val) {
+      mapController2.addMarker(MarkerOptions(
+        visible: true,
+        draggable: true,
+        flat: false,
+        position: LatLng(lat,log),
+        infoWindowText: InfoWindowText(name, 'Cool'),
+        icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+      )
+      );
+    });
+
   }
-
-
-
 }
