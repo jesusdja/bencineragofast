@@ -204,7 +204,6 @@ class _MyHomePageState extends State<mapaHomePage> {
   //AGREGAR MARCADORES
   void initMarkers() async {
 
-
     var currentLocation = <String, double>{};
     final location = LocationManager.Location();
     currentLocation = await location.getLocation();
