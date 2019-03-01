@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bencineragofast/main.dart';
 
 class Ayuda extends StatefulWidget {
   @override
@@ -10,8 +11,7 @@ class _AyudaState extends State<Ayuda> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        backgroundColor: Color.fromRGBO(11,90,70,60),
-        title: new Text('Ayuda'),
+        backgroundColor: PrimaryColor,
       ),
     );
   }

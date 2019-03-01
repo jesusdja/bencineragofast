@@ -9,6 +9,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_dist.dart';
 import '../BotonesHome/menu_gas.dart';
 import 'package:location/location.dart' as LocationManager;
+
+import 'package:bencineragofast/main.dart';
+
 import 'dart:math' as math;
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart' as mate;
@@ -67,7 +70,7 @@ class _MyHomePageState extends State<mapaHomePage> {
       appBar: new AppBar(
 
         title: new Text("GoFast Bencineras"),
-        backgroundColor: Color.fromRGBO(11,87,56,100) ,
+        backgroundColor: PrimaryColor ,
           actions: <Widget>[
             IconButton(
 
@@ -93,7 +96,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           children: <Widget>[
 
             new UserAccountsDrawerHeader(
-                decoration: new BoxDecoration(color: mate.Colors.teal[800]),
+                decoration: new BoxDecoration(color: PrimaryColor),
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
             new ListTile(
