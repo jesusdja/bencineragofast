@@ -217,7 +217,6 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   initMarker(double lat, double log, String name) {
-
     GoogleMapController mapController2 = mapController;
 
     mapController.onInfoWindowTapped.add(_onInfoWindowTapped);
