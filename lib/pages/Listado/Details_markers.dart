@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:bencineragofast/pages/Home/mapaHome.dart';
+import 'package:bencineragofast/pages/Home/place.dart';
 
 
 
 class DetailsMarkers extends StatefulWidget {
 
-  DetailsMarkers({this.mapController});
+  DetailsMarkers({this.mapController, this.place});
 
   final GoogleMapController mapController;
+  final Place place;
 
   @override
   _DetailsMarkersState createState() => new _DetailsMarkersState();
@@ -30,7 +32,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         backgroundColor: Color.fromRGBO(11,90,70,60),
-        title: new Text('Opciones '),
+        title: new Text(widget.place.id + ' - ' + widget.place.description),
       ),
       body: new Container(
 

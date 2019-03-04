@@ -11,6 +11,7 @@ import '../BotonesHome/menu_gas.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:flutter/material.dart' as mate;
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
+import 'place.dart';
 
 
 
@@ -28,7 +29,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   GoogleMapController mapController;
 
-  Map<String,String> markerMap = Map();
+  Map<String,Place> markerMap = Map();
 
   //AGREGAR MARCADORES
   void initMarkers() async {
@@ -38,12 +39,21 @@ class _MyHomePageState extends State<mapaHomePage> {
     final lat = currentLocation["latitude"];
     final lng = currentLocation["longitude"];
     //markerMap[marker.id] = 'f';
-    initMarker(8.2965626,-62.7356024,'- 2 km');
-    initMarker(8.270346,-62.7579366,'- 10 km');
-    initMarker(8.2081334,-62.8328788,'- 20 km');
+
+    Place placed ;
+    LatLng latlo = LatLng(8.2965626,-62.7356024);
+    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km');
+    initMarker(placed);
+    latlo = LatLng(8.270346,-62.7579366);
+    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km');
+    initMarker(placed);
+    latlo = LatLng(8.2081334,-62.8328788);
+    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km');
+    initMarker(placed);
+
   }
 
-  initMarker(double lat, double log, String name) {
+  initMarker(Place place) {
     GoogleMapController mapController2 = mapController;
 
     //mapController.onMarkerTapped.add(_onInfoWindowTapped);
@@ -52,13 +62,13 @@ class _MyHomePageState extends State<mapaHomePage> {
         visible: true,
         draggable: true,
         flat: false,
-        position: LatLng(lat,log),
-        infoWindowText: InfoWindowText(name, 'Cool'),
+        position: place.latLng,
+        infoWindowText: InfoWindowText(place.id, place.description),
         icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
       )
       );
 
-      markerMap[marker.id] = name;
+      markerMap[marker.id] = place;
     });
   }
 
@@ -66,10 +76,12 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     final marcador_seleccionado = markerMap[marker.id];
 
+    print(marcador_seleccionado.id);
+
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return DetailsMarkers(mapController: mapController);
+        return DetailsMarkers(mapController: mapController, place: marcador_seleccionado);
       }),
     );
 
