@@ -214,7 +214,7 @@ class _opcionesState extends State<opciones> {
               width: double.infinity,
               // height: double.infinity,
               child: new RaisedButton(
-                child: Icon(Icons.arrow_downward),
+                child: Text(_valueMapa),
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
@@ -240,6 +240,7 @@ class _opcionesState extends State<opciones> {
               width: double.infinity,
               // height: double.infinity,
               child: new RaisedButton(
+
                 elevation: 5.0,
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
