@@ -25,8 +25,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
   Widget build(BuildContext context) {
 
 
-
-
     return new Scaffold(
       key: _formKey,
       resizeToAvoidBottomPadding: false,

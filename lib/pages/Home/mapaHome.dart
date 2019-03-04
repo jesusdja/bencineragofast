@@ -26,37 +26,54 @@ class mapaHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<mapaHomePage> {
 
-
-
   GoogleMapController mapController;
 
-  String buscarDirecccion;
+  Map<String,String> markerMap = Map();
 
-  /*AppBar appBar = new AppBar(
+  //AGREGAR MARCADORES
+  void initMarkers() async {
+    var currentLocation = <String, double>{};
+    final location = LocationManager.Location();
+    currentLocation = await location.getLocation();
+    final lat = currentLocation["latitude"];
+    final lng = currentLocation["longitude"];
+    //markerMap[marker.id] = 'f';
+    initMarker(8.2965626,-62.7356024,'- 2 km');
+    initMarker(8.270346,-62.7579366,'- 10 km');
+    initMarker(8.2081334,-62.8328788,'- 20 km');
+  }
 
-    title: new Text("GoFast Bencineras"),
-    backgroundColor: Color.fromRGBO(11,87,56,100) ,
+  initMarker(double lat, double log, String name) {
+    GoogleMapController mapController2 = mapController;
 
-    actions: <Widget>[
+    //mapController.onMarkerTapped.add(_onInfoWindowTapped);
+    mapController2.clearMarkers().then((val) async {
+      final Marker marker = await mapController2.addMarker(MarkerOptions(
+        visible: true,
+        draggable: true,
+        flat: false,
+        position: LatLng(lat,log),
+        infoWindowText: InfoWindowText(name, 'Cool'),
+        icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+      )
+      );
 
+      markerMap[marker.id] = name;
+    });
+  }
 
-      IconButton(
+  void _onInfoWindowTapped(Marker marker) {
 
-        iconSize: 40,
-        icon: Icon(Icons.map),
-        tooltip: 'Lista de Gasolineras',
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute( //Error de Contex no esta declarado o recibido en la funcion....tiene que ser en el  build
-              builder: (BuildContext context) => ListadoGasolineras()),
-          );
-        },
-      ),
+    final marcador_seleccionado = markerMap[marker.id];
 
-    ],
-  );*/
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return DetailsMarkers(mapController: mapController);
+      }),
+    );
 
-
-
+  }
 
 
   @override
@@ -79,18 +96,11 @@ class _MyHomePageState extends State<mapaHomePage> {
                 );
               },
             ),
-
-
-
           ],
-
-
-
       ),
       drawer: new Drawer(
         child: new ListView(
           children: <Widget>[
-
             new UserAccountsDrawerHeader(
                 decoration: new BoxDecoration(color: mate.Colors.teal[800]),
                 accountName: new Text('Nombre de Usuario'),
@@ -151,11 +161,6 @@ class _MyHomePageState extends State<mapaHomePage> {
                 );
               },
             ),
-           /* new ListTile(
-              title: new Text("Cerrar"),
-              trailing: new Icon(Icons.close),
-              onTap: () => Navigator.of(context).pop(),
-            ),*/
           ],
         ),
       ),
@@ -192,6 +197,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   void refresh() async {
 
+    mapController.onInfoWindowTapped.add(_onInfoWindowTapped);
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: center == null ? LatLng(0, 0) : center, zoom: 13.0)));
@@ -221,49 +227,5 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     refresh();
     initMarkers();
-  }
-
-  //AGREGAR MARCADORES
-  void initMarkers() async {
-    var currentLocation = <String, double>{};
-    final location = LocationManager.Location();
-    currentLocation = await location.getLocation();
-    final lat = currentLocation["latitude"];
-    final lng = currentLocation["longitude"];
-
-    initMarker(8.2965626,-62.7356024,'- 2 km');
-    initMarker(8.270346,-62.7579366,'- 10 km');
-    initMarker(8.2081334,-62.8328788,'- 20 km');
-
-
-  }
-
-  initMarker(double lat, double log, String name) {
-    GoogleMapController mapController2 = mapController;
-
-    mapController.onInfoWindowTapped.add(_onInfoWindowTapped);
-    //mapController.onMarkerTapped.add(_onInfoWindowTapped);
-
-    mapController2.clearMarkers().then((val) {
-      mapController2.addMarker(MarkerOptions(
-        visible: true,
-        draggable: true,
-        flat: false,
-        position: LatLng(lat,log),
-        infoWindowText: InfoWindowText(name, 'Cool'),
-        icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
-      )
-      );
-    });
-
-  }
-
-  void _onInfoWindowTapped(Marker marker) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) {
-        return DetailsMarkers(mapController: mapController);
-      }),
-    );
   }
 }
