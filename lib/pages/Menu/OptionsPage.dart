@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';//Desde Dependencias
 import 'package:location/location.dart' as LocationManager;
 import 'package:bencineragofast/pages/Home/mapaHome.dart';
 import 'package:bencineragofast/main.dart';
@@ -16,8 +16,8 @@ class opciones extends StatefulWidget {
 }
 
 
-enum TipodeMarca{todas,Copec,Petrobras,Shell,Terpel}
-enum TipodeMapa{Normal,Satelital,Otro}
+enum TipodeMarca{todas,Copec,Petrobras,Shell,Terpel}// variable global de marcas
+enum TipodeMapa{Normal,Satelital,Otro} //Vairables de tipo Mapa
 
 class _opcionesState extends State<opciones> {
 
@@ -48,7 +48,7 @@ class _opcionesState extends State<opciones> {
                 textColor: Colors.white,
                 color: PrimaryColor,
                 child: new Text("Satelital"),
-                  onPressed: (){Navigator.pop(context ,TipodeMapa.Satelital); CambiarmapaSatelital();refresh(15);},
+                  onPressed: (){Navigator.pop(context ,TipodeMapa.Satelital); CambiarmapaSatelital();refresh(15);},//LLamar a la funcion CambiarmapaSatelital
               ),
 
             ),
@@ -95,22 +95,20 @@ class _opcionesState extends State<opciones> {
   }
   Future _seleccionarMarca() async { //cambiar Nombre para funcion de ventan emerrgente
     switch(
-    await showDialog(
+    await showDialog( //Ventana de dialogo emergente
         context: context,
-        /*it shows a popup with few options which you can select, for option we
-        created enums which we can use with switch statement, in this first switch
-        will wait for the user to select the option which it can use with switch cases*/
-        child: new SimpleDialog(
+
+        child: new SimpleDialog( //cada opcion tiene que ser llamada por un SimpleDialog
           title: new Text('Tipo de Marca'),
           children: <Widget>[
             new SimpleDialogOption(
               child: new RaisedButton(
-                splashColor: Colors.black,
+                splashColor: Colors.black, //Efectos de click
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: PrimaryColor,
                 child: new Text("Todas"),
-                onPressed: (){Navigator.pop(context, TipodeMarca.todas);},
+                onPressed: (){Navigator.pop(context, TipodeMarca.todas);}, //cambio de variable local
               ),
 
             ),
@@ -167,7 +165,7 @@ class _opcionesState extends State<opciones> {
         )
     )
     ) {
-      case TipodeMarca.todas:
+      case TipodeMarca.todas: //seleccion de nombre de boton
         _setValueMarca('Todas');
         break;
       case TipodeMarca.Copec:
@@ -192,7 +190,7 @@ class _opcionesState extends State<opciones> {
 
     return new Scaffold(
       //key: _formKey,
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomPadding: false,// bloquear bugs de tama#o de Pantalla
       appBar: new AppBar(
         backgroundColor: PrimaryColor,
         title: new Text('Opciones '),
@@ -201,14 +199,14 @@ class _opcionesState extends State<opciones> {
       ),
 
       body: new Container(
-          padding: new EdgeInsets.all(32.0),
-          child: new Column(
-          children: <Widget>[
+          padding: new EdgeInsets.all(32.0), //altura del boton
+          child: new Column( //centrar all content
+          children: <Widget>[ //trabajar y permitir multiples widgets
             Text(
               'Tipo de Mapa',
               textAlign: TextAlign.justify,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
+              //overflow: TextOverflow.ellipsis, ...
+               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
 
             ),
 

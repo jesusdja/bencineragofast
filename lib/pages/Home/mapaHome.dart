@@ -96,7 +96,14 @@ class _MyHomePageState extends State<mapaHomePage> {
           children: <Widget>[
 
             new UserAccountsDrawerHeader(
-                decoration: new BoxDecoration(color: PrimaryColor),
+                decoration: new BoxDecoration(color: PrimaryColor,
+                /* gradient: LinearGradient(
+                   begin: Alignment.topLeft,
+                   end: Alignment(1.5, 1.0), // 10% of the width, so there are ten blinds.
+                   colors: [const Color(0xff0f481f), const Color(0xFF000000)], // whitish to gray
+                   tileMode: TileMode.repeated, // repeats the gradient over the canvas
+        ),        ),),*/
+                ),
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
             new ListTile(
@@ -131,7 +138,7 @@ class _MyHomePageState extends State<mapaHomePage> {
               },
             ),
             Divider(
-              height: .0,
+              height: 30.0,
             ),
             new ListTile(
               title: new Text("Acerca de"),
