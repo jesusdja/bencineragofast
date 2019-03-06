@@ -16,16 +16,9 @@ import 'dart:math' as math;
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart' as mate;
 
-
-
-
-
-
-
 class mapaHomePage extends StatefulWidget {
 
   _MyHomePageState createState() => _MyHomePageState();
-
 }
 
 class _MyHomePageState extends State<mapaHomePage> {
@@ -58,6 +51,9 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     ],
   );*/
+
+
+
 
 
 
