@@ -46,7 +46,7 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
         Tab(icon: Icon(Icons.directions_car)),
         Tab(icon: Icon(Icons.bookmark)),
         Tab(icon: Icon(Icons.attach_money)),
-        Tab(icon: Icon(Icons.star)),
+
       ],
       controller: _controller,
     );
@@ -60,7 +60,7 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
         display(),
         Center( child: Text("aqui van la lista con la marcas")),
         Center( child: Text("por precios ")),
-        Center( child: Text("Lista de favoritos desde la lista principal")),
+
 
       ],
       controller: _controller,
