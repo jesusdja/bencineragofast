@@ -34,6 +34,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     //markerMap[marker.id] = 'f';
 
     Place placed ;
+
     LatLng latlo = LatLng(8.2965626,-62.7356024);
     placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km');
     initMarker(placed);
