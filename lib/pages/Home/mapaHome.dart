@@ -27,6 +27,8 @@ class mapaHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<mapaHomePage> {
 
+
+
   GoogleMapController mapController;
 
   Map<String,Place> markerMap = Map();
@@ -80,6 +82,9 @@ class _MyHomePageState extends State<mapaHomePage> {
       }),
     );
   }
+
+
+
 
 
   @override

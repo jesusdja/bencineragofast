@@ -31,7 +31,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       mapController = controller;
       mapController.clearMarkers().then((val) async {
         final Marker marker = await mapController.addMarker(MarkerOptions(
-          consumeTapEvents: false,
           visible: true,
           position: widget.place.latLng,
           icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
