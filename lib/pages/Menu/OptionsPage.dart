@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:bencineragofast/pages/Home/mapaHome.dart';
-
+import 'package:bencineragofast/main.dart';
 
 
 class opciones extends StatefulWidget {
@@ -46,7 +46,7 @@ class _opcionesState extends State<opciones> {
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
-                color: Colors.teal[500],
+                color: PrimaryColor,
                 child: new Text("Satelital"),
                   onPressed: (){Navigator.pop(context ,TipodeMapa.Satelital); CambiarmapaSatelital();refresh(15);},
               ),
@@ -58,7 +58,7 @@ class _opcionesState extends State<opciones> {
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
-                 color: Colors.teal[500],
+                 color: PrimaryColor,
                 child: new Text("Normal"),
                 onPressed: (){Navigator.pop(context, TipodeMapa.Normal) ; CambiarmapaNormal();refresh(15);
                 },
@@ -71,7 +71,7 @@ class _opcionesState extends State<opciones> {
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
-                color: Colors.teal[500],
+                color: PrimaryColor,
                 child: new Text("Otro"),
                 onPressed: (){Navigator.pop(context, TipodeMapa.Otro);CambiarmapaOtro();refresh(15);
                 },
@@ -108,7 +108,7 @@ class _opcionesState extends State<opciones> {
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
-                color: Colors.teal[500],
+                color: PrimaryColor,
                 child: new Text("Todas"),
                 onPressed: (){Navigator.pop(context, TipodeMarca.todas);},
               ),
@@ -119,7 +119,7 @@ class _opcionesState extends State<opciones> {
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
-                color: Colors.teal[500],
+                color: PrimaryColor,
                 child: new Text("Copec"),
                 onPressed: (){Navigator.pop(context, TipodeMarca.Copec);},
               ),
@@ -131,7 +131,7 @@ class _opcionesState extends State<opciones> {
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
-                color: Colors.teal[500],
+                color: PrimaryColor,
                 child: new Text("Petrobras"),
                 onPressed: (){Navigator.pop(context, TipodeMarca.Petrobras);
                 },
@@ -144,7 +144,7 @@ class _opcionesState extends State<opciones> {
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
-                color: Colors.teal[500],
+                color: PrimaryColor,
                 child: new Text("Shell"),
                 onPressed: (){Navigator.pop(context, TipodeMarca.Shell);
                 },
@@ -156,7 +156,7 @@ class _opcionesState extends State<opciones> {
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
-                color: Colors.teal[500],
+                color: PrimaryColor,
                 child: new Text("Terpel"),
                 onPressed: (){Navigator.pop(context, TipodeMarca.Terpel);
                 },
@@ -191,10 +191,10 @@ class _opcionesState extends State<opciones> {
 
 
     return new Scaffold(
-      key: _formKey,
+      //key: _formKey,
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
-        backgroundColor: Color.fromRGBO(11,90,70,60),
+        backgroundColor: PrimaryColor,
         title: new Text('Opciones '),
 
 
@@ -220,7 +220,7 @@ class _opcionesState extends State<opciones> {
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
-                color: Colors.teal[500],
+                color:PrimaryColor,
                 onPressed: _seleccionarMapa,
               //  child: new Text(_valueMapa),
 
@@ -246,7 +246,7 @@ class _opcionesState extends State<opciones> {
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
-                color: Colors.teal[500],
+                color: PrimaryColor,
                 onPressed: _seleccionarMarca,
                 child: new Text(_valueMarca),
 
@@ -283,7 +283,7 @@ class _opcionesState extends State<opciones> {
             SizedBox(
               width: double.infinity,
               child: RaisedButton(
-                color: Colors.teal,
+                color: PrimaryColor,
                 elevation: 5.0,
                 textColor: Colors.white,
                 splashColor: Colors.black,

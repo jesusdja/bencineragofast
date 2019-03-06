@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bencineragofast/main.dart';
 
 class Registrarse extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class _RegistrarseState extends State<Registrarse> {
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
-        backgroundColor: Color.fromRGBO(11,90,70,60),
+        backgroundColor:PrimaryColor,
         title: new Text('Registrar Vehiculo'),
       ),
       body: MyCustomForm(),
@@ -101,8 +102,8 @@ class MyCustomFormState extends State<MyCustomForm> {
 
               width: double.infinity,
               child: RaisedButton(
-
-                color: Colors.teal,
+                textColor: Colors.white,
+                color: PrimaryColor,
                 padding: const EdgeInsets.all(20.0),
                 elevation: 5.0,
                 splashColor: Colors.black,
