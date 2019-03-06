@@ -21,12 +21,45 @@ class DetailsMarkers extends StatefulWidget {
 class _DetailsMarkersState extends State<DetailsMarkers> {
 
   final _formKey = GlobalKey<FormState>();
+  GoogleMapController mapController;
+
+
+
+
+  void onMapCreated(controller) {
+
+      mapController = controller;
+      mapController.clearMarkers().then((val) async {
+        final Marker marker = await mapController.addMarker(MarkerOptions(
+          consumeTapEvents: false,
+          visible: true,
+          position: widget.place.latLng,
+          icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+        )
+        );
+      });
+  }
+
+
+
+  Widget _detailsBody() {
+    return ListView(
+        padding: const EdgeInsets.fromLTRB(1.0, 1.0, 1.0, 12.0),
+        children: <Widget>[
+          _Map(
+            center: widget.place.latLng,
+            mapController: mapController,
+            onMapCreated: onMapCreated,
+          ),
+        ]
+    );
+  }
+
+
 
 
   @override
   Widget build(BuildContext context) {
-
-
     return new Scaffold(
       key: _formKey,
       resizeToAvoidBottomPadding: false,
@@ -34,8 +67,18 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
         backgroundColor: Color.fromRGBO(11,90,70,60),
         title: new Text(widget.place.id + ' - ' + widget.place.description),
       ),
-      body: new Container(
-
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.all(28.0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              colors: [
+                Color.fromRGBO(11,90,70,60),
+                Colors.white,
+              ]),
+        ),
+        child: _detailsBody(),
       ),
     );
 
@@ -63,6 +106,48 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       currentLocation = null;
       return null;
     }
+  }
+
+}
+
+
+class _Map extends StatelessWidget{
+  const _Map({
+    @required this.center,
+    @required this.mapController,
+    @required this.onMapCreated,
+    Key key,
+  })  : assert(center != null),
+        assert(onMapCreated != null),
+        super(key: key);
+
+  final LatLng center;
+  final GoogleMapController mapController;
+  final ArgumentCallback<GoogleMapController> onMapCreated;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 2.0),
+      elevation: 10.0,
+      child: SizedBox(
+        width: 340.0,
+        height: 240.0,
+        child: GoogleMap(
+          onMapCreated: onMapCreated,
+          options: GoogleMapOptions(
+            cameraPosition: CameraPosition(
+              target: center,
+              zoom: 16.0,
+            ),
+            zoomGesturesEnabled: false,
+            rotateGesturesEnabled: false,
+            tiltGesturesEnabled: false,
+            scrollGesturesEnabled: false,
+          ),
+        ),
+      ),
+    );
   }
 
 }

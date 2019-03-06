@@ -55,7 +55,6 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   initMarker(Place place) {
     GoogleMapController mapController2 = mapController;
-
     //mapController.onMarkerTapped.add(_onInfoWindowTapped);
     mapController2.clearMarkers().then((val) async {
       final Marker marker = await mapController2.addMarker(MarkerOptions(
@@ -73,18 +72,13 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   void _onInfoWindowTapped(Marker marker) {
-
     final marcador_seleccionado = markerMap[marker.id];
-
-    print(marcador_seleccionado.id);
-
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
         return DetailsMarkers(mapController: mapController, place: marcador_seleccionado);
       }),
     );
-
   }
 
 
