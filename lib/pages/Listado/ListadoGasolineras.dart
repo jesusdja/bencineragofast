@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Listado/tabs/display.dart';
 import 'package:bencineragofast/main.dart';
+import 'package:path/path.dart';
+import 'package:bencineragofast/main.dart';
 
 class ListadoGasolineras extends StatefulWidget {
   @override
@@ -13,11 +15,12 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
 
 
 
+
   @override
 
   void initState(){
     super.initState();
-    _controller = TabController(length: 4, vsync: this );
+    _controller = TabController(length: 3, vsync: this );
   }
 
 
@@ -44,7 +47,7 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
         Tab(icon: Icon(Icons.directions_car)),
         Tab(icon: Icon(Icons.bookmark)),
         Tab(icon: Icon(Icons.attach_money)),
-        Tab(icon: Icon(Icons.star)),
+
       ],
       controller: _controller,
     );
@@ -58,7 +61,7 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
         display(),
         Center( child: Text("aqui van la lista con la marcas")),
         Center( child: Text("por precios ")),
-        Center( child: Text("Lista de favoritos desde la lista principal")),
+
 
       ],
       controller: _controller,

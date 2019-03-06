@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
+class Todo {
+  final String title;
+  final String description;
+
+  Todo(this.title, this.description);
+}
+
 class display extends StatefulWidget {
   @override
   _displayState createState() => new _displayState();
@@ -21,79 +28,77 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
-  final _biggerFont = const TextStyle(fontSize: 18.0);
-
-  final _saved = new Set<WordPair>();
-  final _suggestions = <WordPair>[];
-
+  var y = 20;
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-
-      body: _buildSuggestions(),
-    );
-  }
-
-  Widget _buildRow(WordPair pair) {
-    final _isSaved = _saved.contains(pair);
-
-    return new ListTile(
-      onTap: () {
-        setState(() {
-          _isSaved ? _saved.remove(pair) : _saved.add(pair);
-        });
-      },
-      title: new Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-      trailing: new Icon(
-        _isSaved ? Icons.favorite : Icons.favorite_border,
-        color: _isSaved ? Colors.red : null,
-      ),
-    );
-  }
-
-  Widget _buildSuggestions() {
-    return new ListView.builder(
-      padding: const EdgeInsets.all(16.0),
-      itemBuilder: (context, i) {
-        if (i.isOdd) return new Divider();
-
-        final index = i ~/ 2;
-
-        if (index >= _suggestions.length)
-          _suggestions.addAll(generateWordPairs().take(10));
-
-        return _buildRow(_suggestions[index]);
-      },
-    );
-  }
-
-  void pushSaved() {
-    Navigator.of(context).push(
-      new MaterialPageRoute(builder: (context) {
-        final _tiles = ListTile
-            .divideTiles(
-          context: context,
-          tiles: _saved.map((pair) {
-            return new ListTile(
-              title: new Text(
-                pair.asPascalCase,
-                style: _biggerFont,
-              ),
-            );
-          }),
-        )
-            .toList();
-
-        return new Scaffold(
-          appBar: new AppBar(
-            title: new Text('Saved Names'),
+      body: TodosScreen(
+        todos: List.generate(
+          y,
+              (i) => Todo(
+            'Todo $i',
+            'A description of what needs to be done for Todo $i',
           ),
-          body: new ListView(children: _tiles),
-        );
-      }),
+        ),
+      ),
+
+    );
+  }
+
+
+}
+
+class TodosScreen extends StatelessWidget {
+  final List<Todo> todos;
+
+  TodosScreen({Key key, @required this.todos}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      body: ListView.builder(
+        itemCount: todos.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(todos[index].title),
+            // Cuando un usuario pulsa en el ListTile, navega al DetailScreen.
+            // Tenga en cuenta que no solo estamos creando un DetailScreen,
+            // también le pasamos el objeto Todo actual!
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailScreen(todo: todos[index]),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+
+class DetailScreen extends StatelessWidget {
+  // Declara un campo que contenga el objeto Todo
+  final Todo todo;
+
+  // En el constructor, se requiere un objeto Todo
+  DetailScreen({Key key, @required this.todo}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // Usa el objeto Todo para crear nuestra UI
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("${todo.title}"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Text('${todo.description}'),
+      ),
     );
   }
 }

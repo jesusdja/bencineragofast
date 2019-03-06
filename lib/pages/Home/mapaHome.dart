@@ -9,6 +9,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_dist.dart';
 import '../BotonesHome/menu_gas.dart';
 import 'package:location/location.dart' as LocationManager;
+
+import 'package:bencineragofast/main.dart';
+
+import 'dart:math' as math;
+import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart' as mate;
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'place.dart';
@@ -85,7 +90,7 @@ class _MyHomePageState extends State<mapaHomePage> {
       appBar: new AppBar(
 
         title: new Text("GoFast Bencineras"),
-        backgroundColor: Color.fromRGBO(11,87,56,100) ,
+        backgroundColor: PrimaryColor ,
           actions: <Widget>[
             IconButton(
 
@@ -104,7 +109,22 @@ class _MyHomePageState extends State<mapaHomePage> {
         child: new ListView(
           children: <Widget>[
             new UserAccountsDrawerHeader(
-                decoration: new BoxDecoration(color: mate.Colors.teal[800]),
+                decoration: new BoxDecoration(color: PrimaryColor,
+                 gradient: LinearGradient(
+                   begin: Alignment.topRight,
+                   end: Alignment.bottomLeft,
+                   // Add one stop for each color. Stops should increase from 0 to 1
+                   stops: [0.1, 0.5, 0.7, 0.9],
+                   colors: [
+                     // Colors are easy thanks to Flutter's Colors class.
+
+                     mate.Colors.green[900],
+                     mate.Colors.green[800],
+                     mate. Colors.green[700],
+                     mate. Colors.green[700],
+                   ],
+
+                 ),),
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
             new ListTile(
@@ -139,7 +159,7 @@ class _MyHomePageState extends State<mapaHomePage> {
               },
             ),
             Divider(
-              height: .0,
+              height: 30.0,
             ),
             new ListTile(
               title: new Text("Acerca de"),
