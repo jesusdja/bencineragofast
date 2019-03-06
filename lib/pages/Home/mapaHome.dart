@@ -13,21 +13,12 @@ import 'package:flutter/material.dart' as mate;
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'place.dart';
 
-
-
-
-
-
-
 class mapaHomePage extends StatefulWidget {
 
   _MyHomePageState createState() => _MyHomePageState();
-
 }
 
 class _MyHomePageState extends State<mapaHomePage> {
-
-
 
   GoogleMapController mapController;
 
