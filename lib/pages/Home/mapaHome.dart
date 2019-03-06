@@ -30,6 +30,7 @@ class _MyHomePageState extends State<mapaHomePage> {
   Map<String,Place> markerMap = Map();
 
   //AGREGAR MARCADORES
+
   void initMarkers() async {
     var currentLocation = <String, double>{};
     final location = LocationManager.Location();
