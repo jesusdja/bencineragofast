@@ -97,16 +97,25 @@ class _MyHomePageState extends State<mapaHomePage> {
 
             new UserAccountsDrawerHeader(
                 decoration: new BoxDecoration(color: PrimaryColor,
-                /* gradient: LinearGradient(
-                   begin: Alignment.topLeft,
-                   end: Alignment(1.5, 1.0), // 10% of the width, so there are ten blinds.
-                   colors: [const Color(0xff0f481f), const Color(0xFF000000)], // whitish to gray
-                   tileMode: TileMode.repeated, // repeats the gradient over the canvas
-        ),        ),),*/
-                ),
+                 gradient: LinearGradient(
+                   begin: Alignment.topRight,
+                   end: Alignment.bottomLeft,
+                   // Add one stop for each color. Stops should increase from 0 to 1
+                   stops: [0.1, 0.5, 0.7, 0.9],
+                   colors: [
+                     // Colors are easy thanks to Flutter's Colors class.
+
+                     mate.Colors.green[900],
+                     mate.Colors.green[800],
+                     mate. Colors.green[700],
+                     mate. Colors.green[700],
+                   ],
+
+                 ),),
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
             new ListTile(
+
               title: new Text('Registrarse'),
               trailing: new Icon(Icons.directions_car),
               onTap: () {
@@ -162,11 +171,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                 );
               },
             ),
-           /* new ListTile(
-              title: new Text("Cerrar"),
-              trailing: new Icon(Icons.close),
-              onTap: () => Navigator.of(context).pop(),
-            ),*/
+
           ],
         ),
       ),
@@ -175,6 +180,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           GoogleMap(
             onMapCreated: onMapCreated,
             options: GoogleMapOptions(
+
                 cameraPosition: CameraPosition(
                     target: LatLng(0,0),
                     zoom: 0.1),
@@ -258,6 +264,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     mapController2.clearMarkers().then((val) {
       mapController2.addMarker(MarkerOptions(
+
         visible: true,
         draggable: true,
         flat: false,
