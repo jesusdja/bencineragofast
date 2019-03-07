@@ -54,6 +54,21 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
 
   @override
   Widget build(BuildContext context) {
+
+    var contenedor_mapa =  Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(top: 18.0,right: 24.0,left: 24.0,bottom: 0.0),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topRight,
+            colors: [
+              Color.fromRGBO(11,90,70,60),
+              Colors.white,
+            ]),
+      ),
+      child: _detailsBody(),
+    );
+
     return new Scaffold(
       key: _formKey,
       resizeToAvoidBottomPadding: false,
@@ -61,19 +76,12 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
         backgroundColor: Color.fromRGBO(11,90,70,60),
         title: new Text(widget.place.id + ' - ' + widget.place.description),
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.only(top: 18.0,right: 24.0,left: 24.0,bottom: 0.0),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              colors: [
-                Color.fromRGBO(11,90,70,60),
-                Colors.white,
-              ]),
-        ),
-        child: _detailsBody(),
-      ),
+      body:  Stack(
+       children: <Widget>[
+         contenedor_mapa,
+         button_Goto(),
+       ],
+      )
     );
   }
 
@@ -139,6 +147,33 @@ class _Map extends StatelessWidget{
             tiltGesturesEnabled: false,
             scrollGesturesEnabled: false,
           ),
+        ),
+      ),
+    );
+  }
+
+}
+
+class button_Goto extends StatelessWidget{
+
+
+  nada(){
+    debugPrint('*****************');
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      right: 60.0,
+      bottom: 370.0,
+      child: Container(
+        child: FloatingActionButton(
+          child: Icon(Icons.place),
+          backgroundColor: Colors.teal[800],
+          heroTag: 3,
+          onPressed: nada(),
+          tooltip: 'Toggle',
         ),
       ),
     );
