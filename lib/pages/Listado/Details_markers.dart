@@ -127,12 +127,19 @@ class _Map extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       margin: const EdgeInsets.symmetric(vertical: 2.0),
       elevation: 10.0,
+
       child: SizedBox(
+
         width: 340.0,
         height: 240.0,
+
         child: GoogleMap(
+
           onMapCreated: onMapCreated,
           options: GoogleMapOptions(
             cameraPosition: CameraPosition(

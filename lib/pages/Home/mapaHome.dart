@@ -110,21 +110,8 @@ class _MyHomePageState extends State<mapaHomePage> {
           children: <Widget>[
             new UserAccountsDrawerHeader(
                 decoration: new BoxDecoration(color: PrimaryColor,
-                 gradient: LinearGradient(
-                   begin: Alignment.topRight,
-                   end: Alignment.bottomLeft,
-                   // Add one stop for each color. Stops should increase from 0 to 1
-                   stops: [0.1, 0.5, 0.7, 0.9],
-                   colors: [
-                     // Colors are easy thanks to Flutter's Colors class.
 
-                     mate.Colors.green[900],
-                     mate.Colors.green[800],
-                     mate. Colors.green[700],
-                     mate. Colors.green[700],
-                   ],
-
-                 ),),
+                 ),
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
             new ListTile(

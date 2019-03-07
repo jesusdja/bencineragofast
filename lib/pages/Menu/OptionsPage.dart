@@ -39,11 +39,13 @@ class _opcionesState extends State<opciones> {
         created enums which we can use with switch statement, in this first switch
         will wait for the user to select the option which it can use with switch cases*/
         child: new SimpleDialog(
+
           title: new Text('Tipo de mapa'),
           children: <Widget>[
             new SimpleDialogOption(
               child: new RaisedButton(
                 splashColor: Colors.black,
+
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
                 color: PrimaryColor,
@@ -202,31 +204,39 @@ class _opcionesState extends State<opciones> {
           padding: new EdgeInsets.all(32.0), //altura del boton
           child: new Column( //centrar all content
           children: <Widget>[ //trabajar y permitir multiples widgets
-            Text(
+          Container(
+            margin: EdgeInsets.only(left: 0.0,top: 50.0,right: 0.0,bottom: 10.0),
+             child: Text(
               'Tipo de Mapa',
               textAlign: TextAlign.justify,
               //overflow: TextOverflow.ellipsis, ...
-               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
+              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
 
             ),
-
-            new SizedBox(
-              width: double.infinity,
-              // height: double.infinity,
-              child: new RaisedButton(
-                child: Text(_valueMapa),
-                splashColor: Colors.black,
-                padding: const EdgeInsets.all(12.0),
-                textColor: Colors.white,
-                color:PrimaryColor,
-                onPressed: _seleccionarMapa,
-              //  child: new Text(_valueMapa),
+          ),
+            Container(
+              margin: EdgeInsets.only(left: 0.0,top: 10.0,right: 0.0,bottom: 10.0),
+               child: SizedBox(
 
 
-            ),
-            ),
-            Divider(
-              height: 20,
+                width: double.infinity,
+                // height: double.infinity,
+                child: new RaisedButton(
+
+                  child: Text(_valueMapa),
+
+                  splashColor: Colors.black,
+                  padding: const EdgeInsets.all(15.0),
+                  textColor: Colors.white,
+                  elevation: 15.0,
+                  color:PrimaryColor,
+                  onPressed: _seleccionarMapa,
+
+                  //  child: new Text(_valueMapa),
+
+
+                ),
+              ),
             ),
             Text(
               'Marca Favorita',
@@ -240,9 +250,9 @@ class _opcionesState extends State<opciones> {
               width: double.infinity,
               // height: double.infinity,
               child: new RaisedButton(
-                elevation: 5.0,
+                elevation: 15.0,
                 splashColor: Colors.black,
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(15.0),
                 textColor: Colors.white,
                 color: PrimaryColor,
                 onPressed: _seleccionarMarca,
@@ -250,38 +260,43 @@ class _opcionesState extends State<opciones> {
 
               ),
             ),
-            Divider(
-              height: 20,
-            ),
 
-            Text(
+          Container(
+            margin: EdgeInsets.only(left: 0.0,top: 20.0,right: 0.0,bottom: 10.0),
+            child: Text(
               'Precio ',
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
 
             ),
-        Divider(
-          height: 12.0,
-        ),
-
-        new TextField(
-
-          autofocus: false,
-          decoration: new InputDecoration(
-            labelText: "Entre 100-1000",border: OutlineInputBorder(),
-            prefixIcon: Icon(Icons.euro_symbol),
           ),
-          keyboardType: TextInputType.number,
+
+        Container(
+          margin: EdgeInsets.only(left: 0.0,top: 10.0,right: 0.0,bottom: 10.0),
+         child: TextField(
+
+            autofocus: false,
+            decoration: new InputDecoration(
+
+              labelText: "Entre 100-1000",border: OutlineInputBorder(),
+              prefixIcon: Icon(Icons.attach_money),
+            ),
+            keyboardType: TextInputType.number,
+          ),
         ),
 
-        Divider(
-          height: 20,
-        ),
-            SizedBox(
+
+
+          Container(
+            margin: EdgeInsets.only(left: 0.0,top: 50.0,right: 0.0,bottom: 40.0),
+
+            child: SizedBox(
               width: double.infinity,
               child: RaisedButton(
+                padding: const EdgeInsets.all(20.0),
                 color: PrimaryColor,
+
                 elevation: 5.0,
                 textColor: Colors.white,
                 splashColor: Colors.black,
@@ -291,6 +306,8 @@ class _opcionesState extends State<opciones> {
                 child: Center(child: Center(child: Text('Establecer Configuracion'))),
               ),
             ),
+          ),
+
       ],
 
 

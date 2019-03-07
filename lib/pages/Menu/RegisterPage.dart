@@ -38,91 +38,127 @@ class MyCustomFormState extends State<MyCustomForm> {
   @override
   Widget build(BuildContext context) {
     // Crea un widget Form usando el _formKey que creamos anteriormente
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Divider(),
-          Divider(),
-          TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Modelo',
-              prefixIcon: Icon(Icons.directions_car),
-            ),
-            autofocus: true,
+    return Container(
 
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Campo Vacio';
-              }
-            },
-          ),
-          Divider(),
-          TextFormField(
+      margin: EdgeInsets.only(left: 60,right: 40),
 
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.bookmark),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
 
-                labelText: 'Tipo de Combustible'
+            Container(
 
-            ),
-            autofocus: true,
+              margin: EdgeInsets.only(left: 0.0,top: 100.0,right: 0.0,bottom: 40.0),
+                width: 300,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Modelo',
+                  prefixIcon: Icon(Icons.directions_car),
+                ),
+                autofocus: true,
 
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Campo Vacio';
-              }
-            },
-          ),
-          Divider(),
-          TextFormField(
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.featured_video),
-                labelText: 'Capacidad de Combustible'
-            ),
-            autofocus: true,
-
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Campo Vacio';
-              }
-            },
-          ),
-
-          Divider(
-            height: 10.0,
-          ),
-
-          SizedBox(
-
-              width: double.infinity,
-              child: RaisedButton(
-                textColor: Colors.white,
-                color: PrimaryColor,
-                padding: const EdgeInsets.all(20.0),
-                elevation: 5.0,
-                splashColor: Colors.black,
-                onPressed: () {
-
-                  // devolverá true si el formulario es válido, o falso si
-                  // el formulario no es válido.
-                  if (_formKey.currentState.validate()) {
-                    // Si el formulario es válido, queremos mostrar un Snackbar
-                    Scaffold
-                        .of(context)
-                        .showSnackBar(SnackBar(content: Text('Processing Data')));
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Campo Vacio';
                   }
                 },
-                child: Text('Registrar'),
+              ),
+
+            ),
+
+            Container(
+              margin: EdgeInsets.only(left: 0.0,top: 0.0,right: 0.0,bottom: 40.0),
+              width: 300,
+
+              child:  TextFormField(
+
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.bookmark),
+
+                    labelText: 'Tipo de Combustible'
+
+                ),
+                autofocus: true,
+
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Campo Vacio';
+                  }
+                },
               ),
             ),
 
-        ],
+
+            Container(
+              margin: EdgeInsets.only(left: 0.0,top: 0.0,right: 0.0,bottom: 40.0),
+
+                child: SizedBox(
+
+                  child:  TextFormField(
+
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+
+
+                        border: OutlineInputBorder(),
+
+                        prefixIcon: Icon(Icons.featured_video),
+                        labelText: 'Capacidad de Combustible'
+                    ),
+                    autofocus: true,
+
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Campo Vacio';
+                      }
+                    },
+                  ),
+                  width: 300,
+
+                ),
+
+            ),
+
+
+
+            SizedBox(
+              child:Container(
+
+                width: 300,
+                child: RaisedButton(
+
+                  textColor: Colors.white,
+                  color: PrimaryColor,
+                  padding: const EdgeInsets.all(20.0),
+                  elevation: 5.0,
+
+                  splashColor: Colors.black,
+                  onPressed: () {
+
+                    // devolverá true si el formulario es válido, o falso si
+                    // el formulario no es válido.
+                    if (_formKey.currentState.validate()) {
+                      // Si el formulario es válido, queremos mostrar un Snackbar
+                      Scaffold
+                          .of(context)
+                          .showSnackBar(SnackBar(content: Text('Processing Data')));
+                    }
+                  },
+                  child: Text('Registrar'),
+
+                ),
+
+              ),
+
+
+            ),
+
+          ],
+        ),
       ),
     );
   }
