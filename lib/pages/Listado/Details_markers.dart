@@ -39,11 +39,8 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       });
   }
 
-
-
   Widget _detailsBody() {
     return ListView(
-        padding: const EdgeInsets.fromLTRB(1.0, 1.0, 1.0, 12.0),
         children: <Widget>[
           _Map(
             center: widget.place.latLng,
@@ -53,8 +50,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
         ]
     );
   }
-
-
 
 
   @override
@@ -68,7 +63,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(28.0),
+        padding: EdgeInsets.only(top: 18.0,right: 24.0,left: 24.0,bottom: 0.0),
         decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topRight,
@@ -107,7 +102,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
 
 }
 
-
 class _Map extends StatelessWidget{
   const _Map({
     @required this.center,
@@ -130,14 +124,10 @@ class _Map extends StatelessWidget{
       ),
       margin: const EdgeInsets.symmetric(vertical: 2.0),
       elevation: 10.0,
-
       child: SizedBox(
-
         width: 340.0,
-        height: 240.0,
-
+        height: 200.0,
         child: GoogleMap(
-
           onMapCreated: onMapCreated,
           options: GoogleMapOptions(
             cameraPosition: CameraPosition(
