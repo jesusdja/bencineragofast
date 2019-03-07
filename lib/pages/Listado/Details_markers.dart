@@ -80,8 +80,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
         child: _detailsBody(),
       ),
     );
-
-
   }
 
   void refresh(double zoomcam) async {
