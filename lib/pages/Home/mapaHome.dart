@@ -69,6 +69,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     });
   }
 
+
   void _onInfoWindowTapped(Marker marker) {
     final marcador_seleccionado = markerMap[marker.id];
     Navigator.push(
