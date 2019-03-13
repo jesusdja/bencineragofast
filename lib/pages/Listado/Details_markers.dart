@@ -37,15 +37,13 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
   }
 
   Widget _MapPlace() {
-    return ListView(
-        children: <Widget>[
-          _Map(
-            center: widget.place.latLng,
-            mapController: mapController,
-            onMapCreated: onMapCreated,
-          ),
-        ]
-    );
+    return
+      _Map(
+        center: widget.place.latLng,
+        mapController: mapController,
+        onMapCreated: onMapCreated,
+
+      );
   }
 
   _launchURL() async {
@@ -75,7 +73,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
     }
   }
 
-
   // ignore: non_constant_identifier_names
   Widget ButtonGo() {
     return FloatingActionButton(
@@ -86,78 +83,62 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
     );
   }
 
-  bool _isFavorited = true;
-  void _toggleFavorite() {
-    setState(() {
-      if (_isFavorited) {
-        _isFavorited = false;
-      } else {
-        _isFavorited = true;
-      }
-    });
-  }
+  Widget _detailsBody() {
+    return ListView(
+      //padding: const EdgeInsets.only(left: 28.0, top: 12.0, right: 28.0, bottom: 0.0),
+      children: <Widget>[
 
-  Widget Favorite(){
-
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: EdgeInsets.all(0),
-          child: IconButton(
-            icon: (_isFavorited ? Icon(Icons.star) : Icon(Icons.star_border)),
-            color: Colors.red[500],
-            onPressed: _toggleFavorite,
-          ),
+        Stack(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    colors: [
+                      Color.fromRGBO(11,90,70,60),
+                      Colors.white,
+                    ]),
+              ),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.3,
+            ),
+            Stack(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(left: 28.0, top: 12.0, right: 28.0, bottom: 0.0),
+                  child: _MapPlace(),
+                ),
+                Positioned(
+                  right: 40.0,
+                  bottom: 10.0,
+                  child: ButtonGo(),
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-
-    var contenedor_mapa =  Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.only(top: 18.0,right: 24.0,left: 24.0,bottom: 0.0),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topRight,
-            colors: [
-              Color.fromRGBO(11,90,70,60),
-              Colors.white,
-            ]),
-      ),
-      child: _MapPlace(),
-    );
-
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         backgroundColor: Color.fromRGBO(11,90,70,60),
         title: new Text(widget.place.id + ' - ' + widget.place.description),
       ),
-      body: Stack(
-        children: <Widget>[
-          contenedor_mapa,
-          Positioned(
-            right: 60.0,
-            bottom: 370.0,
-            child: ButtonGo(),
-          ),
-          Column(
-            children: <Widget>[
-
-            ],
-          ),
-        ],
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: _detailsBody(),
       ),
     );
 
   }
 }
-
 class _Map extends StatelessWidget{
   const _Map({
     @required this.center,
@@ -181,8 +162,8 @@ class _Map extends StatelessWidget{
       margin: const EdgeInsets.symmetric(vertical: 2.0),
       elevation: 10.0,
       child: SizedBox(
-        width: 340.0,
-        height: 200.0,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.3,
         child: GoogleMap(
           onMapCreated: onMapCreated,
           options: GoogleMapOptions(
@@ -201,6 +182,8 @@ class _Map extends StatelessWidget{
   }
 
 }
+
+
 
 
 
