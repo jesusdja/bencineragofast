@@ -29,8 +29,10 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
     setState(() {
       if (_isFavorited) {
         _isFavorited = false;
+        print("ELIMINADO DE FAVORITOS");
       } else {
         _isFavorited = true;
+        print("AGREGADO DE FAVORITOS");
       }
     });
   }
@@ -94,12 +96,46 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
     );
   }
 
+
+  DetallesConIcono(String nombre, String Descripcion, IconData ico){
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.only(left: 20.0, top: 0.0, right: 20.0, bottom: 0.0),
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                nombre,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,),
+            ),
+            Row(
+              children: <Widget>[
+                Icon(ico),
+                Expanded(child: Text(
+                  Descripcion,
+                  style: TextStyle(
+                    color: Colors.grey[500],
+                  ),
+                  textAlign: TextAlign.center,
+                ),),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _detailsBody() {
     return ListView(
       //padding: const EdgeInsets.only(left: 28.0, top: 12.0, right: 28.0, bottom: 0.0),
       children: <Widget>[
 
-        Stack(
+        Stack( //**********************MAPAS**********************
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
@@ -128,14 +164,30 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
             ),
           ],
         ),
-        Container(
+        Container( //**********************ESTRELLA**********************
+          margin: EdgeInsets.only(left: 28.0, top: 0.0, right: 28.0, bottom: 0.0),
           child: Row(
             children: <Widget>[
               Expanded(
                 child: Column(
-                  children: <Widget>[
-                    Text('Registrar',textAlign: TextAlign.right,),
-                    Text('Deliver features faster', textAlign: TextAlign.right),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /*2*/
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        'NOMBRE DE LA BENCINERA',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'Descripción de la bencinera.',
+                      style: TextStyle(
+                        color: Colors.grey[500],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -145,6 +197,33 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
                 color: Colors.orange,
                 onPressed: _toggleFavorite,
               ),
+            ],
+          ),
+        ),
+        Container(//**********************DETALLES DE PLACE 1 **********************
+          margin: EdgeInsets.only(left: 28.0, top: 10.0, right: 28.0, bottom: 20.0),
+          child: Row(
+            children: <Widget>[
+              DetallesConIcono("Detalle Bencinera 1","Información Destalle 1",Icons.local_gas_station),
+              DetallesConIcono("Detalle Bencinera  2","Información Destalle 2",Icons.place),
+            ],
+          ),
+        ),
+        Container(//**********************DETALLES DE PLACE 1 **********************
+          margin: EdgeInsets.only(left: 28.0, top: 10.0, right: 28.0, bottom: 20.0),
+          child: Row(
+            children: <Widget>[
+              DetallesConIcono("Detalle Bencinera 3","Información Destalle 3",Icons.thumb_up),
+              DetallesConIcono("Detalle Bencinera 4","Información Destalle 4",Icons.accessibility),
+            ],
+          ),
+        ),
+        Container(//**********************DETALLES DE PLACE 1 **********************
+          margin: EdgeInsets.only(left: 28.0, top: 10.0, right: 28.0, bottom: 20.0),
+          child: Row(
+            children: <Widget>[
+              DetallesConIcono("Detalle Bencinera 5","Información Destalle 5",Icons.access_time),
+              DetallesConIcono("Detalle Bencinera 6","Información Destalle 6",Icons.branding_watermark),
             ],
           ),
         ),
