@@ -54,6 +54,8 @@ class _opcionesState extends State<opciones> {
                   onPressed: (){Navigator.pop(context ,TipodeMapa.Satelital); CambiarmapaSatelital();refresh(15);},//LLamar a la funcion CambiarmapaSatelital
               ),
 
+
+              
             ),
             new SimpleDialogOption(
 
