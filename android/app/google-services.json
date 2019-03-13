@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "320018442583",
+    "firebase_url": "https://fir-bencinera.firebaseio.com",
+    "project_id": "fir-bencinera",
+    "storage_bucket": "fir-bencinera.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320018442583:android:65d1b2872c92b38a",
+        "android_client_info": {
+          "package_name": "com.example.bencineragofast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320018442583-1mhuefdbnbmidsc9kaprdkq36cau3b23.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOInhpWvllWpU1VR3jrg0Ru0VTV9lC-E0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
