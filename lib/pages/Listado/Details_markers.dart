@@ -22,9 +22,20 @@ class DetailsMarkers extends StatefulWidget {
 class _DetailsMarkersState extends State<DetailsMarkers> {
 
   GoogleMapController mapController;
+  bool _isFavorited = true;
+
+
+  void _toggleFavorite() {
+    setState(() {
+      if (_isFavorited) {
+        _isFavorited = false;
+      } else {
+        _isFavorited = true;
+      }
+    });
+  }
 
   void onMapCreated(controller) {
-
     mapController = controller;
     mapController.clearMarkers().then((val) async {
       final Marker marker = await mapController.addMarker(MarkerOptions(
@@ -116,6 +127,26 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
               ],
             ),
           ],
+        ),
+        Container(
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    Text('Registrar',textAlign: TextAlign.right,),
+                    Text('Deliver features faster', textAlign: TextAlign.right),
+                  ],
+                ),
+              ),
+              IconButton(
+                iconSize: 60,
+                icon: (_isFavorited ? Icon(Icons.star) : Icon(Icons.star_border)),
+                color: Colors.orange,
+                onPressed: _toggleFavorite,
+              ),
+            ],
+          ),
         ),
       ],
     );
