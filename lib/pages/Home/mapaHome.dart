@@ -28,9 +28,9 @@ class _MyHomePageState extends State<mapaHomePage> {
   GoogleMapController mapController;
 
   Map<String,Place> markerMap = Map();
+  Place placed;
 
   //AGREGAR MARCADORES
-
   void initMarkers() async {
     var currentLocation = <String, double>{};
     final location = LocationManager.Location();
@@ -39,7 +39,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     final lng = currentLocation["longitude"];
     //markerMap[marker.id] = 'f';
 
-    Place placed ;
+
 
     LatLng latlo = LatLng(8.2965626,-62.7356024);
     placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km');
@@ -101,7 +101,7 @@ class _MyHomePageState extends State<mapaHomePage> {
               tooltip: 'Lista de Gasolineras',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => ListadoGasolineras()),
+                    builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,)),
                 );
               },
             ),

@@ -116,12 +116,13 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
               children: <Widget>[
                 Icon(ico),
                 Expanded(child: Text(
-                  Descripcion,
-                  style: TextStyle(
-                    color: Colors.grey[500],
+                    Descripcion,
+                    style: TextStyle(
+                      color: Colors.grey[500],
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),),
+                ),
               ],
             ),
           ],
