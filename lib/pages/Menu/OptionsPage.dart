@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';//Desde Dependencias
 import 'package:location/location.dart' as LocationManager;
@@ -24,11 +25,11 @@ class _opcionesState extends State<opciones> {
   final _formKey = GlobalKey<FormState>();
 
 
-  String _valueMapa = '';
+  String _valueMapa = 'Seleccione mapa';
   void _setValueMapa(String valueMapa) => setState(() => _valueMapa = valueMapa);
 
 
-  String _valueMarca = '';
+  String _valueMarca = 'Marca Favorita';
   void _setValueMarca(String value) => setState(() => _valueMarca = value);
 
   Future _seleccionarMapa() async { //cambiar Nombre para funcion de ventan emerrgente
@@ -43,7 +44,7 @@ class _opcionesState extends State<opciones> {
           title: new Text('Tipo de mapa'),
           children: <Widget>[
             new SimpleDialogOption(
-              child: new RaisedButton(
+              child: FlatButton(
                 splashColor: Colors.black,
 
                 padding: const EdgeInsets.all(12.0),
@@ -56,7 +57,7 @@ class _opcionesState extends State<opciones> {
             ),
             new SimpleDialogOption(
 
-              child: new RaisedButton(
+              child: new FlatButton(
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
@@ -69,7 +70,7 @@ class _opcionesState extends State<opciones> {
 
             ),
             new SimpleDialogOption(
-              child: new RaisedButton(
+              child: new FlatButton(
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
@@ -97,14 +98,18 @@ class _opcionesState extends State<opciones> {
   }
   Future _seleccionarMarca() async { //cambiar Nombre para funcion de ventan emerrgente
     switch(
+
     await showDialog( //Ventana de dialogo emergente
         context: context,
 
-        child: new SimpleDialog( //cada opcion tiene que ser llamada por un SimpleDialog
+        child: new SimpleDialog(
+          //cada opcion tiene que ser llamada por un SimpleDialog
           title: new Text('Tipo de Marca'),
           children: <Widget>[
             new SimpleDialogOption(
-              child: new RaisedButton(
+
+              child: new FlatButton(
+
                 splashColor: Colors.black, //Efectos de click
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
@@ -115,7 +120,7 @@ class _opcionesState extends State<opciones> {
 
             ),
             new SimpleDialogOption(
-              child: new RaisedButton(
+              child: new FlatButton(
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
@@ -127,7 +132,7 @@ class _opcionesState extends State<opciones> {
             ),
             new SimpleDialogOption(
 
-              child: new RaisedButton(
+              child: new FlatButton(
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
@@ -140,7 +145,7 @@ class _opcionesState extends State<opciones> {
 
             ),
             new SimpleDialogOption(
-              child: new RaisedButton(
+              child: new FlatButton(
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
@@ -152,7 +157,7 @@ class _opcionesState extends State<opciones> {
 
             ),
             new SimpleDialogOption(
-              child: new RaisedButton(
+              child: new FlatButton(
                 splashColor: Colors.black,
                 padding: const EdgeInsets.all(12.0),
                 textColor: Colors.white,
@@ -200,122 +205,129 @@ class _opcionesState extends State<opciones> {
 
       ),
 
-      body: new Container(
-          padding: new EdgeInsets.all(32.0), //altura del boton
-          child: new Column( //centrar all content
-          children: <Widget>[ //trabajar y permitir multiples widgets
-          Container(
-            margin: EdgeInsets.only(left: 0.0,top: 50.0,right: 0.0,bottom: 10.0),
-             child: Text(
-              'Tipo de Mapa',
-              textAlign: TextAlign.justify,
-              //overflow: TextOverflow.ellipsis, ...
-              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
+      body: ListView.builder(
+        itemCount: 1,
+        itemBuilder: (context, index) {
+          return new Container(
+            padding: new EdgeInsets.all(32.0), //altura del boton
+            child: new Column( //centrar all content
+              children: <Widget>[ //trabajar y permitir multiples widgets
+                Container(
+                  margin: EdgeInsets.only(left: 0.0,top: 50.0,right: 0.0,bottom: 10.0),
+                  child: Text(
+                    'Tipo de Mapa',
+                    textAlign: TextAlign.justify,
+                    //overflow: TextOverflow.ellipsis, ...
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
 
-            ),
-          ),
-            Container(
-              margin: EdgeInsets.only(left: 0.0,top: 10.0,right: 0.0,bottom: 10.0),
-               child: SizedBox(
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 0.0,top: 10.0,right: 0.0,bottom: 10.0),
+                  child: SizedBox(
 
 
-                width: double.infinity,
-                // height: double.infinity,
-                child: new RaisedButton(
+                    width: double.infinity,
+                    // height: double.infinity,
+                    child: new FlatButton(
 
-                  child: Text(_valueMapa),
+                      child: Text(_valueMapa),
 
-                  splashColor: Colors.black,
-                  padding: const EdgeInsets.all(15.0),
-                  textColor: Colors.white,
-                  elevation: 15.0,
-                  color:PrimaryColor,
-                  onPressed: _seleccionarMapa,
+                      splashColor: Colors.black,
+                      padding: const EdgeInsets.all(15.0),
+                     textColor: Colors.white,
+                    //  elevation: 15.0,
+                      color:PrimaryColor,
+                      onPressed: _seleccionarMapa,
 
-                  //  child: new Text(_valueMapa),
+                      //  child: new Text(_valueMapa),
 
+
+                    ),
+                  ),
+                ),
+                Text(
+                  'Marca Favorita',
+                  textAlign: TextAlign.justify,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
 
                 ),
-              ),
+
+                new SizedBox(
+                  width: double.infinity,
+                  // height: double.infinity,
+                  child: new FlatButton(
+
+                  //  elevation: 15.0,
+                    splashColor: Colors.black,
+                    padding: const EdgeInsets.all(15.0),
+                    textColor: Colors.white,
+                    color: PrimaryColor,
+                    onPressed: _seleccionarMarca,
+                    child: new Text(_valueMarca),
+
+                  ),
+                ),
+
+                Container(
+                  margin: EdgeInsets.only(left: 0.0,top: 20.0,right: 0.0,bottom: 10.0),
+                  child: Text(
+                    'Precio ',
+                    textAlign: TextAlign.justify,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
+
+                  ),
+                ),
+
+                Container(
+                  margin: EdgeInsets.only(left: 0.0,top: 10.0,right: 0.0,bottom: 10.0),
+                  child: TextField(
+
+                    autofocus: false,
+                    decoration: new InputDecoration(
+
+                      labelText: "Entre 100-1000",border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.attach_money),
+                    ),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+
+
+
+                Container(
+                  margin: EdgeInsets.only(left: 0.0,top: 50.0,right: 0.0,bottom: 40.0),
+
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: RaisedButton(
+                      padding: const EdgeInsets.all(20.0),
+                      color: PrimaryColor,
+
+                      elevation: 5.0,
+                      textColor: Colors.white,
+                      splashColor: Colors.black,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Center(child: Center(child: Text('Establecer Configuracion'))),
+                    ),
+                  ),
+                ),
+
+              ],
+
+
+
             ),
-            Text(
-              'Marca Favorita',
-              textAlign: TextAlign.justify,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
 
-            ),
-
-            new SizedBox(
-              width: double.infinity,
-              // height: double.infinity,
-              child: new RaisedButton(
-                elevation: 15.0,
-                splashColor: Colors.black,
-                padding: const EdgeInsets.all(15.0),
-                textColor: Colors.white,
-                color: PrimaryColor,
-                onPressed: _seleccionarMarca,
-                child: new Text(_valueMarca),
-
-              ),
-            ),
-
-          Container(
-            margin: EdgeInsets.only(left: 0.0,top: 20.0,right: 0.0,bottom: 10.0),
-            child: Text(
-              'Precio ',
-              textAlign: TextAlign.justify,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
-
-            ),
-          ),
-
-        Container(
-          margin: EdgeInsets.only(left: 0.0,top: 10.0,right: 0.0,bottom: 10.0),
-         child: TextField(
-
-            autofocus: false,
-            decoration: new InputDecoration(
-
-              labelText: "Entre 100-1000",border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.attach_money),
-            ),
-            keyboardType: TextInputType.number,
-          ),
-        ),
+          );
 
 
-
-          Container(
-            margin: EdgeInsets.only(left: 0.0,top: 50.0,right: 0.0,bottom: 40.0),
-
-            child: SizedBox(
-              width: double.infinity,
-              child: RaisedButton(
-                padding: const EdgeInsets.all(20.0),
-                color: PrimaryColor,
-
-                elevation: 5.0,
-                textColor: Colors.white,
-                splashColor: Colors.black,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Center(child: Center(child: Text('Establecer Configuracion'))),
-              ),
-            ),
-          ),
-
-      ],
-
-
-
-    ),
-
-    ),
-
+        },
+      ),
 
 
     );

@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
           headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.w900),
 
           title: TextStyle(fontSize: 14.0, fontFamily: 'RobotoMono'),
+          button: TextStyle(fontSize: 14.0, fontFamily: 'RobotoMono')
         )
       ),
       debugShowCheckedModeBanner: false,
