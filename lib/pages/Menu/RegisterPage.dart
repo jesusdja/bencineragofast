@@ -1,5 +1,9 @@
+import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
+import 'package:bencineragofast/pages/sqlflite/note.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/main.dart';
+import 'dart:core';
+
 
 class Registrarse extends StatefulWidget {
   @override
@@ -39,13 +43,18 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _modelController = TextEditingController();
   final _tipocombustibleController = TextEditingController();
   final _capacidadController = TextEditingController();
+  User user;
 
-  Object $Combustibleuser;
+
 
   @override
   Widget build(BuildContext context) {
     // Crea un widget Form usando el _formKey que creamos anteriormente
 
+    if (user != null) {
+      this.user=user;
+      _modelController.text = user.modelUser;
+    }
 
      return ListView.builder(
       itemCount:1,
@@ -165,31 +174,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                       splashColor: Colors.black,
                       onPressed: () {
 
-
-                        // devolverá true si el formulario es válido, o falso si
-                        // el formulario no es válido.
                         if (_formKey.currentState.validate()) {
-
-                          String modeluser = _modelController.text;
-                          String combustibleuser = _tipocombustibleController.text;
-                          String capacidaduser = _capacidadController.text ;
-
-                          print(modeluser);
-                          print(combustibleuser);
-                          print(capacidaduser);
-                          /* AlertDialog(
-                        title: Text('Registrado'),
-                        elevation: 10,
-                      );*/
-
-                          // Si el formulario es válido, queremos mostrar un Snackbar
-                          Scaffold
-                              .of(context)
-                              .showSnackBar(SnackBar(content: Text('Processing Data')));
+                          addRecord();
+                          print("------------------");
+                          print(_modelController.text);
+                          Navigator.of(context).pop();
+                        //  Scaffold.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
                         }
-
-                        Navigator.pop(context);
+                       // Navigator.of(context).pop();
                       },
+
                       child: Text('Registrar'),
 
                     ),
@@ -208,4 +202,13 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
 
   }
-}
+
+  Future addRecord() async {
+    var db = new DatabaseHelper();
+    var user = new User(_modelController.text);
+
+      await db.saveUser(user);
+    }
+  }
+
+

@@ -28,7 +28,7 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
-  var y = 20;
+  var y = 12;
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

@@ -55,7 +55,7 @@ class _opcionesState extends State<opciones> {
               ),
 
 
-              
+
             ),
             new SimpleDialogOption(
 
