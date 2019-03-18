@@ -45,6 +45,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _tipocombustibleController = TextEditingController();
   final _capacidadController = TextEditingController();
   User user;
+  var db = new DatabaseHelper();
 
   String _deviceid = 'Unknown';
   @override
@@ -72,6 +73,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     if (user != null) {
       this.user=user;
       _modelController.text = user.modelUser;
+      _deviceid = user.id;
 
     }
 
@@ -194,7 +196,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                       onPressed: () {
 
                         if (_formKey.currentState.validate()) {
-                          addRecord();
+                         // addRecord();
+                          db.saveUser(user);
                           print("------------------");
                           print(_modelController.text);
                           print(_deviceid);
@@ -232,6 +235,8 @@ class MyCustomFormState extends State<MyCustomForm> {
 
       await db.saveUser(user);
     }
+
+
   }
 
 

@@ -47,6 +47,7 @@ class DatabaseHelper {
     return res;
   }
 
+
   Future<List<User>> getUser() async {
     var dbClient = await database;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM User');
@@ -54,7 +55,7 @@ class DatabaseHelper {
     for (int i = 0; i < list.length; i++) {
       var user =
       new User(list[i]["id"],list[i]["ModelUser"]);
-      user.setUserId(list[i]["id"]);
+    //  user.setUserId(list[i]["id"]);
       employees.add(user);
     }
     print(employees.length);

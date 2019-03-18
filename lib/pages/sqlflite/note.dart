@@ -9,7 +9,7 @@ class User {
   User.map(dynamic obj) {
     this._modelUser = obj["modelUser"];
     this.id = obj["id"];
-  //  this._dob = obj["dob"];
+
   }
 
   String get modelUser => _modelUser;
@@ -21,7 +21,7 @@ class User {
     var map = new Map<String, dynamic>();
 
     map["modelUser"] = _modelUser;
-    map["id"] = id;
+    map["id"] = iD;
 
     return map;
   }
