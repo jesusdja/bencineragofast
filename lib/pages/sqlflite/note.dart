@@ -1,9 +1,10 @@
 class User {
 
-  int id;
+  String id;
   String _modelUser;
 
-  User(this._modelUser);
+
+  User(this._modelUser, this.id);
 
   User.map(dynamic obj) {
     this._modelUser = obj["modelUser"];
@@ -23,7 +24,7 @@ class User {
     return map;
   }
 
-  void setUserId(int id) {
+  void setUserId(String id) {
     this.id = id;
   }
 }

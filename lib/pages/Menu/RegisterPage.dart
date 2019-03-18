@@ -1,5 +1,6 @@
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:bencineragofast/pages/sqlflite/note.dart';
+import 'package:device_id/device_id.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/main.dart';
 import 'dart:core';
@@ -45,7 +46,24 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _capacidadController = TextEditingController();
   User user;
 
+  String _deviceid = 'Unknown';
+  @override
+  void initState() {
+    super.initState();
+    initDeviceId();
+  }
 
+  void initDeviceId() async {
+    String deviceid;
+
+    deviceid = await DeviceId.getID;
+
+    if (!mounted) return;
+
+    setState(() {
+      _deviceid = deviceid;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +72,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     if (user != null) {
       this.user=user;
       _modelController.text = user.modelUser;
+
     }
 
      return ListView.builder(
@@ -178,8 +197,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                           addRecord();
                           print("------------------");
                           print(_modelController.text);
+                          print(_deviceid);
                           Navigator.of(context).pop();
-                        //  Scaffold.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
+
+
+
+                         Scaffold.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
                         }
                        // Navigator.of(context).pop();
                       },
@@ -205,7 +228,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   Future addRecord() async {
     var db = new DatabaseHelper();
-    var user = new User(_modelController.text);
+    var user = new User(_modelController.text,_deviceid);
 
       await db.saveUser(user);
     }

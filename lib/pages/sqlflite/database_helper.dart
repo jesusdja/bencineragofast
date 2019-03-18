@@ -53,7 +53,7 @@ class DatabaseHelper {
     List<User> employees = new List();
     for (int i = 0; i < list.length; i++) {
       var user =
-      new User(list[i]["ModelUser"]);
+      new User(list[i]["id"],list[i]["ModelUser"]);
       user.setUserId(list[i]["id"]);
       employees.add(user);
     }
@@ -76,7 +76,7 @@ class DatabaseHelper {
 
 
     int res =   await dbClient.update("User", user.toMap(),
-        where: "id = ?", whereArgs: <int>[user.id]);
+        where: "id = ?", whereArgs: <String>[user.id]);
 
 
 
