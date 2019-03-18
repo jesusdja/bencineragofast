@@ -73,7 +73,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     if (user != null) {
       this.user=user;
       _modelController.text = user.modelUser;
-      _deviceid = user.id;
+      _deviceid = user.device_id;
 
     }
 
@@ -194,20 +194,19 @@ class MyCustomFormState extends State<MyCustomForm> {
 
                       splashColor: Colors.black,
                       onPressed: () {
-
+                            
                         if (_formKey.currentState.validate()) {
-                         // addRecord();
-                          db.saveUser(user);
-                          print("------------------");
-                          print(_modelController.text);
-                          print(_deviceid);
-                          Navigator.of(context).pop();
 
-
-
-                         Scaffold.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
+                          if(db.getUser()){
+                          print('*******************');
                         }
-                       // Navigator.of(context).pop();
+
+                          var user = new User(_deviceid,_modelController.text);
+                          db.saveUser(user);
+
+                       //  Scaffold.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
+                        }
+                        Navigator.of(context).pop();
                       },
 
                       child: Text('Registrar'),
@@ -229,13 +228,13 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   }
 
-  Future addRecord() async {
+  /*Future addRecord() async {
     var db = new DatabaseHelper();
     var user = new User(_modelController.text,_deviceid);
 
       await db.saveUser(user);
     }
-
+*/
 
   }
 

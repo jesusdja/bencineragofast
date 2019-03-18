@@ -13,8 +13,9 @@ class DatabaseHelper {
 
   static Database _database;
   String noteTable = 'note_table';
-  String colId = 'id';
+  String colId = 'deviceId';
   String colModel = 'ModelUser';
+ // String colDevice = 'deviceId';
 
   Future<Database> get database async{
     if(_database == null){
@@ -27,7 +28,7 @@ class DatabaseHelper {
   Future<Database> initializeDatabase() async{
 
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path +'User.db';
+    String path = directory.path +'Userss.db';
 
     var notesDatabase = await openDatabase(path,version: 1, onCreate: _onCreate);
     return notesDatabase;
@@ -38,7 +39,7 @@ class DatabaseHelper {
   void _onCreate(Database db, int version) async {
     // When creating the db, create the table
     await db.execute(
-        "CREATE TABLE User(id INTEGER PRIMARY KEY, modelUser TEXT)");
+        "CREATE TABLE User(deviceId STRING PRIMARY KEY, modelUser STRING)");
   }
 
   Future<int> saveUser(User user) async {
@@ -54,8 +55,8 @@ class DatabaseHelper {
     List<User> employees = new List();
     for (int i = 0; i < list.length; i++) {
       var user =
-      new User(list[i]["id"],list[i]["ModelUser"]);
-    //  user.setUserId(list[i]["id"]);
+      new User(list[i]["deviceId"],list[i]["ModelUser"]);
+     //user.setUserId(list[i]["deviceId"]);
       employees.add(user);
     }
     print(employees.length);
@@ -66,11 +67,11 @@ class DatabaseHelper {
     var dbClient = await database;
 
     int res =
-    await dbClient.rawDelete('DELETE FROM User WHERE id = ?', [user.id]);
+    await dbClient.rawDelete('DELETE FROM User WHERE id = ?', [user.device_id]);
     return res;
   }
 
-  Future<bool> update(User user) async {
+ /* Future<bool> update(User user) async {
     var dbClient = await database;
 
 
@@ -82,5 +83,9 @@ class DatabaseHelper {
 
 
     return res > 0 ? true : false;
+  }*/
+
+  void setUserId(String id) {
+    this.colId = colId;
   }
 }

@@ -1,32 +1,31 @@
 class User {
 
-  String id;
+  String _id_device;
   String _modelUser;
 
 
-  User(this._modelUser, this.id);
+  User(this._id_device,this._modelUser);
 
   User.map(dynamic obj) {
+    this._id_device = obj["id_device"];
     this._modelUser = obj["modelUser"];
-    this.id = obj["id"];
 
   }
 
+  String get device_id => _id_device;
   String get modelUser => _modelUser;
 
-
-  String get iD => id;
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
 
-    map["modelUser"] = _modelUser;
-    map["id"] = iD;
+    map["deviceId"] = device_id;
+    map["modelUser"] = modelUser;
 
     return map;
   }
-
   void setUserId(String id) {
-    this.id = id;
+    this._id_device = device_id;
   }
+
 }
