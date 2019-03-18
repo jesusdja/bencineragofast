@@ -1,3 +1,4 @@
+import 'package:bencineragofast/pages/Home/place.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as mate;
 import 'package:flutter/foundation.dart';
@@ -12,10 +13,10 @@ class Menu_gas extends StatefulWidget {
   final Function() onPressed;
   final String tooltip;
   final IconData icon;
+  final Map<String,Place> markerMap;
 
 
-
-  Menu_gas({this.onPressed, this.tooltip, this.icon,this.mapController});
+  Menu_gas({this.onPressed, this.tooltip, this.icon,this.mapController,this.markerMap});
 
   final GoogleMapController mapController;
 
@@ -91,7 +92,9 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
   }
 
   //AGREGAR MARCADORES
-  void initMarkers(double distancia) async {
+  void initMarkers (double distancia) async {
+
+    Map<String,Place> markerMap = widget.markerMap;
 
     var currentLocation = <String, double>{};
     final location = LocationManager.Location();
@@ -100,7 +103,19 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
     final lng = currentLocation["longitude"];
 
 
-    if(calcularDistancia(lat,lng,8.2965626,-62.7356024,distancia)){
+    /*print(markerMap.length);*/
+    void iterateMapEntry(key, value) {
+      Place p = value;
+      if(calcularDistancia(lat,lng,p.latitude,p.longitude,distancia)){
+        initMarker(p.latitude,p.longitude,p.name);
+      }
+    }
+    if(markerMap != null){
+      markerMap.forEach(iterateMapEntry);
+    }
+
+
+    /*if(calcularDistancia(lat,lng,8.2965626,-62.7356024,distancia)){
       initMarker(8.2965626,-62.7356024,'- 2 km');
     }
 
@@ -110,9 +125,11 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
 
     if(calcularDistancia(lat,lng,8.2081334,-62.8328788,distancia)){
       initMarker(8.2081334,-62.8328788,'- 20 km');
-    }
+    }*/
 
   }
+
+
 
   initMarker(double lat, double log, String name) {
 
@@ -197,7 +214,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
             0.0,
             0.0,
           ),
-          child: add(text: '2',tagg: 5,zoom: 17,dis: 0.1),
+          child: add(text: '2',tagg: 5,zoom: 17,dis: 2),
         ),
         Transform(
           transform: Matrix4.translationValues(

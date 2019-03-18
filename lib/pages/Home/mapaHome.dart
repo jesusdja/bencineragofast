@@ -42,13 +42,13 @@ class _MyHomePageState extends State<mapaHomePage> {
 
 
     LatLng latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km');
+    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93');
     initMarker(placed);
     latlo = LatLng(8.270346,-62.7579366);
-    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km');
+    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91');
     initMarker(placed);
     latlo = LatLng(8.2081334,-62.8328788);
-    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km');
+    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '95');
     initMarker(placed);
   }
 
@@ -80,9 +80,6 @@ class _MyHomePageState extends State<mapaHomePage> {
       }),
     );
   }
-
-
-
 
 
   @override
@@ -196,12 +193,12 @@ class _MyHomePageState extends State<mapaHomePage> {
           Positioned(
             right: 10.0,
             bottom: 20.0,
-            child: Menu_dist(),
+            child: Menu_dist(mapController: mapController,markerMap: markerMap,),
           ),
          Positioned(
             right: 10.0,
             bottom: 90.0,
-            child: Menu_gas(mapController: mapController),
+            child: Menu_gas(mapController: mapController,markerMap: markerMap,),
           ),
         ],
       ),

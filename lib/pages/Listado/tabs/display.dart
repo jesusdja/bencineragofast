@@ -36,7 +36,6 @@ class _displayState extends State<display> {
     markerMap = widget.markerMap;
     void iterateMapEntry(key, value) {
       Place p = value;
-      print(p.description);
       places.add(p);
     }
     markerMap.forEach(iterateMapEntry);
