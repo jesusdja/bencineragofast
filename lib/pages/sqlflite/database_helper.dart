@@ -143,8 +143,4 @@ class DatabaseHelper {
     return null;
   }
 
-
-  void setUserId(String id) {
-    this.colId = colId;
-  }
 }

@@ -1,103 +1,64 @@
+import 'package:bencineragofast/pages/Home/place.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
-
-class Todo {
-  final String title;
-  final String description;
-
-  Todo(this.title, this.description);
-}
+import 'package:bencineragofast/pages/Listado/Details_markers.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class display extends StatefulWidget {
+
+  display({this.mapController,this.markerMap});
+
+  final Map<String,Place> markerMap;
+  final GoogleMapController mapController;
+
   @override
   _displayState createState() => new _displayState();
 }
 
 class _displayState extends State<display> {
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-       body: RandomWords(),
 
-    );
-  }
-}
-class RandomWords extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => new RandomWordsState();
-}
+  Map<String,Place> markerMap;
+  List<Place> places;
+  /*void initState(){
+    markerMap = widget.markerMap;
+    void iterateMapEntry(key, value) {
+      Place p = value;
+      print(p.description);
+      places.add(p);
+    }
+    markerMap.forEach(iterateMapEntry);
+  }*/
 
-class RandomWordsState extends State<RandomWords> {
-  var y = 12;
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      body: TodosScreen(
-        todos: List.generate(
-          y,
-              (i) => Todo(
-            'Todo $i',
-            'A description of what needs to be done for Todo $i',
-          ),
-        ),
-      ),
-
-    );
-  }
-
-
-}
-
-class TodosScreen extends StatelessWidget {
-  final List<Todo> todos;
-
-  TodosScreen({Key key, @required this.todos}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<Place> places = new List<Place>();
+    markerMap = widget.markerMap;
+    void iterateMapEntry(key, value) {
+      Place p = value;
+      places.add(p);
+    }
+    markerMap.forEach(iterateMapEntry);
+
     return Scaffold(
-
       body: ListView.builder(
-        itemCount: todos.length,
+        itemCount: widget.markerMap.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(todos[index].title),
-            // Cuando un usuario pulsa en el ListTile, navega al DetailScreen.
-            // Tenga en cuenta que no solo estamos creando un DetailScreen,
-            // también le pasamos el objeto Todo actual!
+            title: Text(places[index].description),
+            subtitle: Text(places[index].id),
+            leading: Image.asset('assets/images/icono_gas.png',height: 50),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DetailScreen(todo: todos[index]),
-                ),
+                  builder: (context) {
+                    return DetailsMarkers(mapController: widget.mapController, place: places[index]);
+                  }),
               );
             },
           );
         },
-      ),
-    );
-  }
-}
-
-
-class DetailScreen extends StatelessWidget {
-  // Declara un campo que contenga el objeto Todo
-  final Todo todo;
-
-  // En el constructor, se requiere un objeto Todo
-  DetailScreen({Key key, @required this.todo}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // Usa el objeto Todo para crear nuestra UI
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("${todo.title}"),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text('${todo.description}'),
       ),
     );
   }

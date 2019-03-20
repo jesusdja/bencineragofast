@@ -4,7 +4,6 @@ import 'package:bencineragofast/pages/Menu/HelpPage.dart';
 import 'package:bencineragofast/pages/Menu/OptionsPage.dart';
 import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
-import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_dist.dart';
@@ -18,7 +17,7 @@ import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart' as mate;
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'place.dart';
-import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
+
 class mapaHomePage extends StatefulWidget {
 
   _MyHomePageState createState() => _MyHomePageState();
@@ -29,11 +28,7 @@ class _MyHomePageState extends State<mapaHomePage> {
   GoogleMapController mapController;
 
   Map<String,Place> markerMap = Map();
-
-  //Elemetos de la base de datos
-  var db = new DatabaseHelper();
-  User user;
-
+  Place placed;
 
   //AGREGAR MARCADORES
   void initMarkers() async {
@@ -44,17 +39,17 @@ class _MyHomePageState extends State<mapaHomePage> {
     final lng = currentLocation["longitude"];
     //markerMap[marker.id] = 'f';
 
-    Place placed ;
+
+
     LatLng latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km');
+    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93');
     initMarker(placed);
     latlo = LatLng(8.270346,-62.7579366);
-    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km');
+    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91');
     initMarker(placed);
     latlo = LatLng(8.2081334,-62.8328788);
-    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km');
+    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '95');
     initMarker(placed);
-
   }
 
   initMarker(Place place) {
@@ -87,8 +82,6 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
 
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -105,7 +98,7 @@ class _MyHomePageState extends State<mapaHomePage> {
               tooltip: 'Lista de Gasolineras',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => ListadoGasolineras()),
+                    builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,)),
                 );
               },
             ),
@@ -118,9 +111,8 @@ class _MyHomePageState extends State<mapaHomePage> {
                 decoration: new BoxDecoration(color: PrimaryColor,
 
                  ),
-                accountEmail: Text("email"),
-
-            ),
+                accountName: new Text('Nombre de Usuario'),
+                accountEmail: new Text('Vehiculo Registrado')),
             new ListTile(
               title: new Text('Registrar Vehiculo'),
               trailing: new Icon(Icons.directions_car),
@@ -201,12 +193,12 @@ class _MyHomePageState extends State<mapaHomePage> {
           Positioned(
             right: 10.0,
             bottom: 20.0,
-            child: Menu_dist(),
+            child: Menu_dist(mapController: mapController,markerMap: markerMap,),
           ),
          Positioned(
             right: 10.0,
             bottom: 90.0,
-            child: Menu_gas(mapController: mapController),
+            child: Menu_gas(mapController: mapController,markerMap: markerMap,),
           ),
         ],
       ),
@@ -238,17 +230,6 @@ class _MyHomePageState extends State<mapaHomePage> {
     }
   }
 
-  void _query() async {
-    final allRows = await db.queryAllRows();
-    print('query all rows:');
-
-    allRows.forEach((row) => print(row));
-
-    User note = await db.getId(1);
-    print(note.device_id);
-
-  }
-
   void onMapCreated(controller) {
     setState(() {
       mapController = controller;
@@ -257,6 +238,4 @@ class _MyHomePageState extends State<mapaHomePage> {
     refresh();
     initMarkers();
   }
-
-
-  }
+}

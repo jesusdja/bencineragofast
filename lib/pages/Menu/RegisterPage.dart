@@ -128,22 +128,4 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   }
 
-  void _query() async {
-    final allRows = await db.queryAllRows();
-    print('query all rows:');
-    allRows.forEach((row) => print(row));
-
-  }
-
-
-  /*Future addRecord() async {
-    var db = new DatabaseHelper();
-    var user = new User(_modelController.text,_deviceid);
-
-      await db.saveUser(user);
-    }
-*/
-
-  }
-
 

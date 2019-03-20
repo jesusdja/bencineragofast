@@ -1,11 +1,19 @@
+import 'package:bencineragofast/pages/Home/place.dart';
 import 'package:bencineragofast/pages/Listado/tabs/pruebadesqlite.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Listado/tabs/display.dart';
 import 'package:bencineragofast/main.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:path/path.dart';
 import 'package:bencineragofast/main.dart';
 
 class ListadoGasolineras extends StatefulWidget {
+
+  ListadoGasolineras({this.mapController,this.markerMap});
+
+  final Map<String,Place> markerMap;
+  final GoogleMapController mapController;
+
   @override
   _ListadoGasolinerasState createState() => new _ListadoGasolinerasState();
 }
@@ -59,7 +67,7 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
   TabBarView getTabBarView(){
     return TabBarView(
       children: <Widget>[
-        display(),
+        display(mapController: widget.mapController, markerMap: widget.markerMap,),
         pruebasqlite(),
         Center( child: Text("por precios ")),
 
