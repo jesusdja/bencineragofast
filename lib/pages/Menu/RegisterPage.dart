@@ -80,72 +80,49 @@ class MyCustomFormState extends State<MyCustomForm> {
      return ListView.builder(
       itemCount:1,
       itemBuilder: (context, index) {
-        return  Container(
+        return Container(
+          margin: EdgeInsets.only(left: 50,right: 50,top: 20),
 
-          margin: EdgeInsets.only(left: 60,right: 40),
+          child: Column(
+           //   crossAxisAlignment: CrossAxisAlignment.center,
 
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-
-
-
+            children: <Widget>[
                 SizedBox(
-                  child:Container(
 
+                  child: Container(
                     width: MediaQuery.of(context).size.width,
 
-                    child: RaisedButton(
-
-                      textColor: Colors.white,
-                      color: PrimaryColor,
-                      padding: const EdgeInsets.all(20.0),
-                      elevation: 5.0,
-
-                      splashColor: Colors.black,
-                      onPressed: () {
-                        //var user = new User(_deviceid,_modelController.text);
-                        if (_formKey.currentState.validate()) {
-
-                          if(db.queryAllRows() != null){
 
 
-                            print("ya esta registrado");
-                            _query();
+                     child: FlatButton(
+
+                        child: Text("Marca de Vehiculo"),
+
+                          splashColor: Colors.black,
+                          padding: const EdgeInsets.all(15.0),
+                          textColor: Colors.white,
+                          color:PrimaryColor,
+                          onPressed: (){}
 
 
-                          }else{
-
-                            int id = 1;
-                            var user = new User(id,_deviceid,null,null);
-                            db.saveUser(user);
-
-                            print("registro Exitoso");
-                            _query();
-                          }
+                          ),
 
 
-                       //  Scaffold.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
-                        }
-                        Navigator.of(context).pop();
-                      },
-
-                      child: Text('Registrar'),
-
-                    ),
+        ),
+              
+              
+                 ),
+              
+            ],
 
 
-                  ),
 
-
-                ),
-
-              ],
-            ),
           ),
+
+
+
         );
+
       }
     );
 
