@@ -1,5 +1,5 @@
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
-import 'package:bencineragofast/pages/sqlflite/note.dart';
+import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:device_id/device_id.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/main.dart';
@@ -72,7 +72,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
     if (user != null) {
       this.user=user;
-      _modelController.text = user.modelUser;
+      _modelController.text = user.device_id;
       _deviceid = user.device_id;
 
     }
@@ -90,94 +90,6 @@ class MyCustomFormState extends State<MyCustomForm> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
 
-                Container(
-
-                  margin: EdgeInsets.only(left: 0.0,top: 60.0,right: 0.0,bottom: 40.0),
-                  width: MediaQuery.of(context).size.width,
-
-
-
-                  child: TextFormField(
-
-                    controller: _modelController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Modelo',
-                      prefixIcon: Icon(Icons.directions_car),
-                    ),
-                    autofocus: true,
-
-
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Campo Vacio';
-                      }
-                    },
-
-
-                  ),
-
-
-
-                ),
-
-                Container(
-                 margin: EdgeInsets.only(left: 0.0,top: 0.0,right: 0.0,bottom: 40.0),
-                  width: MediaQuery.of(context).size.width,
-
-
-                  child:  TextFormField(
-                    controller: _tipocombustibleController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.bookmark),
-
-                        labelText: 'Tipo de Combustible'
-
-                    ),
-                    autofocus: true,
-
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Campo Vacio';
-                      }
-                    },
-                  ),
-                ),
-
-
-                Container(
-                  margin: EdgeInsets.only(left: 0.0,top: 0.0,right: 0.0,bottom: 80.0),
-                  width: MediaQuery.of(context).size.width,
-                  child: SizedBox(
-
-                    child:  TextFormField(
-                      controller: _capacidadController,
-
-                      keyboardType: TextInputType.number,
-
-                      decoration: InputDecoration(
-
-
-                          border: OutlineInputBorder(),
-
-                          prefixIcon: Icon(Icons.featured_video),
-                          labelText: 'Capacidad de Combustible'
-                      ),
-                      autofocus: true,
-
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Campo Vacio';
-                        }
-                      },
-                    ),
-                    width: 300,
-
-                  ),
-
-                ),
-
 
 
                 SizedBox(
@@ -194,15 +106,26 @@ class MyCustomFormState extends State<MyCustomForm> {
 
                       splashColor: Colors.black,
                       onPressed: () {
-                            
+                        //var user = new User(_deviceid,_modelController.text);
                         if (_formKey.currentState.validate()) {
 
-                          if(db.getUser()){
-                          print('*******************');
-                        }
+                          if(db.queryAllRows() != null){
 
-                          var user = new User(_deviceid,_modelController.text);
-                          db.saveUser(user);
+
+                            print("ya esta registrado");
+                            _query();
+
+
+                          }else{
+
+                            int id = 1;
+                            var user = new User(id,_deviceid,null,null);
+                            db.saveUser(user);
+
+                            print("registro Exitoso");
+                            _query();
+                          }
+
 
                        //  Scaffold.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
                         }
@@ -227,6 +150,14 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
 
   }
+
+  void _query() async {
+    final allRows = await db.queryAllRows();
+    print('query all rows:');
+    allRows.forEach((row) => print(row));
+
+  }
+
 
   /*Future addRecord() async {
     var db = new DatabaseHelper();

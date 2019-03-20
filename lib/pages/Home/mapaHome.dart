@@ -4,6 +4,7 @@ import 'package:bencineragofast/pages/Menu/HelpPage.dart';
 import 'package:bencineragofast/pages/Menu/OptionsPage.dart';
 import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
+import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_dist.dart';
@@ -17,7 +18,7 @@ import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart' as mate;
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'place.dart';
-
+import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 class mapaHomePage extends StatefulWidget {
 
   _MyHomePageState createState() => _MyHomePageState();
@@ -28,6 +29,11 @@ class _MyHomePageState extends State<mapaHomePage> {
   GoogleMapController mapController;
 
   Map<String,Place> markerMap = Map();
+
+  //Elemetos de la base de datos
+  var db = new DatabaseHelper();
+  User user;
+
 
   //AGREGAR MARCADORES
   void initMarkers() async {
@@ -83,7 +89,6 @@ class _MyHomePageState extends State<mapaHomePage> {
 
 
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -113,10 +118,11 @@ class _MyHomePageState extends State<mapaHomePage> {
                 decoration: new BoxDecoration(color: PrimaryColor,
 
                  ),
-                accountName: new Text('Nombre de Usuario'),
-                accountEmail: new Text('Vehiculo Registrado')),
+                accountEmail: Text("email"),
+
+            ),
             new ListTile(
-              title: new Text('Registrarse'),
+              title: new Text('Registrar Vehiculo'),
               trailing: new Icon(Icons.directions_car),
               onTap: () {
                 Navigator.of(context).pop();
@@ -232,6 +238,17 @@ class _MyHomePageState extends State<mapaHomePage> {
     }
   }
 
+  void _query() async {
+    final allRows = await db.queryAllRows();
+    print('query all rows:');
+
+    allRows.forEach((row) => print(row));
+
+    User note = await db.getId(1);
+    print(note.device_id);
+
+  }
+
   void onMapCreated(controller) {
     setState(() {
       mapController = controller;
@@ -240,4 +257,6 @@ class _MyHomePageState extends State<mapaHomePage> {
     refresh();
     initMarkers();
   }
-}
+
+
+  }

@@ -1,3 +1,4 @@
+import 'package:bencineragofast/pages/Listado/tabs/pruebadesqlite.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Listado/tabs/display.dart';
 import 'package:bencineragofast/main.dart';
@@ -59,7 +60,7 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
     return TabBarView(
       children: <Widget>[
         display(),
-        Center( child: Text("aqui van la lista con la marcas")),
+        pruebasqlite(),
         Center( child: Text("por precios ")),
 
 
