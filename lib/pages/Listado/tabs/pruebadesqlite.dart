@@ -43,7 +43,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _tipocombustibleController = TextEditingController();
   final _capacidadController = TextEditingController();
   User user;
-  var db = new DatabaseHelper();
+  var db ;
 
   String _deviceid = 'Unknown';
 
@@ -52,6 +52,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   void initState() {
     super.initState();
     initDeviceId();
+    db = new DatabaseHelper();
   }
 
   void initDeviceId() async {
@@ -93,96 +94,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
 
-                  Container(
-
-                    margin: EdgeInsets.only(left: 0.0,top: 60.0,right: 0.0,bottom: 40.0),
-                    width: MediaQuery.of(context).size.width,
-
-
-
-                    child: TextFormField(
-
-                      controller: _modelController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Modelo',
-                        prefixIcon: Icon(Icons.directions_car),
-                      ),
-                      autofocus: true,
-
-
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Campo Vacio';
-                        }
-                      },
-
-
-                    ),
-
-
-
-                  ),
-
-                  Container(
-                    margin: EdgeInsets.only(left: 0.0,top: 0.0,right: 0.0,bottom: 40.0),
-                    width: MediaQuery.of(context).size.width,
-
-
-                    child:  TextFormField(
-                      controller: _tipocombustibleController,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.bookmark),
-
-                          labelText: 'Tipo de Combustible'
-
-                      ),
-                      autofocus: true,
-
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Campo Vacio';
-                        }
-                      },
-                    ),
-                  ),
-
-
-                  Container(
-                    margin: EdgeInsets.only(left: 0.0,top: 0.0,right: 0.0,bottom: 80.0),
-                    width: MediaQuery.of(context).size.width,
-                    child: SizedBox(
-
-                      child:  TextFormField(
-                        controller: _capacidadController,
-
-                        keyboardType: TextInputType.number,
-
-                        decoration: InputDecoration(
-
-
-                            border: OutlineInputBorder(),
-
-                            prefixIcon: Icon(Icons.featured_video),
-                            labelText: 'Capacidad de Combustible'
-                        ),
-                        autofocus: true,
-
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Campo Vacio';
-                          }
-                        },
-                      ),
-                      width: 300,
-
-                    ),
-
-                  ),
-
-
-
                   SizedBox(
                     child:Container(
 
@@ -196,11 +107,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                         elevation: 5.0,
 
                         splashColor: Colors.black,
-                        onPressed: ()  {
+                        onPressed: ()  async {
                           //var user = new User(_deviceid,_modelController.text);
                           if (_formKey.currentState.validate()) {
 
-                            if(db.queryRowCount() != null){
+                            if(await db.queryRowCount() != 0){
 
                               print("ya esta registrado");
                               _query();

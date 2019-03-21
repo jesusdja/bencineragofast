@@ -48,6 +48,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   var db = new DatabaseHelper();
 
   String _deviceid = 'Unknown';
+
   @override
   void initState() {
     super.initState();
@@ -71,61 +72,58 @@ class MyCustomFormState extends State<MyCustomForm> {
     // Crea un widget Form usando el _formKey que creamos anteriormente
 
     if (user != null) {
-      this.user=user;
+      this.user = user;
       _modelController.text = user.device_id;
       _deviceid = user.device_id;
-
     }
 
-     return ListView.builder(
-      itemCount:1,
-      itemBuilder: (context, index) {
-        return Container(
-          margin: EdgeInsets.only(left: 50,right: 50,top: 20),
+    return ListView.builder(
+        itemCount: 1,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: EdgeInsets.only(left: 50, right: 50, top: 20),
 
-          child: Column(
-           //   crossAxisAlignment: CrossAxisAlignment.center,
+            child: Column(
+              //   crossAxisAlignment: CrossAxisAlignment.center,
 
-            children: <Widget>[
+              children: <Widget>[
                 SizedBox(
 
                   child: Container(
-                    width: MediaQuery.of(context).size.width,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
 
 
-
-                     child: FlatButton(
+                    child: FlatButton(
 
                         child: Text("Marca de Vehiculo"),
 
-                          splashColor: Colors.black,
-                          padding: const EdgeInsets.all(15.0),
-                          textColor: Colors.white,
-                          color:PrimaryColor,
-                          onPressed: (){}
+                        splashColor: Colors.black,
+                        padding: const EdgeInsets.all(15.0),
+                        textColor: Colors.white,
+                        color: PrimaryColor,
+                        onPressed: () {}
 
 
-                          ),
+                    ),
 
 
-        ),
-              
-              
-                 ),
-              
-            ],
+                  ),
 
 
+                ),
 
-          ),
+              ],
 
 
+            ),
 
-        );
 
-      }
+          );
+        }
     );
-
   }
-
+}
 
