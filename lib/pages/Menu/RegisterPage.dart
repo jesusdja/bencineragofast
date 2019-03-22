@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/main.dart';
 import 'dart:core';
-
-class Vehiculo{
-  String NombreMarca = 'Desconocido';
-  String NombreModelo = 'Desconocido';
-  String NombreYear = 'Desconocido';
-  String LitrosCombustible = 'Desconocido';
-  //Icono e imagen
+import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
+import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 
 
-Vehiculo(this.NombreMarca, this.NombreModelo, this.NombreYear, this.LitrosCombustible);
-
-}
 class Registrarse extends StatefulWidget {
 
   @override
@@ -34,12 +26,15 @@ class _RegistrarseState extends State<Registrarse> {
 }
 class MyCustomForm extends StatefulWidget {
 
+
   @override
   MyCustomFormState createState() {
     return MyCustomFormState(vehiculo: <Vehiculo>[]);
   }
 }
 class MyCustomFormState extends State<MyCustomForm> {
+
+  DatabaseHelper db = new DatabaseHelper();
 
   final List<Vehiculo> vehiculo;
   MyCustomFormState({Key key, @required this.vehiculo,});
@@ -53,14 +48,21 @@ class MyCustomFormState extends State<MyCustomForm> {
           itemCount: vehiculo.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(vehiculo[index].NombreMarca),
+              title: Text(vehiculo[index].marcaVehiculo),
               leading: Image.asset('assets/images/icono_gas.png',height: 50),
               onTap: () {
-                print(vehiculo[index].NombreMarca);
                 setState(() {
-                  _valueMarca = vehiculo[index].NombreMarca;
+                  _valueMarca = vehiculo[index].marcaVehiculo;
+
                   //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
                 });
+                print(_valueMarca);
+                Vehiculo vehiculoUp = null;
+                vehiculoUp = new Vehiculo(1, vehiculo[index].marcaVehiculo,
+                    vehiculo[index].modeloVehiculo ,
+                    vehiculo[index].yearsVehiculo,
+                    vehiculo[index].combustible);
+                db.updateCarro(vehiculoUp);
                 Navigator.pop(context);
               },
             );
@@ -75,7 +77,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       height: MediaQuery.of(context).size.height *0.7,
       child: _ElementosMarca (
         vehiculo: List.generate(
-          y, (i) => Vehiculo('Marca $i',' ','',''),
+          y, (i) => Vehiculo(1,'Marca $i',' ','',''),
         ),
       ),
     );
@@ -87,16 +89,9 @@ class MyCustomFormState extends State<MyCustomForm> {
         itemCount: vehiculo.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(vehiculo[index].NombreModelo),
+            title: Text(vehiculo[index].modeloVehiculo),
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
-            onTap: () {
-              print(vehiculo[index].NombreModelo);
-              setState(() {
-                _valueModel = vehiculo[index].NombreModelo;
-                //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
-              });
-              Navigator.pop(context);
-            },
+
           );
         },
       ),
@@ -109,7 +104,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       height: MediaQuery.of(context).size.height *0.7,
       child: _ElementosModel (
         vehiculo: List.generate(
-          y, (i) => Vehiculo('Model $i',' ','',''),
+          y, (i) => Vehiculo(1,'Model $i',' ','',''),
         ),
       ),
     );
@@ -126,150 +121,210 @@ class MyCustomFormState extends State<MyCustomForm> {
             margin: EdgeInsets.only(left: 20, right: 50, top: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              //mainAxisAlignment:  MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  child: Text(
-                    'Selecione marca',
-                    textAlign: TextAlign.justify,
-                    //overflow: TextOverflow.ellipsis, ...
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 20.0),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * .5,
-                  child: FlatButton(
-                    child:Text(_valueMarca),//Valor a cambiar
-                      splashColor: Colors.black,
-                      padding: const EdgeInsets.all(20.0),
-                      textColor: Colors.white,
-                      color: PrimaryColor,
-                      onPressed: () {
-                        MarksDeVheiculo();
-                      }
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment:  CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
+                            child: Text(
+                              'Selecione marca',
+                              textAlign: TextAlign.justify,
+                              //overflow: TextOverflow.ellipsis, ...
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20.0),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width * .5,
+                            child: FlatButton(
+                                child:Text(_valueMarca),//Valor a cambiar
+                                splashColor: Colors.black,
+                                padding: const EdgeInsets.all(20.0),
+                                textColor: Colors.white,
+                                color: PrimaryColor,
+                                onPressed: () {
+                                  MarksDeVheiculo();
+                                }
+                            ),
+
+                          ),
+                        ],
                       ),
-
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 20, top: 20),
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  child: Text(
-                    'Seleccione Modelo',
-                    textAlign: TextAlign.justify,
-                    //overflow: TextOverflow.ellipsis, ...
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 20.0),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * .5,
-                  child: FlatButton(
-                    child: Text(_valueModel),
-                      splashColor: Colors.black,
-                      padding: const EdgeInsets.all(25.0),
-                      textColor: Colors.white,
-                      color: PrimaryColor,
-                      onPressed: () {ModelDeVheiculo;}
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 20, top: 20),
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  child: Text(
-                    'Selecione Año',
-                    textAlign: TextAlign.justify,
-                    //overflow: TextOverflow.ellipsis, ...
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 20.0),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * .5,
-                  child: FlatButton(
-                      child: Text(''),
-                      splashColor: Colors.black,
-                      padding: const EdgeInsets.all(25.0),
-                      textColor: Colors.white,
-                      color: PrimaryColor,
-                      onPressed: () {}
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 20, top: 20),
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  child: Text(
-                    'Litros De combustible',
-                    textAlign: TextAlign.justify,
-                    //overflow: TextOverflow.ellipsis, ...
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 20.0),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * .5,
-                  child: FlatButton(
-                      child: Text(''),
-                      splashColor: Colors.black,
-                      padding: const EdgeInsets.all(25.0),
-                      textColor: Colors.white,
-                      color: PrimaryColor,
-                      onPressed: () {}
-                  ),
-                ),
-
-                Container(
-                  margin: EdgeInsets.only(
-                      left: 0.0, top: 50.0, right: 0.0, bottom: 40.0),
-
-                  child: SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 2.3,
-                    child: RaisedButton(
-                      padding: const EdgeInsets.all(20.0),
-                      color: PrimaryColor,
-
-                      elevation: 5.0,
-                      textColor: Colors.white,
-                      splashColor: Colors.black,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Center(
-                          child: Center(child: Text('Guardar Vehiculo'))),
                     ),
+                  ],
+                ),
+              ),
+                //--------------------------------First Mark
+
+                Container(
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20, top: 20),
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width,
+                              child: Text(
+                                'Seleccione Modelo',
+                                textAlign: TextAlign.justify,
+                                //overflow: TextOverflow.ellipsis, ...
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20.0),
+                              ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .5,
+                              child: FlatButton(
+                                  child: Text(_valueModel),
+                                  splashColor: Colors.black,
+                                  padding: const EdgeInsets.all(25.0),
+                                  textColor: Colors.white,
+                                  color: PrimaryColor,
+                                  onPressed: () {ModelDeVheiculo;}
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                //--------------------------------Second Model
+
+               Container(
+                 child: Row(
+                   children: <Widget>[
+                     Expanded(
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: <Widget>[
+                           Container(
+                             margin: EdgeInsets.only(bottom: 20, top: 20),
+                             width: MediaQuery
+                                 .of(context)
+                                 .size
+                                 .width,
+                             child: Text(
+                               'Selecione Año',
+                               textAlign: TextAlign.justify,
+                               //overflow: TextOverflow.ellipsis, ...
+                               style: TextStyle(
+                                   fontWeight: FontWeight.bold, fontSize: 20.0),
+                             ),
+                           ),
+                           SizedBox(
+                             width: MediaQuery
+                                 .of(context)
+                                 .size
+                                 .width * .5,
+                             child: FlatButton(
+                                 child: Text(''),
+                                 splashColor: Colors.black,
+                                 padding: const EdgeInsets.all(25.0),
+                                 textColor: Colors.white,
+                                 color: PrimaryColor,
+                                 onPressed: () {}
+                             ),
+                           ),
+                         ],
+                       ),
+                     ),
+                   ],
+                 ),
+               ),
+                //-------------------------------3 --years
+
+
+                Container(
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(bottom: 20, top: 20),
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width,
+                              child: Text(
+                                'Litros De combustible',
+                                textAlign: TextAlign.justify,
+                                //overflow: TextOverflow.ellipsis, ...
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20.0),
+                              ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .5,
+                              child: FlatButton(
+                                  child: Text(''),
+                                  splashColor: Colors.black,
+                                  padding: const EdgeInsets.all(25.0),
+                                  textColor: Colors.white,
+                                  color: PrimaryColor,
+                                  onPressed: () {}
+                              ),
+                            ),
+
+
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 
+
+              Container(
+                margin: EdgeInsets.only(
+                    left: 30.0, top: 50.0, right: 0.0, bottom: 40.0),
+
+                child: SizedBox(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 2.3,
+                  child: RaisedButton(
+                    padding: const EdgeInsets.all(20.0),
+                    color: PrimaryColor,
+
+                    elevation: 5.0,
+                    textColor: Colors.white,
+                    splashColor: Colors.black,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Center(
+                        child: Center(child: Text('Guardar Vehiculo'))),
+                  ),
+                ),
+              ),
 
               ],
 

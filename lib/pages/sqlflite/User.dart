@@ -5,9 +5,6 @@ class User {
   String _botonDisGas;
   String _botonTipGas;
 
-
-
-
   User(this.idTable, this._idDevice, this._botonDisGas,this._botonTipGas);
 
   User.map(dynamic obj) {
@@ -21,7 +18,6 @@ class User {
   String get device_id => _idDevice;
   String get botonDisGas => _botonDisGas;
   String get botonTipoGas => _botonTipGas;
-
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();

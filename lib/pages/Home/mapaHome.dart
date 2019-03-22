@@ -15,6 +15,7 @@ import 'package:device_id/device_id.dart';
 import 'package:bencineragofast/main.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'place.dart';
+import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 
 class mapaHomePage extends StatefulWidget {
 
@@ -46,16 +47,31 @@ class _MyHomePageState extends State<mapaHomePage> {
     setState(() {
       _deviceid = deviceid;
     });
+    if(await db.queryRowCountCarro() != 0){
+      print("ya esta registrado el carro");
 
+      final allRows = await db.queryAllRowsCarro();
+      print('query all rows:');
+      allRows.forEach((row) => print(row));
+
+    }else{
+      String _marcaVehiculo = 'Desconocido';
+      String _modeloVehiculo = 'Desconocido';
+      String _years_vehiculo= 'Desconocido';
+      String _combustible= 'Desconocido';
+      var carro = new Vehiculo(1, _marcaVehiculo, _modeloVehiculo, _years_vehiculo, _combustible);
+      db.saveCarro(carro);
+      print("Registro de carro Existoso");
+    }
 
     if(await db.queryRowCount() != 0){
-      print("ya esta registrado");
+      print("ya esta registrado el Usuario");
     }else{
       String btngas = "All";
       String btndis = "20";
       var user = new User(1,_deviceid,btndis,btngas);
       db.saveUser(user);
-      print("registro Exitoso");
+      print("registro Exitoso de Usuario");
     }
   }
 
