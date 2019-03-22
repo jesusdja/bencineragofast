@@ -4,17 +4,15 @@ import 'package:bencineragofast/pages/Menu/HelpPage.dart';
 import 'package:bencineragofast/pages/Menu/OptionsPage.dart';
 import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
+import 'package:bencineragofast/pages/sqlflite/User.dart';
+import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_dist.dart';
 import '../BotonesHome/menu_gas.dart';
 import 'package:location/location.dart' as LocationManager;
-
+import 'package:device_id/device_id.dart';
 import 'package:bencineragofast/main.dart';
-
-import 'dart:math' as math;
-import 'package:vector_math/vector_math_64.dart';
-import 'package:flutter/material.dart' as mate;
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'place.dart';
 
@@ -29,6 +27,37 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   Map<String,Place> markerMap = Map();
   Place placed;
+  var db ;
+  String _deviceid = 'Unknown';
+
+
+  @override
+  void initState() {
+    super.initState();
+    db = new DatabaseHelper();
+    initDeviceId();
+  }
+
+  //Inicializar variable de Id del telefono
+  void initDeviceId() async {
+    String deviceid;
+    deviceid = await DeviceId.getID;
+    if (!mounted) return;
+    setState(() {
+      _deviceid = deviceid;
+    });
+
+
+    if(await db.queryRowCount() != 0){
+      print("ya esta registrado");
+    }else{
+      String btngas = "All";
+      String btndis = "20";
+      var user = new User(1,_deviceid,btndis,btngas);
+      db.saveUser(user);
+      print("registro Exitoso");
+    }
+  }
 
   //AGREGAR MARCADORES
   void initMarkers() async {
@@ -39,8 +68,6 @@ class _MyHomePageState extends State<mapaHomePage> {
     final lng = currentLocation["longitude"];
     //markerMap[marker.id] = 'f';
 
-
-
     LatLng latlo = LatLng(8.2965626,-62.7356024);
     placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93');
     initMarker(placed);
@@ -48,7 +75,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91');
     initMarker(placed);
     latlo = LatLng(8.2081334,-62.8328788);
-    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '95');
+    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93');
     initMarker(placed);
   }
 
@@ -65,11 +92,9 @@ class _MyHomePageState extends State<mapaHomePage> {
         icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
       )
       );
-
       markerMap[marker.id] = place;
     });
   }
-
 
   void _onInfoWindowTapped(Marker marker) {
     final marcador_seleccionado = markerMap[marker.id];
@@ -84,7 +109,6 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: new AppBar(
 
@@ -174,8 +198,6 @@ class _MyHomePageState extends State<mapaHomePage> {
       ),
       body: Stack(
         children: <Widget>[
-
-
           GoogleMap(
             onMapCreated: onMapCreated,
             options: GoogleMapOptions(
@@ -188,11 +210,13 @@ class _MyHomePageState extends State<mapaHomePage> {
                 trackCameraPosition: true,
                 rotateGesturesEnabled: true, //Activar gestos de rotación
                 scrollGesturesEnabled: true, //Puede o no mover el mapa
+
             ),
           ),
           Positioned(
             right: 10.0,
             bottom: 20.0,
+            width: MediaQuery.of(context).size.width,
             child: Menu_dist(mapController: mapController,markerMap: markerMap,),
           ),
          Positioned(
@@ -210,7 +234,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     mapController.onInfoWindowTapped.add(_onInfoWindowTapped);
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: center == null ? LatLng(0, 0) : center, zoom: 13.0)));
+        target: center == null ? LatLng(0, 0) : center, zoom: 11.0)));
   }
 
   Future<LatLng> getUserLocation() async {
