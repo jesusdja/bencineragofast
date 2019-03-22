@@ -43,6 +43,7 @@ class DatabaseHelper {
         "CREATE TABLE Usersx(idTable INT PRIMARY KEY, deviceId TEXT, botonDisGas TEXT , botonTipoGas TEXT,)");
   }
 
+
   Future<int> saveUser(User user) async {
     var dbClient = await database;
     int res = await dbClient.insert("Usersx", user.toMap());
