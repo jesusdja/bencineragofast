@@ -40,7 +40,7 @@ class DatabaseHelper {
   void _onCreate(Database db, int version) async {
     // When creating the db, create the table
     await db.execute(
-        "CREATE TABLE Usersx(idTable INT PRIMARY KEY, deviceId TEXT, botonDisGas TEXT , botonTipoGas TEXT)");
+        "CREATE TABLE Usersx(idTable INT PRIMARY KEY, deviceId TEXT, botonDisGas TEXT , botonTipoGas TEXT,)");
   }
 
   Future<int> saveUser(User user) async {

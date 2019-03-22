@@ -1,5 +1,6 @@
 import 'package:bencineragofast/pages/Home/place.dart';
 import 'package:bencineragofast/pages/Listado/tabs/pruebadesqlite.dart';
+import 'package:bencineragofast/pages/Menu/Data/DATACOPIA.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Listado/tabs/display.dart';
 import 'package:bencineragofast/main.dart';
@@ -68,7 +69,7 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
     return TabBarView(
       children: <Widget>[
         display(mapController: widget.mapController, markerMap: widget.markerMap,),
-        pruebasqlite(),
+        DATACOPIA(),
         Center( child: Text("por precios ")),
 
 

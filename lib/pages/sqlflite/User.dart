@@ -7,6 +7,7 @@ class User {
 
 
 
+
   User(this.idTable, this._idDevice, this._botonDisGas,this._botonTipGas);
 
   User.map(dynamic obj) {

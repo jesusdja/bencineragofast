@@ -22,7 +22,6 @@ enum TipodeMapa{Normal,Satelital,Otro} //Vairables de tipo Mapa
 
 class _opcionesState extends State<opciones> {
 
-  final _formKey = GlobalKey<FormState>();
 
 
   String _valueMapa = 'Seleccione mapa';

@@ -10,7 +10,7 @@ class Vehiculo{
   //Icono e imagen
 
 
-Vehiculo(this.NombreMarca, this.NombreModelo, this.NombreYear, this.LitrosCombustible);
+  Vehiculo(this.NombreMarca, this.NombreModelo, this.NombreYear, this.LitrosCombustible);
 
 }
 class Registrarse extends StatefulWidget {
@@ -19,7 +19,6 @@ class Registrarse extends StatefulWidget {
   _RegistrarseState createState() => new _RegistrarseState();
 }
 class _RegistrarseState extends State<Registrarse> {
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -34,88 +33,15 @@ class _RegistrarseState extends State<Registrarse> {
 }
 class MyCustomForm extends StatefulWidget {
 
+
   @override
   MyCustomFormState createState() {
     return MyCustomFormState(vehiculo: <Vehiculo>[]);
   }
 }
 class MyCustomFormState extends State<MyCustomForm> {
-
   final List<Vehiculo> vehiculo;
   MyCustomFormState({Key key, @required this.vehiculo,});
-
-  String _valueMarca = 'Desconocido';
-  String _valueModel = 'Desconocido';
-
-   _ElementosMarca({List<Vehiculo> vehiculo}) {
-     return Container(
-        child: ListView.builder(
-          itemCount: vehiculo.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(vehiculo[index].NombreMarca),
-              leading: Image.asset('assets/images/icono_gas.png',height: 50),
-              onTap: () {
-                print(vehiculo[index].NombreMarca);
-                setState(() {
-                  _valueMarca = vehiculo[index].NombreMarca;
-                  //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
-                });
-                Navigator.pop(context);
-              },
-            );
-          },
-        ),
-      );
-  }
-    Marca() {
-  var y = 20;
-    return new Container(
-      width: MediaQuery.of(context).size.width ,
-      height: MediaQuery.of(context).size.height *0.7,
-      child: _ElementosMarca (
-        vehiculo: List.generate(
-          y, (i) => Vehiculo('Marca $i',' ','',''),
-        ),
-      ),
-    );
-}
-
-  _ElementosModel({List<Vehiculo> vehiculo}) {
-    return Container(
-      child: ListView.builder(
-        itemCount: vehiculo.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(vehiculo[index].NombreModelo),
-            leading: Image.asset('assets/images/icono_gas.png',height: 50),
-            onTap: () {
-              print(vehiculo[index].NombreModelo);
-              setState(() {
-                _valueModel = vehiculo[index].NombreModelo;
-                //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
-              });
-              Navigator.pop(context);
-            },
-          );
-        },
-      ),
-    );
-  }
-  Model() {
-    var y = 20;
-    return new Container(
-      width: MediaQuery.of(context).size.width ,
-      height: MediaQuery.of(context).size.height *0.7,
-      child: _ElementosModel (
-        vehiculo: List.generate(
-          y, (i) => Vehiculo('Model $i',' ','',''),
-        ),
-      ),
-    );
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +75,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       .size
                       .width * .5,
                   child: FlatButton(
-                    child:Text(_valueMarca),//Valor a cambiar
+                      child:Text(''),
                       splashColor: Colors.black,
                       padding: const EdgeInsets.all(20.0),
                       textColor: Colors.white,
@@ -157,7 +83,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       onPressed: () {
                         MarksDeVheiculo();
                       }
-                      ),
+                  ),
 
                 ),
                 Container(
@@ -180,12 +106,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                       .size
                       .width * .5,
                   child: FlatButton(
-                    child: Text(_valueModel),
                       splashColor: Colors.black,
                       padding: const EdgeInsets.all(25.0),
                       textColor: Colors.white,
                       color: PrimaryColor,
-                      onPressed: () {ModelDeVheiculo;}
+                      onPressed: () {}
                   ),
                 ),
                 Container(
@@ -208,7 +133,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                       .size
                       .width * .5,
                   child: FlatButton(
-                      child: Text(''),
                       splashColor: Colors.black,
                       padding: const EdgeInsets.all(25.0),
                       textColor: Colors.white,
@@ -236,7 +160,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                       .size
                       .width * .5,
                   child: FlatButton(
-                      child: Text(''),
                       splashColor: Colors.black,
                       padding: const EdgeInsets.all(25.0),
                       textColor: Colors.white,
@@ -282,13 +205,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 
     );
-
-
-
-
   }
-
-
 
   Future MarksDeVheiculo() async {
 
@@ -296,21 +213,8 @@ class MyCustomFormState extends State<MyCustomForm> {
         context: context,
         child: SimpleDialog(
             title: Text('Marcas de Vehiculo'),
-             children: <Widget>[
-            Marca(),
-             ]
-        )
-    );
-  }
-
-  Future ModelDeVheiculo() async {
-
-    await showDialog(
-        context: context,
-        child: SimpleDialog(
-            title: Text('Model de Vehiculo'),
             children: <Widget>[
-              Model(),
+              Vehiculos(),
             ]
         )
     );
@@ -320,3 +224,69 @@ class MyCustomFormState extends State<MyCustomForm> {
 }
 
 
+
+class Vehiculos extends StatelessWidget {
+  List<Vehiculo> vehiculo;
+
+  var y = 200;
+  @override
+  Widget build(BuildContext context) {
+    var vehiculo;
+    return new Container(
+      width: MediaQuery.of(context).size.width ,
+      height: MediaQuery.of(context).size.height *0.7,
+      child: ElementosVehiculos(
+
+        vehiculo: List.generate(
+          y,
+              (i) => Vehiculo(vehiculo,' ','',''),
+        ),
+      ),
+
+    );
+  }
+}
+
+
+class ElementosVehiculos extends StatefulWidget {
+
+
+  List<Vehiculo> vehiculo;
+  ElementosVehiculos({Key key, @required this.vehiculo,}) : super(key: key);
+
+  @override
+  _ElementosVehiculosState createState() => _ElementosVehiculosState();
+}
+
+
+class _ElementosVehiculosState extends State<ElementosVehiculos> {
+
+  String _valueMarca;
+
+  void _setValueMarca(String valueMarca) => setState(() => _valueMarca = valueMarca);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+
+      child: ListView.builder(
+        itemCount: widget.vehiculo.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(widget.vehiculo[index].NombreMarca),
+            leading: Image.asset('assets/images/icono_gas.png',height: 50),
+            onTap: () {
+              print(widget.vehiculo[index].NombreMarca);
+              // cambiarNombreMarca(widget.marca[index].title);
+              _setValueMarca(widget.vehiculo[index].NombreMarca);
+              Navigator.pop(context);
+
+              //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
+            },
+          );
+        },
+      ),
+    );
+
+  }
+}//cambiarNombreMarca(String marca){ _NombreMarca = marca;return _NombreMarca;}
