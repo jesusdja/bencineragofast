@@ -35,8 +35,6 @@ class MyCustomFormState extends State<MyCustomForm> {
   // Nota: Esto es un GlobalKey<FormState>, no un GlobalKey<MyCustomFormState>!
   final _formKey = GlobalKey<FormState>();
   final _modelController = TextEditingController();
-  final _tipocombustibleController = TextEditingController();
-  final _capacidadController = TextEditingController();
   User user;
   var db ;
   String _deviceid = 'Unknown';
@@ -132,25 +130,5 @@ class MyCustomFormState extends State<MyCustomForm> {
     //print(updatedUser.device_id);
     db.updatebtngas(updatedUser);
     user = await db.getIdDevice(1);
-    //print(user.botonTipoGas);
-
-
-
-       // print("Actualizadooo");
-
-
-
-
-
   }
-
-
-/*Future addRecord() async {
-    var db = new DatabaseHelper();
-    var user = new User(_modelController.text,_deviceid);
-
-      await db.saveUser(user);
-    }
-*/
-
 }

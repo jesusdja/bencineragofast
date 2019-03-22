@@ -62,18 +62,22 @@ class DatabaseHelper {
 
 
 
-  Future<List<User>> getUser() async {
+  Future<User> getUser() async {
     var dbClient = await database;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM Usersx');
     List<User> employees = new List();
-    for (int i = 0; i < list.length; i++) {
+
+    var user =
+    new User(list[0]["idTable"],list[0]["deviceId"],list[0]["botonDisGas"],list[0]["botonTipoGas"]);
+
+    /*for (int i = 0; i < list.length; i++) {
       var user =
       new User(list[i]["idTable"],list[i]["deviceId"],list[i]["botonDisGas"],list[i]["botonTipoGas"]);
      //user.setUserId(list[i]["deviceId"]);
       employees.add(user);
     }
-    print(employees.length);
-    return employees;
+    print(employees.length);*/
+    return user;
   }
 
   Future<int> deleteUsers(User user) async {
@@ -109,7 +113,16 @@ class DatabaseHelper {
     /*return await dbClient.rawUpdate(
         'UPDATE $table SET $colbtngas = \'${user.botonDisGas}\' WHERE $colId = ${user.idTable}');*/
     return await dbClient.rawUpdate(
-        'UPDATE $table SET $colbtngas = \'${user.botonDisGas}\' WHERE $colId = ${user.idTable}');
+        'UPDATE $table SET $colbtngas = \'${user.botonTipoGas}\' WHERE $colId = ${user.idTable}');
+  }
+
+  Future<int> updateBtnDis(User user) async {
+    var dbClient = await  database;
+    //   return await dbClient.update(tableNote, note.toMap(), where: "$columnId = ?", whereArgs: [note.id]);
+    /*return await dbClient.rawUpdate(
+        'UPDATE $table SET $colbtngas = \'${user.botonDisGas}\' WHERE $colId = ${user.idTable}');*/
+    return await dbClient.rawUpdate(
+        'UPDATE $table SET $colBtnDis = \'${user.botonDisGas}\' WHERE $colId = ${user.idTable}');
   }
 
 

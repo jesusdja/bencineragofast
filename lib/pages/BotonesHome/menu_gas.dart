@@ -1,4 +1,6 @@
 import 'package:bencineragofast/pages/Home/place.dart';
+import 'package:bencineragofast/pages/sqlflite/User.dart';
+import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as mate;
 import 'package:flutter/foundation.dart';
@@ -34,7 +36,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
 
-  String name_gas_button = '20';
+  String name_gas_button = '20Km';
 
   @override
   initState() {
@@ -92,7 +94,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
   }
 
   //AGREGAR MARCADORES
-  void initMarkers (double distancia) async {
+  void initMarkers (String distancia) async {
 
     Map<String,Place> markerMap = widget.markerMap;
 
@@ -102,53 +104,59 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
     final lat = currentLocation["latitude"];
     final lng = currentLocation["longitude"];
 
+    String ValorTipoGas = "";
 
-    /*print(markerMap.length);*/
+    var db = new DatabaseHelper();
+    User user = null;
+    if(await db.queryRowCount() != 0){
+      user = await db.getUser();
+      ValorTipoGas = user.botonTipoGas;
+    }
+
+    User userUp = null;
+    if(user != null){
+      userUp = new User(1,user.device_id,distancia,user.botonTipoGas);
+      db.updateBtnDis(userUp);
+    }
+
+    List<String> keyys = new List<String>();
     void iterateMapEntry(key, value) {
       Place p = value;
-      if(calcularDistancia(lat,lng,p.latitude,p.longitude,distancia)){
-        initMarker(p.latitude,p.longitude,p.name);
+      if(((p.TipoGas == ValorTipoGas)||("All" == ValorTipoGas))&(calcularDistancia(lat,lng,p.latitude,p.longitude,distancia))){
+        keyys.add(key);
+        initMarker(p);
       }
     }
     if(markerMap != null){
       markerMap.forEach(iterateMapEntry);
     }
-
-
-    /*if(calcularDistancia(lat,lng,8.2965626,-62.7356024,distancia)){
-      initMarker(8.2965626,-62.7356024,'- 2 km');
+    for(var i = 0; i < keyys.length; i++){
+      widget.markerMap.remove(keyys[i]);
     }
-
-    if(calcularDistancia(lat,lng,8.270346,-62.7579366,distancia)){
-      initMarker(8.270346,-62.7579366,'- 10 km');
+    if(keyys.length == 0){
+      widget.mapController.clearMarkers();
     }
-
-    if(calcularDistancia(lat,lng,8.2081334,-62.8328788,distancia)){
-      initMarker(8.2081334,-62.8328788,'- 20 km');
-    }*/
-
   }
 
 
 
-  initMarker(double lat, double log, String name) {
-
+  initMarker(Place place) {
     GoogleMapController mapController2 = widget.mapController;
-    mapController2.clearMarkers().then((val) {
-      mapController2.addMarker(MarkerOptions(
+    mapController2.clearMarkers().then((val) async {
+      final Marker marker = await mapController2.addMarker(MarkerOptions(
         visible: true,
         draggable: true,
         flat: false,
-        position: LatLng(lat,log),
-        infoWindowText: InfoWindowText(name, 'Cool'),
+        position: LatLng(place.latitude,place.longitude),
+        infoWindowText: InfoWindowText(place.name, place.description),
         icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
       )
       );
+      widget.markerMap[marker.id] = place;
     });
-
   }
 
-  bool calcularDistancia(double lat1, double lg1, double lat2, double lg2, double distancia){
+  bool calcularDistancia(double lat1, double lg1, double lat2, double lg2, String distancia){
     bool rango = false;
     double d = 0.0;
     double radio = 6378;
@@ -160,12 +168,12 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
             math.pow((math.sin(Sumlg / 2)),2) ;
     double c = 2 * (math.atan2(math.sqrt(a),math.sqrt(1 - a)));
     d = radio * c;
-    if(d <= distancia){rango = true;}
+    if(d <= double.parse('$distancia')){rango = true;}
     return rango;
   }
 
   //AGREGAR BOTONES INTERNOS
-  Widget add({String text, int tagg, double zoom, double dis}) {
+  Widget add({String text, int tagg, double zoom, String dis}) {
     return Container(
       child: FloatingActionButton(
         onPressed: (){animate(); name_gas_button = text;refresh(zoom);initMarkers(dis);},
@@ -173,7 +181,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
         heroTag: tagg,
         backgroundColor: mate.Colors.red[900] ,
         child: Text(
-          text + 'Km',
+          text,
           style: TextStyle(
               color: mate.Colors.white,
               fontSize: 18.0
@@ -193,7 +201,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
         heroTag: 4,
         tooltip: 'Toggle',
         child: Text(
-        name_gas_button + 'Km',
+        name_gas_button,
         style: TextStyle(
           color: mate.Colors.white,
           fontSize: 18.0
@@ -214,7 +222,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
             0.0,
             0.0,
           ),
-          child: add(text: '2',tagg: 5,zoom: 17,dis: 2),
+          child: add(text: '2Km',tagg: 5,zoom: 15,dis: '2'),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -222,7 +230,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
             0.0,
             0.0,
           ),
-          child: add(text: '10',tagg: 6,zoom: 15,dis: 10),
+          child: add(text: '10Km',tagg: 6,zoom: 13,dis: '10'),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -230,7 +238,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
             0.0,
             0.0,
           ),
-          child: add(text: '20', tagg: 7,zoom: 13,dis: 20),
+          child: add(text: '20Km', tagg: 7,zoom: 11,dis: '20'),
         ),
         toggle(),
         //initMarkers(20),
