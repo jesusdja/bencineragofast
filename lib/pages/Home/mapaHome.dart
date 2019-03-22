@@ -210,6 +210,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                 trackCameraPosition: true,
                 rotateGesturesEnabled: true, //Activar gestos de rotación
                 scrollGesturesEnabled: true, //Puede o no mover el mapa
+
             ),
           ),
           Positioned(

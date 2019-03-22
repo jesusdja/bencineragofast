@@ -168,6 +168,21 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
     isOpened = !isOpened;
   }
 
+  Widget textadd(String t){
+    if(t == 'All'){
+      return Icon(Icons.local_gas_station);
+    }else{
+      return Text(
+        t,
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0
+        ),
+      );
+    }
+  }
+
+
   Widget add({String text, int tagg, String tipogas}) {
     return Container(
       child: FloatingActionButton(
@@ -175,15 +190,23 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
         tooltip: 'Add',
         heroTag: tagg,
         backgroundColor: Colors.red[900],
-        child: Text(
-          text,
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0
-          ),
-        ),
+        child: textadd(text),
       ),
     );
+  }
+
+  Widget texttoggle(){
+    if(name_gas_button == 'All'){
+      return Icon(Icons.local_gas_station);
+    }else{
+      return Text(
+        name_gas_button,
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0
+        ),
+      );
+    }
   }
 
   Widget toggle() {
@@ -193,13 +216,7 @@ class _MenuFABState extends State<Menu_dist> with SingleTickerProviderStateMixin
         heroTag: 0,
         onPressed: animate,
         tooltip: 'Toggle',
-        child: Text(
-        name_gas_button,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 18.0
-          ),
-        ),
+        child: texttoggle(),
       ),
     );
   }
