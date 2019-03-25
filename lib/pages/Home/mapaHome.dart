@@ -19,10 +19,14 @@ import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 
 class mapaHomePage extends StatefulWidget {
 
+
+  String _valueMarca;
+
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<mapaHomePage> {
+
 
   GoogleMapController mapController;
 
@@ -37,6 +41,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     super.initState();
     db = new DatabaseHelper();
     initDeviceId();
+   // initvalues();
   }
 
   //Inicializar variable de Id del telefono

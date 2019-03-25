@@ -3,6 +3,7 @@ import 'package:bencineragofast/main.dart';
 import 'dart:core';
 import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
+import 'package:flutter/scheduler.dart';
 
 class Registrarse extends StatefulWidget {
   @override
@@ -196,14 +197,15 @@ class MyCustomFormState extends State<MyCustomForm> {
   }
 
 //===========================FUNCIONES DE LOS BOTONES=============================== ARRIBA
-  @override
+
   void initvalues() async {
-    print('=============init=======');
     carropull = await db.getCarro();
-    _valueMarca = carropull.marcaVehiculo;
-    _valueModel =carropull.modeloVehiculo;
-    _valueYear =carropull.yearsVehiculo;
-    _valueCombustible =carropull.combustible;
+   setState(() {
+     _valueMarca = carropull.marcaVehiculo;
+     _valueModel =carropull.modeloVehiculo;
+     _valueYear =carropull.yearsVehiculo;
+     _valueCombustible =carropull.combustible;
+   });
   }
   @override
   void initState() {
@@ -263,9 +265,13 @@ class MyCustomFormState extends State<MyCustomForm> {
 
                            ),
                          ),
+
+                      //==============ICONOOOO
                         ],
                       ),
+
                     ),
+                    Image.asset('assets/images/icono_gas.png',width: 80,height: 80,),//=====No va , icono de otra cosa
                   ],
                 ),
               ),
@@ -312,6 +318,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           ],
                         ),
                       ),
+                      Image.asset('assets/images/icono_gas.png',width: 80,height: 80,),
                     ],
                   ),
                 ),
@@ -357,6 +364,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                          ],
                        ),
                      ),
+                     Image.asset('assets/images/icono_gas.png',width: 80,height: 80,),
                    ],
                  ),
                ),
@@ -402,6 +410,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           ],
                         ),
                       ),
+                      Image.asset('assets/images/icono_gas.png',width: 80,height: 110,),
                     ],
                   ),
                 ),
@@ -446,6 +455,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   Future MarksDeVheiculo() async {
     await showDialog(
         context: context,
+        // ignore: deprecated_member_use
         child: SimpleDialog(
             title: Text('Marcas de Vehiculo'),
              children: <Widget>[
