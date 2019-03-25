@@ -34,13 +34,16 @@ class MyCustomForm extends StatefulWidget {
 }
 class MyCustomFormState extends State<MyCustomForm> {
 
-  DatabaseHelper db = new DatabaseHelper();
+  DatabaseHelper db ;
 
-  final List<Vehiculo> vehiculo;
+   List<Vehiculo> vehiculo;
   MyCustomFormState({Key key, @required this.vehiculo,});
 
-  String _valueMarca = 'Desconocido';
-  String _valueModel = 'Desconocido';
+  String _valueMarca       = 'Desconocido';
+  String _valueModel       = 'Desconocido';
+  String _valueYear        = 'Desconocido';
+  String _valueCombustible = 'Desconocido';
+
 
    _ElementosMarca({List<Vehiculo> vehiculo}) {
      return Container(
@@ -53,16 +56,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               onTap: () {
                 setState(() {
                   _valueMarca = vehiculo[index].marcaVehiculo;
-
                   //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
                 });
                 print(_valueMarca);
-                Vehiculo vehiculoUp = null;
-                vehiculoUp = new Vehiculo(1, vehiculo[index].marcaVehiculo,
-                    vehiculo[index].modeloVehiculo ,
-                    vehiculo[index].yearsVehiculo,
-                    vehiculo[index].combustible);
-                db.updateCarro(vehiculoUp);
                 Navigator.pop(context);
               },
             );
@@ -91,7 +87,14 @@ class MyCustomFormState extends State<MyCustomForm> {
           return ListTile(
             title: Text(vehiculo[index].modeloVehiculo),
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
-
+            onTap: () {
+              setState(() {
+                _valueModel = vehiculo[index].modeloVehiculo;
+                //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
+              });
+              print(_valueModel);
+              Navigator.pop(context);
+            },
           );
         },
       ),
@@ -104,17 +107,86 @@ class MyCustomFormState extends State<MyCustomForm> {
       height: MediaQuery.of(context).size.height *0.7,
       child: _ElementosModel (
         vehiculo: List.generate(
-          y, (i) => Vehiculo(1,'Model $i',' ','',''),
+          y, (i) => Vehiculo(1,'','Model $i','',''),
         ),
       ),
     );
   }
 
+  _ElementosYears({List<Vehiculo> vehiculo}) {
+    return Container(
+      child: ListView.builder(
+        itemCount: vehiculo.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(vehiculo[index].yearsVehiculo),
+            leading: Image.asset('assets/images/icono_gas.png',height: 50),
+            onTap: () {
+              setState(() {
+                _valueYear = vehiculo[index].yearsVehiculo;
+                //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
+              });
+              print(_valueYear);
+              Navigator.pop(context);
+            },
+          );
+        },
+      ),
+    );
+  }
+  Years() {
+    var y = 20;
+    return new Container(
+      width: MediaQuery.of(context).size.width ,
+      height: MediaQuery.of(context).size.height *0.7,
+      child: _ElementosYears (
+        vehiculo: List.generate(
+          y, (i) => Vehiculo(1,'','','Year $i',''),
+        ),
+      ),
+    );
+  }
+  _ElementosCombustible({List<Vehiculo> vehiculo}) {
+    return Container(
+      child: ListView.builder(
+        itemCount: vehiculo.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(vehiculo[index].combustible),
+            leading: Image.asset('assets/images/icono_gas.png',height: 50),
+            onTap: () {
+              setState(() {
+                _valueCombustible = vehiculo[index].combustible;
+                //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
+              });
+              print(_valueCombustible);
+              Navigator.pop(context);
+            },
+          );
+        },
+      ),
+    );
+  }
+  Combustible() {
+    var y = 20;
+    return new Container(
+      width: MediaQuery.of(context).size.width ,
+      height: MediaQuery.of(context).size.height *0.7,
+      child: _ElementosCombustible (
+        vehiculo: List.generate(
+          y, (i) => Vehiculo(1,'','','','Combustible $i'),
+        ),
+      ),
+    );
+  }
+//===========================FUNCIONES DE LOS BOTONES===============================
 
 
   @override
   Widget build(BuildContext context) {
+    db = new DatabaseHelper();
     return ListView.builder (
+
         itemCount: 1,
         itemBuilder: (context, index) {
           return Container (
@@ -123,6 +195,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+
               Container(
                 child: Row(
                   children: <Widget>[
@@ -201,7 +274,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   padding: const EdgeInsets.all(25.0),
                                   textColor: Colors.white,
                                   color: PrimaryColor,
-                                  onPressed: () {ModelDeVheiculo;}
+                                  onPressed: () {ModelDeVheiculo();}
                               ),
                             ),
                           ],
@@ -239,12 +312,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                  .size
                                  .width * .5,
                              child: FlatButton(
-                                 child: Text(''),
+                                 child: Text(_valueYear),
                                  splashColor: Colors.black,
                                  padding: const EdgeInsets.all(25.0),
                                  textColor: Colors.white,
                                  color: PrimaryColor,
-                                 onPressed: () {}
+                                 onPressed: () {YearsVehiculo();}
                              ),
                            ),
                          ],
@@ -283,12 +356,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   .size
                                   .width * .5,
                               child: FlatButton(
-                                  child: Text(''),
+                                  child: Text(_valueCombustible),
                                   splashColor: Colors.black,
                                   padding: const EdgeInsets.all(25.0),
                                   textColor: Colors.white,
                                   color: PrimaryColor,
-                                  onPressed: () {}
+                                  onPressed: () {ConbustibleVheiculo();}
                               ),
                             ),
 
@@ -317,8 +390,19 @@ class MyCustomFormState extends State<MyCustomForm> {
                     elevation: 5.0,
                     textColor: Colors.white,
                     splashColor: Colors.black,
-                    onPressed: () {
-                      Navigator.pop(context);
+                    onPressed: () async {
+                      if(await db.queryRowCountCarro() != 0){
+                        Vehiculo vehiculoUp = null;
+                        vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear, _valueCombustible);
+                             db.updateCarro(vehiculoUp);
+                             Navigator.pop(context);
+
+                      }else
+                        {
+                          print('Verifique valores');
+                        }
+
+
                     },
                     child: Center(
                         child: Center(child: Text('Guardar Vehiculo'))),
@@ -370,7 +454,30 @@ class MyCustomFormState extends State<MyCustomForm> {
         )
     );
   }
+  Future YearsVehiculo() async {
 
+    await showDialog(
+        context: context,
+        child: SimpleDialog(
+            title: Text('Año del Vehiculo'),
+            children: <Widget>[
+                Years(),
+            ]
+        )
+    );
+  }
+  Future ConbustibleVheiculo() async {
+
+    await showDialog(
+        context: context,
+        child: SimpleDialog(
+            title: Text('Combustible del Vehiculo'),
+            children: <Widget>[
+              Combustible(),
+            ]
+        )
+    );
+  }
 
 }
 
