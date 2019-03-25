@@ -62,6 +62,7 @@ class _MyHomePageState extends State<mapaHomePage> {
       var carro = new Vehiculo(1, _marcaVehiculo, _modeloVehiculo, _years_vehiculo, _combustible);
       db.saveCarro(carro);
       print("Registro de carro Existoso");
+
     }
 
     if(await db.queryRowCount() != 0){

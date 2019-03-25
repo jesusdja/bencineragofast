@@ -187,10 +187,10 @@ class DatabaseHelper {
 
     return null;
   }
-  Future<Vehiculo> getMarcaCarro(String marca) async {
+  Future<Vehiculo> getmarca(int id) async {
     var dbClient = await database;
 
-    var result = await dbClient.rawQuery('SELECT * FROM $tablecarro WHERE marcaVehiculo = $marca');
+    var result = await dbClient.rawQuery('SELECT * FROM $tablecarro WHERE idTable = $id');
 
 
     if (result.length > 0) {

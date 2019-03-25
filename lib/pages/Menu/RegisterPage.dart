@@ -4,15 +4,13 @@ import 'dart:core';
 import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 
-
 class Registrarse extends StatefulWidget {
-
   @override
   _RegistrarseState createState() => new _RegistrarseState();
 }
 class _RegistrarseState extends State<Registrarse> {
-
   @override
+
   Widget build(BuildContext context) {
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -25,8 +23,6 @@ class _RegistrarseState extends State<Registrarse> {
   }
 }
 class MyCustomForm extends StatefulWidget {
-
-
   @override
   MyCustomFormState createState() {
     return MyCustomFormState(vehiculo: <Vehiculo>[]);
@@ -34,22 +30,25 @@ class MyCustomForm extends StatefulWidget {
 }
 class MyCustomFormState extends State<MyCustomForm> {
 
-  DatabaseHelper db ;
-
+  DatabaseHelper db = new DatabaseHelper();
    List<Vehiculo> vehiculo;
   MyCustomFormState({Key key, @required this.vehiculo,});
+
+
+  Vehiculo carropull;
 
   String _valueMarca       = 'Desconocido';
   String _valueModel       = 'Desconocido';
   String _valueYear        = 'Desconocido';
   String _valueCombustible = 'Desconocido';
-  bool _isButtonDisabledmarca = false;
-  bool _isButtonDisabledmodel = true;
-  bool _isButtonDisabledyear = true;
+  bool _isButtonDisabledmarca =      false;
+  bool _isButtonDisabledmodel =       true;
+  bool _isButtonDisabledyear =        true;
   bool _isButtonDisabledcombustible = true;
 
 
-   _ElementosMarca({List<Vehiculo> vehiculo}) {
+
+  _ElementosMarca({List<Vehiculo> vehiculo}) {
      return Container(
         child: ListView.builder(
           itemCount: vehiculo.length,
@@ -59,7 +58,6 @@ class MyCustomFormState extends State<MyCustomForm> {
               leading: Image.asset('assets/images/icono_gas.png',height: 50),
               onTap: () {
                 setState(() {
-
                   _valueMarca = vehiculo[index].marcaVehiculo;
                   _isButtonDisabledmarca =true;
                   _isButtonDisabledmodel = false;
@@ -158,6 +156,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       ),
     );
   }
+
   _ElementosCombustible({List<Vehiculo> vehiculo}) {
     return Container(
       child: ListView.builder(
@@ -195,14 +194,26 @@ class MyCustomFormState extends State<MyCustomForm> {
       ),
     );
   }
-//===========================FUNCIONES DE LOS BOTONES===============================
 
-
+//===========================FUNCIONES DE LOS BOTONES=============================== ARRIBA
   @override
-  Widget build(BuildContext context) {
-    db = new DatabaseHelper();
-    return ListView.builder (
+  void initvalues() async {
+    print('=============init=======');
+    carropull = await db.getCarro();
+    _valueMarca = carropull.marcaVehiculo;
+    _valueModel =carropull.modeloVehiculo;
+    _valueYear =carropull.yearsVehiculo;
+    _valueCombustible =carropull.combustible;
+  }
+  @override
+  void initState() {
+    super.initState();
+    initvalues();
+  }
 
+  Widget build(BuildContext context) {
+
+    return ListView.builder (
         itemCount: 1,
         itemBuilder: (context, index) {
           return Container (
@@ -211,8 +222,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-
-              Container(
+                Container(
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -248,7 +258,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                                  color: PrimaryColor,
                                  onPressed: () {
                                    MarksDeVheiculo();
-
                                  }
                              ),
 
@@ -261,7 +270,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                 ),
               ),
                 //--------------------------------First Mark
-
                 Container(
                   child: Row(
                     children: <Widget>[
@@ -308,7 +316,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ),
                 ),
                 //--------------------------------Second Model
-
                Container(
                  child: Row(
                    children: <Widget>[
@@ -354,8 +361,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                  ),
                ),
                 //-------------------------------3 --years
-
-
                 Container(
                   child: Row(
                     children: <Widget>[
@@ -394,17 +399,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                                ),
                              ),
                            ),
-
-
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-
-
-              Container(
+                Container(
                 margin: EdgeInsets.only(
                     left: 30.0, top: 50.0, right: 0.0, bottom: 40.0),
 
@@ -426,41 +427,23 @@ class MyCustomFormState extends State<MyCustomForm> {
                         vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear, _valueCombustible);
                              db.updateCarro(vehiculoUp);
                              Navigator.pop(context);
-
                       }else
                         {
                           print('Verifique valores');
                         }
-
-
                     },
                     child: Center(
                         child: Center(child: Text('Guardar Vehiculo'))),
                   ),
                 ),
               ),
-
               ],
-
-
             ),
-
-
           );
         }
-
-
     );
-
-
-
-
   }
-
-
-
   Future MarksDeVheiculo() async {
-
     await showDialog(
         context: context,
         child: SimpleDialog(
@@ -473,7 +456,6 @@ class MyCustomFormState extends State<MyCustomForm> {
   }
 
   Future ModelDeVheiculo() async {
-
     await showDialog(
         context: context,
         child: SimpleDialog(
@@ -485,7 +467,6 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
   }
   Future YearsVehiculo() async {
-
     await showDialog(
         context: context,
         child: SimpleDialog(
@@ -497,7 +478,6 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
   }
   Future ConbustibleVheiculo() async {
-
     await showDialog(
         context: context,
         child: SimpleDialog(
@@ -508,7 +488,4 @@ class MyCustomFormState extends State<MyCustomForm> {
         )
     );
   }
-
 }
-
-
