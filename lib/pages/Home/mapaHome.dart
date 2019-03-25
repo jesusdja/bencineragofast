@@ -24,7 +24,7 @@ class mapaHomePage extends StatefulWidget {
 class _MyHomePageState extends State<mapaHomePage> {
 
   GoogleMapController mapController;
-
+  LatLng MelatLng;
   Map<String,Place> markerMap = Map();
   Place placed;
   var db ;
@@ -50,6 +50,12 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     if(await db.queryRowCount() != 0){
       print("ya esta registrado");
+      User userUp = new User(1,_deviceid,"20","All");
+      db.updatebtngas(userUp);
+      db.updateBtnDis(userUp);
+      final allRows = await db.queryAllRows();
+      print('query all rows:');
+      allRows.forEach((row) => print(row));
     }else{
       String btngas = "All";
       String btndis = "20";
@@ -60,22 +66,15 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   //AGREGAR MARCADORES
-  void initMarkers() async {
-    var currentLocation = <String, double>{};
-    final location = LocationManager.Location();
-    currentLocation = await location.getLocation();
-    final lat = currentLocation["latitude"];
-    final lng = currentLocation["longitude"];
-    //markerMap[marker.id] = 'f';
-
-    LatLng latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93');
-    initMarker(placed);
-    latlo = LatLng(8.270346,-62.7579366);
-    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91');
+  void initMarkers() {
+    LatLng latlo = LatLng(8.270346,-62.7579366);
+    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0);
     initMarker(placed);
     latlo = LatLng(8.2081334,-62.8328788);
-    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93');
+    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93',DiferenciaDist: 0);
+    initMarker(placed);
+    latlo = LatLng(8.2965626,-62.7356024);
+    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0);
     initMarker(placed);
   }
 
@@ -106,23 +105,20 @@ class _MyHomePageState extends State<mapaHomePage> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-
         title: new Text("GoFast Bencineras"),
         backgroundColor: PrimaryColor ,
           actions: <Widget>[
             IconButton(
-
               iconSize: 40,
               icon: Icon(Icons.map),
               tooltip: 'Lista de Gasolineras',
-              onPressed: () {
+              onPressed: (){
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,)),
+                    builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,MelatLng: MelatLng,)),
                 );
               },
             ),
@@ -133,7 +129,6 @@ class _MyHomePageState extends State<mapaHomePage> {
           children: <Widget>[
             new UserAccountsDrawerHeader(
                 decoration: new BoxDecoration(color: PrimaryColor,
-
                  ),
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
@@ -244,6 +239,8 @@ class _MyHomePageState extends State<mapaHomePage> {
       currentLocation = await location.getLocation();
       final lat = currentLocation["latitude"];
       final lng = currentLocation["longitude"];
+
+      MelatLng = LatLng(lat,lng);
 
       //final dist =
       final center = LatLng(lat, lng);

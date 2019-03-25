@@ -4,16 +4,19 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class Place {
   const Place({
     @required this.id,
+    @required this.DiferenciaDist,
     @required this.latLng,
     @required this.TipoGas,
     @required this.name,
     this.description,
   })  : assert(id != null),
+        assert(DiferenciaDist != null),
         assert(latLng != null),
         assert(TipoGas != null),
         assert(name != null);
 
   final String id;
+  final double DiferenciaDist;
   final LatLng latLng;
   final String TipoGas;
   final String name;
@@ -24,6 +27,7 @@ class Place {
 
   Place copyWith({
     String id,
+    double DiferenciaDist,
     LatLng latLng,
     String TipoGas,
     String name,
@@ -31,6 +35,7 @@ class Place {
   }) {
     return Place(
       id: id ?? this.id,
+      DiferenciaDist: DiferenciaDist ?? this.DiferenciaDist,
       latLng: latLng ?? this.latLng,
       TipoGas: TipoGas ?? this.TipoGas,
       name: name ?? this.name,

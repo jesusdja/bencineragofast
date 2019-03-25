@@ -1,19 +1,20 @@
 import 'package:bencineragofast/pages/Home/place.dart';
-import 'package:bencineragofast/pages/Listado/tabs/pruebadesqlite.dart';
 import 'package:bencineragofast/pages/Menu/Data/DATACOPIA.dart';
+import 'package:bencineragofast/pages/sqlflite/User.dart';
+import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Listado/tabs/display.dart';
 import 'package:bencineragofast/main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:path/path.dart';
-import 'package:bencineragofast/main.dart';
 
 class ListadoGasolineras extends StatefulWidget {
 
-  ListadoGasolineras({this.mapController,this.markerMap});
+  ListadoGasolineras({this.mapController,this.markerMap,this.MelatLng,this.kmActual});
 
   final Map<String,Place> markerMap;
   final GoogleMapController mapController;
+  final LatLng MelatLng;
+  final String kmActual;
 
   @override
   _ListadoGasolinerasState createState() => new _ListadoGasolinerasState();
@@ -22,30 +23,35 @@ class ListadoGasolineras extends StatefulWidget {
 
 class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTickerProviderStateMixin{
   TabController _controller;
+  var db;
+  String kmActual;
+  LatLng MelatLng;
+  User u;
 
-
-
-
-  @override
-
-  void initState(){
-    super.initState();
-    _controller = TabController(length: 3, vsync: this );
+  TraerUsuario() async {
+    u = await db.getUser();
   }
 
+  @override
+  Future initState() {
+    _controller = TabController(length: 4, vsync: this );
+    db = new DatabaseHelper();
+    MelatLng = widget.MelatLng;
 
+    TraerUsuario();
+    super.initState();
+  }
   void dispose(){
     _controller.dispose();
     super.dispose();
-
   }
+
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
         backgroundColor: PrimaryColor,
         title: new Text('Bencineras '),
         bottom: getTabBar(),
-
       ),
       body: getTabBarView(),
     );
@@ -57,22 +63,20 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
         Tab(icon: Icon(Icons.directions_car)),
         Tab(icon: Icon(Icons.bookmark)),
         Tab(icon: Icon(Icons.attach_money)),
-
+        Tab(icon: Icon(Icons.star)),
       ],
       controller: _controller,
     );
-
-
   }
 
   TabBarView getTabBarView(){
+
     return TabBarView(
       children: <Widget>[
-        display(mapController: widget.mapController, markerMap: widget.markerMap,),
+        display(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,),
         DATACOPIA(),
         Center( child: Text("por precios ")),
-
-
+        Center( child: Text("por precios ")),
       ],
       controller: _controller,
     );

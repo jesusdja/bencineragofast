@@ -126,7 +126,6 @@ class DatabaseHelper {
         'UPDATE $table SET $colBtnDis = \'${user.botonDisGas}\' WHERE $colId = ${user.idTable}');
   }
 
-
   Future<User> getId(int id) async {
     var dbClient = await database;
     List<Map> result = await dbClient.query(table,
