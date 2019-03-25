@@ -43,6 +43,10 @@ class MyCustomFormState extends State<MyCustomForm> {
   String _valueModel       = 'Desconocido';
   String _valueYear        = 'Desconocido';
   String _valueCombustible = 'Desconocido';
+  bool _isButtonDisabledmarca = false;
+  bool _isButtonDisabledmodel = true;
+  bool _isButtonDisabledyear = true;
+  bool _isButtonDisabledcombustible = true;
 
 
    _ElementosMarca({List<Vehiculo> vehiculo}) {
@@ -55,7 +59,10 @@ class MyCustomFormState extends State<MyCustomForm> {
               leading: Image.asset('assets/images/icono_gas.png',height: 50),
               onTap: () {
                 setState(() {
+
                   _valueMarca = vehiculo[index].marcaVehiculo;
+                  _isButtonDisabledmarca =true;
+                  _isButtonDisabledmodel = false;
                   //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
                 });
                 print(_valueMarca);
@@ -90,6 +97,9 @@ class MyCustomFormState extends State<MyCustomForm> {
             onTap: () {
               setState(() {
                 _valueModel = vehiculo[index].modeloVehiculo;
+                _isButtonDisabledmodel = true;
+                _isButtonDisabledyear = false;
+
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
               print(_valueModel);
@@ -124,6 +134,8 @@ class MyCustomFormState extends State<MyCustomForm> {
             onTap: () {
               setState(() {
                 _valueYear = vehiculo[index].yearsVehiculo;
+                _isButtonDisabledyear = true;
+                _isButtonDisabledcombustible = false;
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
               print(_valueYear);
@@ -157,6 +169,10 @@ class MyCustomFormState extends State<MyCustomForm> {
             onTap: () {
               setState(() {
                 _valueCombustible = vehiculo[index].combustible;
+                _isButtonDisabledmarca =true;
+                _isButtonDisabledmodel =true;
+                _isButtonDisabledyear =true;
+                _isButtonDisabledcombustible =true;
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
               print(_valueCombustible);
@@ -217,23 +233,27 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   fontWeight: FontWeight.bold, fontSize: 20.0),
                             ),
                           ),
-                          SizedBox(
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width * .5,
-                            child: FlatButton(
-                                child:Text(_valueMarca),//Valor a cambiar
-                                splashColor: Colors.black,
-                                padding: const EdgeInsets.all(20.0),
-                                textColor: Colors.white,
-                                color: PrimaryColor,
-                                onPressed: () {
-                                  MarksDeVheiculo();
-                                }
-                            ),
+                         AbsorbPointer(
+                           absorbing: _isButtonDisabledmarca,
+                           child:  SizedBox(
+                             width: MediaQuery
+                                 .of(context)
+                                 .size
+                                 .width * .5,
+                             child: FlatButton(
+                                 child:Text(_valueMarca),//Valor a cambiar
+                                 splashColor: Colors.black,
+                                 padding: const EdgeInsets.all(20.0),
+                                 textColor: Colors.white,
+                                 color: PrimaryColor,
+                                 onPressed: () {
+                                   MarksDeVheiculo();
 
-                          ),
+                                 }
+                             ),
+
+                           ),
+                         ),
                         ],
                       ),
                     ),
@@ -263,7 +283,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     fontWeight: FontWeight.bold, fontSize: 20.0),
                               ),
                             ),
-                            SizedBox(
+                          AbsorbPointer(
+                            absorbing: _isButtonDisabledmodel,
+                            child:   SizedBox(
                               width: MediaQuery
                                   .of(context)
                                   .size
@@ -274,9 +296,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                                   padding: const EdgeInsets.all(25.0),
                                   textColor: Colors.white,
                                   color: PrimaryColor,
-                                  onPressed: () {ModelDeVheiculo();}
+                                  onPressed: () {
+                                    ModelDeVheiculo();}
                               ),
                             ),
+                          ),
                           ],
                         ),
                       ),
@@ -306,18 +330,21 @@ class MyCustomFormState extends State<MyCustomForm> {
                                    fontWeight: FontWeight.bold, fontSize: 20.0),
                              ),
                            ),
-                           SizedBox(
-                             width: MediaQuery
-                                 .of(context)
-                                 .size
-                                 .width * .5,
-                             child: FlatButton(
-                                 child: Text(_valueYear),
-                                 splashColor: Colors.black,
-                                 padding: const EdgeInsets.all(25.0),
-                                 textColor: Colors.white,
-                                 color: PrimaryColor,
-                                 onPressed: () {YearsVehiculo();}
+                           AbsorbPointer(
+                             absorbing: _isButtonDisabledyear,
+                             child: SizedBox(
+                               width: MediaQuery
+                                   .of(context)
+                                   .size
+                                   .width * .5,
+                               child: FlatButton(
+                                   child: Text(_valueYear),
+                                   splashColor: Colors.black,
+                                   padding: const EdgeInsets.all(25.0),
+                                   textColor: Colors.white,
+                                   color: PrimaryColor,
+                                   onPressed: () {YearsVehiculo();}
+                               ),
                              ),
                            ),
                          ],
@@ -350,20 +377,23 @@ class MyCustomFormState extends State<MyCustomForm> {
                                     fontWeight: FontWeight.bold, fontSize: 20.0),
                               ),
                             ),
-                            SizedBox(
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * .5,
-                              child: FlatButton(
-                                  child: Text(_valueCombustible),
-                                  splashColor: Colors.black,
-                                  padding: const EdgeInsets.all(25.0),
-                                  textColor: Colors.white,
-                                  color: PrimaryColor,
-                                  onPressed: () {ConbustibleVheiculo();}
-                              ),
-                            ),
+                           AbsorbPointer(
+                             absorbing: _isButtonDisabledcombustible,
+                             child:  SizedBox(
+                               width: MediaQuery
+                                   .of(context)
+                                   .size
+                                   .width * .5,
+                               child: FlatButton(
+                                   child: Text(_valueCombustible),
+                                   splashColor: Colors.black,
+                                   padding: const EdgeInsets.all(25.0),
+                                   textColor: Colors.white,
+                                   color: PrimaryColor,
+                                   onPressed: () {ConbustibleVheiculo();}
+                               ),
+                             ),
+                           ),
 
 
                           ],
