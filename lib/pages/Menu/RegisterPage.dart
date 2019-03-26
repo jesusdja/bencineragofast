@@ -226,14 +226,15 @@ class MyCustomFormState extends State<MyCustomForm> {
   Widget build(BuildContext context) {
 
     return ListView.builder (
+
         itemCount: 1,
         itemBuilder: (context, index) {
           return Container (
-
-            margin: EdgeInsets.only(left: 20, right: 50, top: 20),
+            height: MediaQuery.of(context).size.height,
+            margin: EdgeInsets.only(left: 20, right: 50, top: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Container(
                 child: Row(
@@ -282,7 +283,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       ),
 
                     ),
-                    Image.asset('assets/images/icono_gas.png',width: 120,height: 120,
+                    Image.asset('assets/images/icono_shell.png',width: 100,height: 100,
                     ),//=====No va , icono de otra cosa
                   ],
                 ),
@@ -296,7 +297,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsets.only(bottom: 20, top: 20),
+                              margin: EdgeInsets.only(bottom: 10, top: 10),
                               width: MediaQuery
                                   .of(context)
                                   .size
@@ -345,7 +346,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: <Widget>[
                            Container(
-                             margin: EdgeInsets.only(bottom: 20, top: 20),
+                             margin: EdgeInsets.only(bottom: 20, top: 10),
                              width: MediaQuery
                                  .of(context)
                                  .size
@@ -391,7 +392,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsets.only(bottom: 20, top: 20),
+                              margin: EdgeInsets.only(bottom: 20, top: 10),
                               width: MediaQuery
                                   .of(context)
                                   .size
@@ -430,20 +431,21 @@ class MyCustomFormState extends State<MyCustomForm> {
                 ),
                 Container(
                 margin: EdgeInsets.only(
-                    left: 30.0, top: 50.0, right: 0.0, bottom: 40.0),
+                    left: 30.0, top: 50.0, right: 0.0),
 
                 child: SizedBox(
                   width: MediaQuery
                       .of(context)
                       .size
-                      .width * 2.3,
+                      .width ,
                   child: RaisedButton(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(30.0),
                     color: PrimaryColor,
 
                     elevation: 5.0,
                     textColor: Colors.white,
                     splashColor: Colors.black,
+
                     onPressed: () async {
                       if(await db.queryRowCountCarro() != 0){
                         Vehiculo vehiculoUp = null;
@@ -456,7 +458,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                         }
                     },
                     child: Center(
-                        child: Center(child: Text('Guardar Vehiculo'))),
+                        child: Center(
+                            child: Text('Guardar Vehiculo',)
+
+                        )
+                    ),
                   ),
                 ),
               ),
