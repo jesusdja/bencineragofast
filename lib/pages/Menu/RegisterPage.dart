@@ -219,10 +219,11 @@ class MyCustomFormState extends State<MyCustomForm> {
         itemCount: 1,
         itemBuilder: (context, index) {
           return Container (
+
             margin: EdgeInsets.only(left: 20, right: 50, top: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Container(
                 child: Row(
@@ -271,7 +272,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       ),
 
                     ),
-                   // Image.asset('assets/images/icono_gas.png',width: 80,height: 80,),//=====No va , icono de otra cosa
+                    Image.asset('assets/images/icono_gas.png',width: 120,height: 120,),//=====No va , icono de otra cosa
                   ],
                 ),
               ),
@@ -318,7 +319,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           ],
                         ),
                       ),
-                      Image.asset('assets/images/icono_gas.png',width: 120,height: 120,),
+
                     ],
                   ),
                 ),
