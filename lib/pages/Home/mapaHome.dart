@@ -8,13 +8,16 @@ import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../BotonesHome/menu_dist.dart';
-import '../BotonesHome/menu_gas.dart';
+import '../BotonesHome/menu_boton_tipoGas.dart';
+import '../BotonesHome/menu_boton_distancia.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:device_id/device_id.dart';
 import 'package:bencineragofast/main.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'place.dart';
+import 'dart:math' as math;
+import 'package:vector_math/vector_math_64.dart' as math64;
+
 import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 
 class mapaHomePage extends StatefulWidget {
@@ -27,9 +30,8 @@ class mapaHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<mapaHomePage> {
 
-
   GoogleMapController mapController;
-
+  LatLng MelatLng;
   Map<String,Place> markerMap = Map();
   Place placed;
   var db ;
@@ -38,10 +40,9 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   @override
   void initState() {
-    super.initState();
     db = new DatabaseHelper();
     initDeviceId();
-   // initvalues();
+    super.initState();
   }
 
   //Inicializar variable de Id del telefono
@@ -72,6 +73,12 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     if(await db.queryRowCount() != 0){
       print("ya esta registrado el Usuario");
+      User userUp = new User(1,_deviceid,"20","All");
+      db.updatebtngas(userUp);
+      db.updateBtnDis(userUp);
+      final allRows = await db.queryAllRows();
+      print('query all rows:');
+      allRows.forEach((row) => print(row));
     }else{
       String btngas = "All";
       String btndis = "20";
@@ -82,40 +89,42 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   //AGREGAR MARCADORES
-  void initMarkers() async {
-    var currentLocation = <String, double>{};
-    final location = LocationManager.Location();
-    currentLocation = await location.getLocation();
-    final lat = currentLocation["latitude"];
-    final lng = currentLocation["longitude"];
-    //markerMap[marker.id] = 'f';
-
-    LatLng latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93');
+  void initMarkers() {
+    LatLng latlo = LatLng(8.270346,-62.7579366);
+    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0, marca: 'SHELL', precio: 20.0, favorito: false);
     initMarker(placed);
-    latlo = LatLng(8.270346,-62.7579366);
-    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91');
+    latlo = LatLng(8.2965626,-62.7356024);
+    placed = Place(id: 'gas4', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'PETROBRAS', precio: 5.0, favorito: false);
     initMarker(placed);
     latlo = LatLng(8.2081334,-62.8328788);
-    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93');
+    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'COPEC', precio: 100.0, favorito: true);
     initMarker(placed);
+    latlo = LatLng(8.2965626,-62.7356024);
+    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'SHELL', precio: 80.0, favorito: false);
+    initMarker(placed);
+
+
   }
 
-  initMarker(Place place) {
-    GoogleMapController mapController2 = mapController;
-    //mapController.onMarkerTapped.add(_onInfoWindowTapped);
-    mapController2.clearMarkers().then((val) async {
-      final Marker marker = await mapController2.addMarker(MarkerOptions(
-        visible: true,
-        draggable: true,
-        flat: false,
-        position: place.latLng,
-        infoWindowText: InfoWindowText(place.id, place.description),
-        icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
-      )
-      );
-      markerMap[marker.id] = place;
-    });
+  initMarker(Place place) async {
+
+    if(await calcularDistancia(place.latLng.latitude,place.latLng.longitude,'20')){
+      GoogleMapController mapController2 = mapController;
+      //mapController.onMarkerTapped.add(_onInfoWindowTapped);
+      mapController2.clearMarkers().then((val) async {
+        final Marker marker = await mapController2.addMarker(MarkerOptions(
+          visible: true,
+          draggable: true,
+          flat: false,
+          position: place.latLng,
+          infoWindowText: InfoWindowText(place.id, place.description),
+          icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+        )
+        );
+        markerMap[marker.id] = place;
+      });
+    }
+
   }
 
   void _onInfoWindowTapped(Marker marker) {
@@ -128,23 +137,44 @@ class _MyHomePageState extends State<mapaHomePage> {
     );
   }
 
+  Future<bool> calcularDistancia(double lat2, double lg2, String distancia) async {
+
+    var currentLocation = <String, double>{};
+    final location = LocationManager.Location();
+    currentLocation = await location.getLocation();
+    final lat = currentLocation["latitude"];
+    final lng = currentLocation["longitude"];
+    double lat1 = lat;
+    double lg1 = lng;
+    bool rango = false;
+    double d = 0.0;
+    double radio = 6378;
+    double SumLat = math64.radians(lat2 - lat1);
+    double Sumlg = math64.radians(lg2 - lg1);
+    double a =  math.pow((math.sin(SumLat / 2)),2) +
+        math.cos(math64.radians(lat1)) *
+            math.cos(math64.radians(lat2)) *
+            math.pow((math.sin(Sumlg / 2)),2) ;
+    double c = 2 * (math.atan2(math.sqrt(a),math.sqrt(1 - a)));
+    d = radio * c;
+    if(d <= double.parse('$distancia')){rango = true;}
+    return rango;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-
         title: new Text("GoFast Bencineras"),
         backgroundColor: PrimaryColor ,
           actions: <Widget>[
             IconButton(
-
               iconSize: 40,
               icon: Icon(Icons.map),
               tooltip: 'Lista de Gasolineras',
-              onPressed: () {
+              onPressed: (){
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,)),
+                    builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,MelatLng: MelatLng,)),
                 );
               },
             ),
@@ -155,7 +185,6 @@ class _MyHomePageState extends State<mapaHomePage> {
           children: <Widget>[
             new UserAccountsDrawerHeader(
                 decoration: new BoxDecoration(color: PrimaryColor,
-
                  ),
                 accountName: new Text('Nombre de Usuario'),
                 accountEmail: new Text('Vehiculo Registrado')),
@@ -239,12 +268,13 @@ class _MyHomePageState extends State<mapaHomePage> {
             right: 10.0,
             bottom: 20.0,
             width: MediaQuery.of(context).size.width,
-            child: Menu_dist(mapController: mapController,markerMap: markerMap,),
+            child: Menu_tgas(mapController: mapController,markerMap: markerMap,),
           ),
          Positioned(
             right: 10.0,
             bottom: 90.0,
-            child: Menu_gas(mapController: mapController,markerMap: markerMap,),
+           width: MediaQuery.of(context).size.width,
+            child: Menu_bdis(mapController: mapController,markerMap: markerMap,),
           ),
         ],
       ),
@@ -266,6 +296,8 @@ class _MyHomePageState extends State<mapaHomePage> {
       currentLocation = await location.getLocation();
       final lat = currentLocation["latitude"];
       final lng = currentLocation["longitude"];
+
+      MelatLng = LatLng(lat,lng);
 
       //final dist =
       final center = LatLng(lat, lng);

@@ -157,7 +157,6 @@ class DatabaseHelper {
         'UPDATE $tablecarro SET marcaVehiculo = \'${vehiculo.marcaVehiculo}\',modeloVehiculo = \'${vehiculo.modeloVehiculo}\',yearsVehiculo = \'${vehiculo.yearsVehiculo}\',combustible = \'${vehiculo.combustible}\' WHERE $colId = ${vehiculo.idTable}');
   }
 
-
   Future<User> getId(int id) async {
     var dbClient = await database;
     List<Map> result = await dbClient.query(table,

@@ -1,32 +1,31 @@
 import 'package:bencineragofast/pages/Home/place.dart';
+import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as mate;
 import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:bencineragofast/pages/Home/mapaHome.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'dart:math' as math;
-import 'package:vector_math/vector_math_64.dart';
+import 'package:vector_math/vector_math_64.dart' as math64;
 
-class Menu_gas extends StatefulWidget {
+class Menu_tgas extends StatefulWidget {
 
   final Function() onPressed;
   final String tooltip;
   final IconData icon;
-  final Map<String,Place> markerMap;
-
-
-  Menu_gas({this.onPressed, this.tooltip, this.icon,this.mapController,this.markerMap});
 
   final GoogleMapController mapController;
+  final Map<String,Place> markerMap;
+
+  Menu_tgas({this.onPressed, this.tooltip, this.icon,this.mapController,this.markerMap});
 
   @override
   _MenuFABState createState() => _MenuFABState();
 }
 
-class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin {
+class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin {
+
 
   bool isOpened = false;
   AnimationController _animationController;
@@ -36,7 +35,8 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
 
-  String name_gas_button = '20Km';
+  String name_gas_button = 'All';
+
 
   @override
   initState() {
@@ -51,8 +51,8 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
 
     _buttonColor = ColorTween(
-      begin: mate.Colors.red,
-      end: mate.Colors.red,
+      begin: Colors.red,
+      end: Colors.red,
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(
@@ -61,7 +61,6 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
         curve: Curves.linear,
       ),
     ));
-
     _translateButton = Tween<double>(
       begin: _fabHeight,
       end: -14.0,
@@ -73,28 +72,11 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
         curve: _curve,
       ),
     ));
-
     super.initState();
   }
 
-  @override
-  dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  animate() {
-
-    if (!isOpened) {
-      _animationController.forward();
-    } else {
-      _animationController.reverse();
-    }
-    isOpened = !isOpened;
-  }
-
   //AGREGAR MARCADORES
-  void initMarkers (String distancia) async {
+  void initMarkers (String tipoDegas) async {
 
     Map<String,Place> markerMap = widget.markerMap;
 
@@ -104,25 +86,25 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
     final lat = currentLocation["latitude"];
     final lng = currentLocation["longitude"];
 
-    String ValorTipoGas = "";
+    String ValorKm = "";
 
     var db = new DatabaseHelper();
     User user = null;
     if(await db.queryRowCount() != 0){
       user = await db.getUser();
-      ValorTipoGas = user.botonTipoGas;
+      ValorKm = user.botonDisGas;
     }
 
     User userUp = null;
     if(user != null){
-      userUp = new User(1,user.device_id,distancia,user.botonTipoGas);
-      db.updateBtnDis(userUp);
+      userUp = new User(1,user.device_id,user.botonDisGas,tipoDegas);
+      db.updatebtngas(userUp);
     }
 
     List<String> keyys = new List<String>();
     void iterateMapEntry(key, value) {
       Place p = value;
-      if(((p.TipoGas == ValorTipoGas)||("All" == ValorTipoGas))&(calcularDistancia(lat,lng,p.latitude,p.longitude,distancia))){
+      if(((p.TipoGas == tipoDegas)||("All" == tipoDegas))&((calcularDistancia(lat,lng,p.latitude,p.longitude,ValorKm))||("All" == ValorKm))){
         keyys.add(key);
         initMarker(p);
       }
@@ -136,10 +118,8 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
     if(keyys.length == 0){
       widget.mapController.clearMarkers();
     }
+
   }
-
-
-
   initMarker(Place place) {
     GoogleMapController mapController2 = widget.mapController;
     mapController2.clearMarkers().then((val) async {
@@ -160,11 +140,11 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
     bool rango = false;
     double d = 0.0;
     double radio = 6378;
-    double SumLat = radians(lat2 - lat1);
-    double Sumlg = radians(lg2 - lg1);
+    double SumLat = math64.radians(lat2 - lat1);
+    double Sumlg = math64.radians(lg2 - lg1);
     double a =  math.pow((math.sin(SumLat / 2)),2) +
-        math.cos(radians(lat1)) *
-            math.cos(radians(lat2)) *
+        math.cos(math64.radians(lat1)) *
+            math.cos(math64.radians(lat2)) *
             math.pow((math.sin(Sumlg / 2)),2) ;
     double c = 2 * (math.atan2(math.sqrt(a),math.sqrt(1 - a)));
     d = radio * c;
@@ -172,57 +152,96 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
     return rango;
   }
 
-  //AGREGAR BOTONES INTERNOS
-  Widget add({String text, int tagg, double zoom, String dis}) {
+  @override
+  dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  animate() {
+
+    if (!isOpened) {
+      _animationController.forward();
+    } else {
+      _animationController.reverse();
+    }
+    isOpened = !isOpened;
+  }
+
+  Widget textadd(String t){
+    if(t == 'All'){
+      return Icon(Icons.local_gas_station);
+    }else{
+      return Text(
+        t,
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0
+        ),
+      );
+    }
+  }
+
+
+  Widget add({String text, int tagg, String tipogas}) {
     return Container(
       child: FloatingActionButton(
-        onPressed: (){animate(); name_gas_button = text;refresh(zoom);initMarkers(dis);},
+        onPressed: (){animate(); name_gas_button = text;initMarkers(tipogas);},
         tooltip: 'Add',
         heroTag: tagg,
-        backgroundColor: mate.Colors.red[900] ,
-        child: Text(
-          text,
-          style: TextStyle(
-              color: mate.Colors.white,
-              fontSize: 18.0
-          ),
-        ),
+        backgroundColor: Colors.red[900],
+        child: textadd(text),
       ),
     );
   }
 
-  //AGREGAR BOTON INICIAL
-  Widget toggle() {
-
-    return Container(
-      child: FloatingActionButton(
-        backgroundColor: mate.Colors.red[900],
-        onPressed: animate,
-        heroTag: 4,
-        tooltip: 'Toggle',
-        child: Text(
+  Widget texttoggle(){
+    if(name_gas_button == 'All'){
+      return Icon(Icons.local_gas_station);
+    }else{
+      return Text(
         name_gas_button,
         style: TextStyle(
-          color: mate.Colors.white,
-          fontSize: 18.0
-          ),
+            color: Colors.white,
+            fontSize: 18.0
         ),
+      );
+    }
+  }
+
+  Widget toggle() {
+    return Container(
+      child: FloatingActionButton(
+        backgroundColor: Colors.red[900],
+        heroTag: 0,
+        onPressed: animate,
+        tooltip: 'Toggle',
+        child: texttoggle(),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Row (
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
+        Transform(
+          transform: Matrix4.translationValues(
+            _translateButton.value * 4.0,
+            0.0,
+            0.0,
+          ),
+          child: add(text: 'All', tagg: 8,tipogas: 'All'),
+        ),
         Transform(
           transform: Matrix4.translationValues(
             _translateButton.value * 3.0,
             0.0,
             0.0,
           ),
-          child: add(text: '2Km',tagg: 5,zoom: 15,dis: '2'),
+          child: add(text: '91', tagg: 1,tipogas: '91'),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -230,7 +249,7 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
             0.0,
             0.0,
           ),
-          child: add(text: '10Km',tagg: 6,zoom: 13,dis: '10'),
+          child: add(text: '93',tagg: 2,tipogas: '93'),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -238,41 +257,11 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
             0.0,
             0.0,
           ),
-          child: add(text: '20Km', tagg: 7,zoom: 11,dis: '20'),
+          child: add(text: '95',tagg: 3,tipogas: '95'),
         ),
         toggle(),
-        //initMarkers(20),
       ],
     );
   }
-
-
-  void refresh(double zoomcam) async {
-
-    GoogleMapController mapController2 = widget.mapController;
-    final center = await getUserLocation();
-    mapController2.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: center == null ? LatLng(0, 0) : center, zoom: zoomcam)));
-
-  }
-
-  Future<LatLng> getUserLocation() async {
-    var currentLocation = <String, double>{};
-    final location = LocationManager.Location();
-    try {
-      currentLocation = await location.getLocation();
-      final lat = currentLocation["latitude"];
-      final lng = currentLocation["longitude"];
-      final center = LatLng(lat, lng);
-      return center;
-    } on Exception {
-      currentLocation = null;
-      return null;
-    }
-  }
-
-
-
-
 
 }
