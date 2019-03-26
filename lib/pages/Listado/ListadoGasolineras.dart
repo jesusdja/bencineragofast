@@ -29,13 +29,18 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
   User u;
 
   TraerUsuario() async {
-    u = await db.getUser();
+    db = new DatabaseHelper();
+    User u = await db.getUser();
+    setState((){
+
+      kmActual = u.botonDisGas;
+
+    });
   }
 
   @override
   Future initState() {
     _controller = TabController(length: 4, vsync: this );
-    db = new DatabaseHelper();
     MelatLng = widget.MelatLng;
 
     TraerUsuario();
@@ -50,7 +55,7 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
     return new Scaffold(
       appBar: new AppBar(
         backgroundColor: PrimaryColor,
-        title: new Text('Bencineras '),
+        title: new Text('Distancia maxima $kmActual Km'),
         bottom: getTabBar(),
       ),
       body: getTabBarView(),

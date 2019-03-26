@@ -9,6 +9,9 @@ class Place {
     @required this.TipoGas,
     @required this.name,
     this.description,
+    this.marca,
+    this.precio,
+    this.favorito,
   })  : assert(id != null),
         assert(DiferenciaDist != null),
         assert(latLng != null),
@@ -21,6 +24,9 @@ class Place {
   final String TipoGas;
   final String name;
   final String description;
+  final String marca;
+  final double precio;
+  final bool favorito;
 
   double get latitude => latLng.latitude;
   double get longitude => latLng.longitude;
@@ -32,6 +38,9 @@ class Place {
     String TipoGas,
     String name,
     String description,
+    String marca,
+    double precio,
+    bool favorito,
   }) {
     return Place(
       id: id ?? this.id,
@@ -40,6 +49,9 @@ class Place {
       TipoGas: TipoGas ?? this.TipoGas,
       name: name ?? this.name,
       description: description ?? this.description,
+      marca: marca ?? this.marca,
+      precio: precio ?? this.precio,
+     favorito: favorito ?? this.favorito,
     );
   }
 }

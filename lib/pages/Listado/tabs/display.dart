@@ -74,16 +74,43 @@ class _displayState extends State<display> {
     Future iterateMapEntry(key, value) {
       Place p = value;
       double d = calcularDistancia(p.latitude,p.longitude);
-      //print(d);
       if(kmActual != null){
         if(double.parse('$kmActual') > d){
           places.add(p);
-          //print('***************');
         }
-        //print(d);
       }
     }
     markerMap.forEach(iterateMapEntry);
+
+    List<Place> places_total = places;
+    List<Place> places_ordenado = new List<Place>();
+
+    places_total = places;
+    int  pos = 0;
+    double aux = 20,dis = 0;
+    bool Entrar = true;
+
+    while(Entrar) {
+      if(places_total.length == 0){
+        Entrar = false;
+      }
+      aux = 1000.0;
+      for(int i = 0; i < places_total.length; i++){
+        dis = calcularDistancia(places_total[i].latitude,places_total[i].longitude);
+        if(dis < aux){
+          aux = dis;
+          pos = i;
+        }
+      }
+      if(aux != 1000.0){
+        places_ordenado.add(places_total[pos]);
+        places_total.removeAt(pos);
+      }
+
+    }
+    places = places_ordenado;
+
+
   }
 
   @override

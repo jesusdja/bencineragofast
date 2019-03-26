@@ -15,6 +15,9 @@ import 'package:device_id/device_id.dart';
 import 'package:bencineragofast/main.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'place.dart';
+import 'dart:math' as math;
+import 'package:vector_math/vector_math_64.dart' as math64;
+
 
 class mapaHomePage extends StatefulWidget {
 
@@ -33,9 +36,9 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   @override
   void initState() {
-    super.initState();
     db = new DatabaseHelper();
     initDeviceId();
+    super.initState();
   }
 
   //Inicializar variable de Id del telefono
@@ -46,7 +49,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     setState(() {
       _deviceid = deviceid;
     });
-
+    final center = await getUserLocation();
 
     if(await db.queryRowCount() != 0){
       print("ya esta registrado");
@@ -68,31 +71,38 @@ class _MyHomePageState extends State<mapaHomePage> {
   //AGREGAR MARCADORES
   void initMarkers() {
     LatLng latlo = LatLng(8.270346,-62.7579366);
-    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0);
-    initMarker(placed);
-    latlo = LatLng(8.2081334,-62.8328788);
-    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93',DiferenciaDist: 0);
+    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0, marca: 'SHELL', precio: 0.0, favorito: false);
     initMarker(placed);
     latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0);
+    placed = Place(id: 'gas4', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'PETROBRAS', precio: 0.0, favorito: false);
+    initMarker(placed);
+    latlo = LatLng(8.2081334,-62.8328788);
+    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'COPEC', precio: 0.0, favorito: true);
+    initMarker(placed);
+    latlo = LatLng(8.2965626,-62.7356024);
+    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'SHELL', precio: 0.0, favorito: false);
     initMarker(placed);
   }
 
-  initMarker(Place place) {
-    GoogleMapController mapController2 = mapController;
-    //mapController.onMarkerTapped.add(_onInfoWindowTapped);
-    mapController2.clearMarkers().then((val) async {
-      final Marker marker = await mapController2.addMarker(MarkerOptions(
-        visible: true,
-        draggable: true,
-        flat: false,
-        position: place.latLng,
-        infoWindowText: InfoWindowText(place.id, place.description),
-        icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
-      )
-      );
-      markerMap[marker.id] = place;
-    });
+  initMarker(Place place) async {
+
+    if(await calcularDistancia(place.latLng.latitude,place.latLng.longitude,'20')){
+      GoogleMapController mapController2 = mapController;
+      //mapController.onMarkerTapped.add(_onInfoWindowTapped);
+      mapController2.clearMarkers().then((val) async {
+        final Marker marker = await mapController2.addMarker(MarkerOptions(
+          visible: true,
+          draggable: true,
+          flat: false,
+          position: place.latLng,
+          infoWindowText: InfoWindowText(place.id, place.description),
+          icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+        )
+        );
+        markerMap[marker.id] = place;
+      });
+    }
+
   }
 
   void _onInfoWindowTapped(Marker marker) {
@@ -103,6 +113,30 @@ class _MyHomePageState extends State<mapaHomePage> {
         return DetailsMarkers(mapController: mapController, place: marcador_seleccionado);
       }),
     );
+  }
+
+  Future<bool> calcularDistancia(double lat2, double lg2, String distancia) async {
+
+    var currentLocation = <String, double>{};
+    final location = LocationManager.Location();
+    currentLocation = await location.getLocation();
+    final lat = currentLocation["latitude"];
+    final lng = currentLocation["longitude"];
+    double lat1 = lat;
+    double lg1 = lng;
+    bool rango = false;
+    double d = 0.0;
+    double radio = 6378;
+    double SumLat = math64.radians(lat2 - lat1);
+    double Sumlg = math64.radians(lg2 - lg1);
+    double a =  math.pow((math.sin(SumLat / 2)),2) +
+        math.cos(math64.radians(lat1)) *
+            math.cos(math64.radians(lat2)) *
+            math.pow((math.sin(Sumlg / 2)),2) ;
+    double c = 2 * (math.atan2(math.sqrt(a),math.sqrt(1 - a)));
+    d = radio * c;
+    if(d <= double.parse('$distancia')){rango = true;}
+    return rango;
   }
 
   @override

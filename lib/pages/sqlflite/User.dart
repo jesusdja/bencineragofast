@@ -5,9 +5,6 @@ class User {
   String _botonDisGas;
   String _botonTipGas;
 
-
-
-
   User(this.idTable, this._idDevice, this._botonDisGas,this._botonTipGas);
 
   User.map(dynamic obj) {
