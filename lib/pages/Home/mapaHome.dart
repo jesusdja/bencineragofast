@@ -8,8 +8,8 @@ import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../BotonesHome/menu_dist.dart';
-import '../BotonesHome/menu_gas.dart';
+import '../BotonesHome/menu_boton_tipoGas.dart';
+import '../BotonesHome/menu_boton_distancia.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:device_id/device_id.dart';
 import 'package:bencineragofast/main.dart';
@@ -49,7 +49,6 @@ class _MyHomePageState extends State<mapaHomePage> {
     setState(() {
       _deviceid = deviceid;
     });
-    final center = await getUserLocation();
 
     if(await db.queryRowCount() != 0){
       print("ya esta registrado");
@@ -71,17 +70,19 @@ class _MyHomePageState extends State<mapaHomePage> {
   //AGREGAR MARCADORES
   void initMarkers() {
     LatLng latlo = LatLng(8.270346,-62.7579366);
-    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0, marca: 'SHELL', precio: 0.0, favorito: false);
+    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0, marca: 'SHELL', precio: 20.0, favorito: false);
     initMarker(placed);
     latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 'gas4', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'PETROBRAS', precio: 0.0, favorito: false);
+    placed = Place(id: 'gas4', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'PETROBRAS', precio: 5.0, favorito: false);
     initMarker(placed);
     latlo = LatLng(8.2081334,-62.8328788);
-    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'COPEC', precio: 0.0, favorito: true);
+    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'COPEC', precio: 100.0, favorito: true);
     initMarker(placed);
     latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'SHELL', precio: 0.0, favorito: false);
+    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'SHELL', precio: 80.0, favorito: false);
     initMarker(placed);
+
+
   }
 
   initMarker(Place place) async {
@@ -246,12 +247,13 @@ class _MyHomePageState extends State<mapaHomePage> {
             right: 10.0,
             bottom: 20.0,
             width: MediaQuery.of(context).size.width,
-            child: Menu_dist(mapController: mapController,markerMap: markerMap,),
+            child: Menu_tgas(mapController: mapController,markerMap: markerMap,),
           ),
          Positioned(
             right: 10.0,
             bottom: 90.0,
-            child: Menu_gas(mapController: mapController,markerMap: markerMap,),
+           width: MediaQuery.of(context).size.width,
+            child: Menu_bdis(mapController: mapController,markerMap: markerMap,),
           ),
         ],
       ),

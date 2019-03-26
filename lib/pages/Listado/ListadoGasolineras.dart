@@ -3,7 +3,10 @@ import 'package:bencineragofast/pages/Menu/Data/DATACOPIA.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:bencineragofast/pages/Listado/tabs/display.dart';
+import 'package:bencineragofast/pages/Listado/tabs/marcador_distancia.dart';
+import 'package:bencineragofast/pages/Listado/tabs/marcador_marca.dart';
+import 'package:bencineragofast/pages/Listado/tabs/marcador_favoritos.dart';
+import 'package:bencineragofast/pages/Listado/tabs/marcador_precio.dart';
 import 'package:bencineragofast/main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -78,10 +81,10 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
 
     return TabBarView(
       children: <Widget>[
-        display(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,),
-        DATACOPIA(),
-        Center( child: Text("por precios ")),
-        Center( child: Text("por precios ")),
+        marcador_distancia(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,),
+        marcador_marca(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,),
+        marcador_precio(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,),
+        marcador_fav(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,),
       ],
       controller: _controller,
     );

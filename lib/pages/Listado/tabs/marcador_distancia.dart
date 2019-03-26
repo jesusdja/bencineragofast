@@ -10,9 +10,9 @@ import 'dart:math' as math;
 import 'package:vector_math/vector_math_64.dart' as math64;
 import 'package:location/location.dart' as LocationManager;
 
-class display extends StatefulWidget {
+class marcador_distancia extends StatefulWidget {
 
-  display({this.mapController,this.markerMap,this.controller,this.kmActual,this.MelatLng});
+  marcador_distancia({this.mapController,this.markerMap,this.controller,this.kmActual,this.MelatLng});
 
   final Map<String,Place> markerMap;
   final GoogleMapController mapController;
@@ -24,7 +24,7 @@ class display extends StatefulWidget {
   _displayState createState() => new _displayState();
 }
 
-class _displayState extends State<display> {
+class _displayState extends State<marcador_distancia> {
 
   Map<String,Place> markerMap;
   List<Place> places = new List<Place>();

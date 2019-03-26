@@ -8,7 +8,7 @@ import 'package:location/location.dart' as LocationManager;
 import 'dart:math' as math;
 import 'package:vector_math/vector_math_64.dart';
 
-class Menu_gas extends StatefulWidget {
+class Menu_bdis extends StatefulWidget {
 
   final Function() onPressed;
   final String tooltip;
@@ -16,7 +16,7 @@ class Menu_gas extends StatefulWidget {
   final Map<String,Place> markerMap;
 
 
-  Menu_gas({this.onPressed, this.tooltip, this.icon,this.mapController,this.markerMap});
+  Menu_bdis({this.onPressed, this.tooltip, this.icon,this.mapController,this.markerMap});
 
   final GoogleMapController mapController;
 
@@ -24,7 +24,7 @@ class Menu_gas extends StatefulWidget {
   _MenuFABState createState() => _MenuFABState();
 }
 
-class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin {
+class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin {
 
   bool isOpened = false;
   AnimationController _animationController;
@@ -216,11 +216,11 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
       children: <Widget>[
         Transform(
           transform: Matrix4.translationValues(
-            _translateButton.value * 3.0,
+            _translateButton.value* 3.0,
             0.0,
             0.0,
           ),
-          child: add(text: '2Km',tagg: 5,zoom: 15,dis: '2'),
+          child: add(text: '20Km', tagg: 7,zoom: 11,dis: '20'),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -232,11 +232,11 @@ class _MenuFABState extends State<Menu_gas> with SingleTickerProviderStateMixin 
         ),
         Transform(
           transform: Matrix4.translationValues(
-            _translateButton.value,
+            _translateButton.value ,
             0.0,
             0.0,
           ),
-          child: add(text: '20Km', tagg: 7,zoom: 11,dis: '20'),
+          child: add(text: '2Km',tagg: 5,zoom: 15,dis: '2'),
         ),
         toggle(),
         //initMarkers(20),
