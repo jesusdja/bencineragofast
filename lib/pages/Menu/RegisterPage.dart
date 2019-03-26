@@ -271,7 +271,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       ),
 
                     ),
-                    Image.asset('assets/images/icono_gas.png',width: 80,height: 80,),//=====No va , icono de otra cosa
+                   // Image.asset('assets/images/icono_gas.png',width: 80,height: 80,),//=====No va , icono de otra cosa
                   ],
                 ),
               ),
@@ -318,7 +318,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           ],
                         ),
                       ),
-                      Image.asset('assets/images/icono_gas.png',width: 80,height: 80,),
+                      Image.asset('assets/images/icono_gas.png',width: 120,height: 120,),
                     ],
                   ),
                 ),
@@ -364,7 +364,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                          ],
                        ),
                      ),
-                     Image.asset('assets/images/icono_gas.png',width: 80,height: 80,),
+                    // Image.asset('assets/images/icono_gas.png',width: 80,height: 80,),
                    ],
                  ),
                ),
@@ -410,7 +410,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           ],
                         ),
                       ),
-                      Image.asset('assets/images/icono_gas.png',width: 80,height: 110,),
+                     // Image.asset('assets/images/icono_gas.png',width: 80,height: 110,),
                     ],
                   ),
                 ),
