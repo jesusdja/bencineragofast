@@ -47,6 +47,11 @@ class MyCustomFormState extends State<MyCustomForm> {
   bool _isButtonDisabledyear =        true;
   bool _isButtonDisabledcombustible = true;
 
+  bool _activatebutton1 = true;
+  bool _activatebutton2 = true;
+  bool _activatebutton3 = true;
+  bool _activatebutton4 = false;
+
 
 
   _ElementosMarca({List<Vehiculo> vehiculo}) {
@@ -62,6 +67,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                   _valueMarca = vehiculo[index].marcaVehiculo;
                   _isButtonDisabledmarca =true;
                   _isButtonDisabledmodel = false;
+                  _activatebutton1 = false;
+
                   //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
                 });
                 print(_valueMarca);
@@ -98,6 +105,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 _valueModel = vehiculo[index].modeloVehiculo;
                 _isButtonDisabledmodel = true;
                 _isButtonDisabledyear = false;
+                _activatebutton2 = false;
 
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
@@ -135,6 +143,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 _valueYear = vehiculo[index].yearsVehiculo;
                 _isButtonDisabledyear = true;
                 _isButtonDisabledcombustible = false;
+                _activatebutton3 = false;
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
               print(_valueYear);
@@ -173,6 +182,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 _isButtonDisabledmodel =true;
                 _isButtonDisabledyear =true;
                 _isButtonDisabledcombustible =true;
+
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
               print(_valueCombustible);
@@ -272,7 +282,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                       ),
 
                     ),
-                    Image.asset('assets/images/icono_gas.png',width: 120,height: 120,),//=====No va , icono de otra cosa
+                    Image.asset('assets/images/icono_gas.png',width: 120,height: 120,
+                    ),//=====No va , icono de otra cosa
                   ],
                 ),
               ),
@@ -300,17 +311,19 @@ class MyCustomFormState extends State<MyCustomForm> {
                             ),
                           AbsorbPointer(
                             absorbing: _isButtonDisabledmodel,
+
                             child:   SizedBox(
                               width: MediaQuery
                                   .of(context)
                                   .size
                                   .width * .5,
                               child: FlatButton(
+
                                   child: Text(_valueModel),
                                   splashColor: Colors.black,
                                   padding: const EdgeInsets.all(25.0),
                                   textColor: Colors.white,
-                                  color: PrimaryColor,
+                                  color: _activatebutton1 ? Colors.grey:  PrimaryColor ,
                                   onPressed: () {
                                     ModelDeVheiculo();}
                               ),
@@ -357,7 +370,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                    splashColor: Colors.black,
                                    padding: const EdgeInsets.all(25.0),
                                    textColor: Colors.white,
-                                   color: PrimaryColor,
+                                   color: _activatebutton2 ? Colors.grey:  PrimaryColor ,
                                    onPressed: () {YearsVehiculo();}
                                ),
                              ),
@@ -403,7 +416,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                                    splashColor: Colors.black,
                                    padding: const EdgeInsets.all(25.0),
                                    textColor: Colors.white,
-                                   color: PrimaryColor,
+                                   color: _activatebutton3 ? Colors.grey:  PrimaryColor ,
                                    onPressed: () {ConbustibleVheiculo();}
                                ),
                              ),
