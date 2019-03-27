@@ -65,10 +65,10 @@ class _displayState extends State<marcador_fav> {
   }
 
   TraerUsuario() async {
-    User u = await db.getUser();
+    /*User u = await db.getUser();
     setState(() {
       kmActual = u.botonDisGas;
-    });
+    });*/
 
     markerMap = widget.markerMap;
     Future iterateMapEntry(key, value) {
@@ -99,7 +99,6 @@ class _displayState extends State<marcador_fav> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: ListView.builder(
         itemCount: places.length,

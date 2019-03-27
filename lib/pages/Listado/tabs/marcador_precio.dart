@@ -65,10 +65,10 @@ class _displayState extends State<marcador_precio> {
   }
 
   TraerUsuario() async {
-    User u = await db.getUser();
+    /*User u = await db.getUser();
     setState(() {
       kmActual = u.botonDisGas;
-    });
+    });*/
 
     markerMap = widget.markerMap;
     Future iterateMapEntry(key, value) {
