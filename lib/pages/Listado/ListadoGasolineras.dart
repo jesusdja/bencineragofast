@@ -34,11 +34,11 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
   TraerUsuario() async {
     db = new DatabaseHelper();
     User u = await db.getUser();
-    setState((){
+   // setState((){
 
       kmActual = u.botonDisGas;
 
-    });
+   // });
   }
 
   @override
