@@ -103,7 +103,6 @@ class _MyHomePageState extends State<mapaHomePage> {
     placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'SHELL', precio: 80.0, favorito: false);
     initMarker(placed);
 
-
   }
 
   initMarker(Place place) async {
