@@ -4,54 +4,53 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class Place {
   const Place({
     @required this.id,
-    @required this.DiferenciaDist,
+    @required this.address,
     @required this.latLng,
-    @required this.TipoGas,
-    @required this.name,
-    this.description,
-    this.marca,
-    this.precio,
-    this.favorito,
+    @required this.brand,
+    @required this.prices,
+    @required this.last_price_update,
+    @required this.services,
+    @required this.favorito,
   })  : assert(id != null),
-        assert(DiferenciaDist != null),
+        assert(address != null),
         assert(latLng != null),
-        assert(TipoGas != null),
-        assert(name != null);
+        assert(brand != null),
+        assert(prices != null),
+        assert(last_price_update != null),
+        assert(services != null),
+        assert(favorito != null);
 
-  final String id;
-  final double DiferenciaDist;
+  final int id;
+  final String address;
   final LatLng latLng;
-  final String TipoGas;
-  final String name;
-  final String description;
-  final String marca;
-  final double precio;
+  final String brand;
+  final List<List<String>> prices;
+  final String last_price_update;
+  final List<String> services;
   final bool favorito;
 
   double get latitude => latLng.latitude;
   double get longitude => latLng.longitude;
 
   Place copyWith({
-    String id,
-    double DiferenciaDist,
+    int id,
+    String address,
     LatLng latLng,
-    String TipoGas,
-    String name,
-    String description,
-    String marca,
-    double precio,
+    String brand,
+    List<List<String>> prices,
+    String last_price_update,
+    List<String> services,
     bool favorito,
   }) {
     return Place(
       id: id ?? this.id,
-      DiferenciaDist: DiferenciaDist ?? this.DiferenciaDist,
+      address: address ?? this.address,
       latLng: latLng ?? this.latLng,
-      TipoGas: TipoGas ?? this.TipoGas,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      marca: marca ?? this.marca,
-      precio: precio ?? this.precio,
-     favorito: favorito ?? this.favorito,
+      brand: brand ?? this.brand,
+      prices: prices ?? this.prices,
+      last_price_update: last_price_update ?? this.last_price_update,
+      services: services ?? this.services,
+      favorito: favorito ?? this.favorito,
     );
   }
 }

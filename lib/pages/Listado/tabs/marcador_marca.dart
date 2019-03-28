@@ -112,7 +112,7 @@ class _displayState extends State<marcador_marca> {
         itemCount: places.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(places[index].description),
+            title: Text(places[index].brand),
             subtitle: Text(places[index].marca),
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
             onTap: () {

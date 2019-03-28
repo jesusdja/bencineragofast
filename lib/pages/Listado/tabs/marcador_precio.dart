@@ -121,7 +121,7 @@ class _displayState extends State<marcador_precio> {
         itemCount: places.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(places[index].description),
+            title: Text(places[index].brand),
             subtitle: Text(places[index].precio.toString()),
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
             onTap: () {

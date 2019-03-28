@@ -1,3 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as LocationManager;
+import 'package:device_id/device_id.dart';
+import 'dart:math' as math;
+
+import 'place.dart';
+import 'package:bencineragofast/main.dart';
+import 'package:bencineragofast/pages/Listado/Details_markers.dart';
+import 'package:vector_math/vector_math_64.dart' as math64;
+import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 import 'package:bencineragofast/pages/Menu/AboutPage.dart';
 import 'package:bencineragofast/pages/Menu/FavoritesPage.dart';
 import 'package:bencineragofast/pages/Menu/HelpPage.dart';
@@ -6,19 +17,9 @@ import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
-import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
-import 'package:location/location.dart' as LocationManager;
-import 'package:device_id/device_id.dart';
-import 'package:bencineragofast/main.dart';
-import 'package:bencineragofast/pages/Listado/Details_markers.dart';
-import 'place.dart';
-import 'dart:math' as math;
-import 'package:vector_math/vector_math_64.dart' as math64;
 
-import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 
 class mapaHomePage extends StatefulWidget {
 
@@ -36,7 +37,6 @@ class _MyHomePageState extends State<mapaHomePage> {
   Place placed;
   var db ;
   String _deviceid = 'Unknown';
-
 
   @override
   void initState() {
@@ -91,16 +91,16 @@ class _MyHomePageState extends State<mapaHomePage> {
   //AGREGAR MARCADORES
   void initMarkers() {
     LatLng latlo = LatLng(8.270346,-62.7579366);
-    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0, marca: 'SHELL', precio: 20.0, favorito: false);
+    placed = Place(id: 1, latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0, marca: 'SHELL', precio: 20.0, favorito: false);
     initMarker(placed);
     latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 'gas4', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'PETROBRAS', precio: 5.0, favorito: false);
+    placed = Place(id: 2, latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'PETROBRAS', precio: 5.0, favorito: false);
     initMarker(placed);
     latlo = LatLng(8.2081334,-62.8328788);
-    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'COPEC', precio: 100.0, favorito: true);
+    placed = Place(id: 3, latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'COPEC', precio: 100.0, favorito: true);
     initMarker(placed);
     latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'SHELL', precio: 80.0, favorito: false);
+    placed = Place(id: 4, latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'SHELL', precio: 80.0, favorito: false);
     initMarker(placed);
 
   }
@@ -260,7 +260,6 @@ class _MyHomePageState extends State<mapaHomePage> {
                 trackCameraPosition: true,
                 rotateGesturesEnabled: true, //Activar gestos de rotación
                 scrollGesturesEnabled: true, //Puede o no mover el mapa
-
             ),
           ),
           Positioned(
@@ -297,6 +296,7 @@ class _MyHomePageState extends State<mapaHomePage> {
       final lng = currentLocation["longitude"];
 
       MelatLng = LatLng(lat,lng);
+
 
       //final dist =
       final center = LatLng(lat, lng);
