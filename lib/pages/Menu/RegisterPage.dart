@@ -52,10 +52,12 @@ class _RegistrarseState extends State<Registrarse> {
   bool _isButtonDisabledmodel = true;
   bool _isButtonDisabledyear = true;
   bool _isButtonDisabledcombustible = true;
+  bool _isButtonDisabledSave = true;
 
   bool _activatebutton1 = true;
   bool _activatebutton2 = true;
   bool _activatebutton3 = true;
+  bool _activatesave = true;
 
 
   _ElementosMarca({List<Marca2> marca}) {
@@ -71,12 +73,16 @@ class _RegistrarseState extends State<Registrarse> {
               setState(() {
                 _valueMarca= marca[index].name;
                 _valueIdMarca = marca[index].id;
-                _valueModel ='Desconoido';
+                _valueModel ='Desconocido';
                 _valueYear= 'Desconocido';
                 _valueCombustible='Desconocido';
                 _isButtonDisabledmodel = false;
+                _isButtonDisabledcombustible =true;
                 _activatebutton1 =false;
                 _activatebutton2 =true;
+                _activatebutton3 =true;
+                _isButtonDisabledSave = true;
+                _activatesave = true ;
 
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
@@ -114,10 +120,13 @@ class _RegistrarseState extends State<Registrarse> {
                 _valueModel = modelo[index].name;
                 _valueIdModelo = modelo[index].id;
                 _activatebutton2 =false;
+                _activatebutton3 =true;
+                _isButtonDisabledyear = false;
+                _isButtonDisabledcombustible =true;
                 _valueYear ='Desconocido';
                 _valueCombustible ='Desconocido';
-                //_valueIdModelo = modelo[index];
-
+                _isButtonDisabledSave = true;
+                _activatesave = true ;
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
               Navigator.pop(context);
@@ -161,6 +170,11 @@ class _RegistrarseState extends State<Registrarse> {
               setState(() {
                 _valueYear = years[index].name;
                 _valueIdYears = years[index].id;
+                _isButtonDisabledcombustible = false;
+                _activatebutton3 = false;
+                _valueCombustible ='Desconocido';
+                _isButtonDisabledSave = true;
+                _activatesave = true ;
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
               Navigator.pop(context);
@@ -206,6 +220,8 @@ class _RegistrarseState extends State<Registrarse> {
 
                 _valueCombustible= combustible[index].name;
                 _valueIdCombustible = combustible[index].id;
+                _isButtonDisabledSave = false;
+                _activatesave = false ;
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
               Navigator.pop(context);
@@ -240,7 +256,22 @@ class _RegistrarseState extends State<Registrarse> {
   void initvalues() async {
 
     carropull = await db.getCarro();
+
     setState(() {
+
+      if(carropull.idMarca != 'Desconocido'){
+
+         _activatebutton1 = false;
+         _activatebutton2 = false;
+         _activatebutton3 = false;
+         _activatesave = false;
+          _isButtonDisabledmodel = false;
+          _isButtonDisabledyear = false;
+          _isButtonDisabledcombustible = false;
+          _isButtonDisabledSave = false;
+
+
+      }
       _valueMarca = carropull.marcaVehiculo;
       _valueModel = carropull.modeloVehiculo;
       _valueYear = carropull.yearsVehiculo;
@@ -546,37 +577,39 @@ class _RegistrarseState extends State<Registrarse> {
                       margin: EdgeInsets.only(
                           left: 30.0, top: 50.0, right: 0.0),
 
-                      child: SizedBox(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        child: RaisedButton(
-                          padding: const EdgeInsets.all(30.0),
-                          color: PrimaryColor,
+                      child:AbsorbPointer(
+                           absorbing:_isButtonDisabledSave,
+                        child:  SizedBox(
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          child: RaisedButton(
+                            padding: const EdgeInsets.all(30.0),
+                            color:_activatesave ? Colors.grey : PrimaryColor,
+                            elevation: 5.0,
+                            textColor: Colors.white,
+                            splashColor: Colors.black,
 
-                          elevation: 5.0,
-                          textColor: Colors.white,
-                          splashColor: Colors.black,
+                            onPressed: () async {
+                              if (await db.queryRowCountCarro() != 0) {
+                                Vehiculo vehiculoUp = null;
+                                vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible);
+                                db.updateCarro(vehiculoUp);
+                                Navigator.pop(context);
+                              } else {
+                                print('Verifique valores');
+                              }
+                            },
+                            child: Center(
+                                child: Center(
+                                    child: Text('Guardar Vehiculo',)
 
-                          onPressed: () async {
-                            if (await db.queryRowCountCarro() != 0) {
-                              Vehiculo vehiculoUp = null;
-                              vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible);
-                              db.updateCarro(vehiculoUp);
-                              Navigator.pop(context);
-                            } else {
-                              print('Verifique valores');
-                            }
-                          },
-                          child: Center(
-                              child: Center(
-                                  child: Text('Guardar Vehiculo',)
-
-                              )
+                                )
+                            ),
                           ),
                         ),
-                      ),
+                      )
                     ),
                   ],
                 ),
