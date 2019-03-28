@@ -1,6 +1,11 @@
+import 'dart:core';
+import 'dart:core';
+import 'dart:core';
+
 import 'package:bencineragofast/pages/Menu/AboutPage.dart';
 import 'package:bencineragofast/pages/Menu/FavoritesPage.dart';
 import 'package:bencineragofast/pages/Menu/HelpPage.dart';
+import 'package:bencineragofast/pages/Menu/Marca2.dart';
 import 'package:bencineragofast/pages/Menu/OptionsPage.dart';
 import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
@@ -23,8 +28,6 @@ import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 class mapaHomePage extends StatefulWidget {
 
 
-  String _valueMarca;
-
   _MyHomePageState createState() => _MyHomePageState();
 }
 
@@ -33,6 +36,10 @@ class _MyHomePageState extends State<mapaHomePage> {
   GoogleMapController mapController;
   LatLng MelatLng;
   Map<String,Place> markerMap = Map();
+
+  List<Marca2> Marcasdecarros = new List<Marca2>();
+  Marca2 var_marca;
+
   Place placed;
   var db ;
   String _deviceid = 'Unknown';
@@ -65,7 +72,12 @@ class _MyHomePageState extends State<mapaHomePage> {
       String _modeloVehiculo = 'Desconocido';
       String _years_vehiculo= 'Desconocido';
       String _combustible= 'Desconocido';
-      var carro = new Vehiculo(1, _marcaVehiculo, _modeloVehiculo, _years_vehiculo, _combustible);
+      String _idMarca = 'Desconocido';
+      String _idModelo = 'Desconocido';
+      String _idYears = 'Desconocido';
+      String _idCombustible = 'Desconocido';
+
+      var carro = new Vehiculo(1, _marcaVehiculo, _modeloVehiculo, _years_vehiculo, _combustible,_idMarca,_idModelo,_idYears,_idCombustible);
       db.saveCarro(carro);
       print("Registro de carro Existoso");
 
@@ -90,6 +102,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   //AGREGAR MARCADORES
   void initMarkers() {
+
     LatLng latlo = LatLng(8.270346,-62.7579366);
     placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0, marca: 'SHELL', precio: 20.0, favorito: false);
     initMarker(placed);
@@ -102,6 +115,11 @@ class _MyHomePageState extends State<mapaHomePage> {
     latlo = LatLng(8.2965626,-62.7356024);
     placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'SHELL', precio: 80.0, favorito: false);
     initMarker(placed);
+
+    var_marca = Marca2(id: '1', name: 'Ford');Marcasdecarros.add(var_marca);
+    var_marca = Marca2(id: '2', name: 'Toyota');Marcasdecarros.add(var_marca);
+    var_marca = Marca2(id: '3', name: 'Ferrari');Marcasdecarros.add(var_marca);
+
 
   }
 
@@ -195,7 +213,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                 Navigator.push(
                     context,
                     new MaterialPageRoute(
-                        builder: (BuildContext context) => new  Registrarse()));
+                        builder: (BuildContext context) => new  Registrarse(Marcasdecarros: Marcasdecarros,)));
               },
             ),
             new ListTile(
