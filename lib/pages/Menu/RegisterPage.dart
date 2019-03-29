@@ -351,10 +351,10 @@ class _RegistrarseState extends State<Registrarse> {
                     .of(context)
                     .size
                     .height,
+                width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.only(left: 20, right: 50, top: 10),
+              child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Container(
                       child: Row(
@@ -399,7 +399,6 @@ class _RegistrarseState extends State<Registrarse> {
 
                                   ),
                                 ),
-
                                 //==============ICONOOOO
                               ],
                             ),
@@ -414,205 +413,178 @@ class _RegistrarseState extends State<Registrarse> {
                     ),
                     //--------------------------------First Mark
                     Container(
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(bottom: 10, top: 10),
-                                  width: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width,
-                                  child: Text(
-                                    'Seleccione Modelo',
-                                    textAlign: TextAlign.justify,
-                                    //overflow: TextOverflow.ellipsis, ...
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0),
-                                  ),
-                                ),
-                                AbsorbPointer(
-                                  absorbing: _isButtonDisabledmodel,
-
-                                  child: SizedBox(
-                                    width: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width * .5,
-                                    child: FlatButton(
-
-                                        child: Text(_valueModel),
-                                        splashColor: Colors.black,
-                                        padding: const EdgeInsets.all(25.0),
-                                        textColor: Colors.white,
-                                        color: _activatebutton1
-                                            ? Colors.grey
-                                            : PrimaryColor,
-                                        onPressed: () {
-                                          cargarmodelos();
-                                          ModelDeVheiculo();
-                                          Modelosdecarro.clear();
-                                        }
-                                    ),
-                                  ),
-                                ),
-                              ],
+                          Container(
+                            margin: EdgeInsets.only(bottom: 10, top: 10),
+                            width: MediaQuery.of(context).size.width,
+                            child: Text(
+                              'Seleccione Modelo',
+                              textAlign: TextAlign.justify,
+                              //overflow: TextOverflow.ellipsis, ...
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0),
                             ),
                           ),
+                          AbsorbPointer(
+                            absorbing: _isButtonDisabledmodel,
 
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * .5,
+                              child: FlatButton(
+                                  child: Text(_valueModel),
+                                  splashColor: Colors.black,
+                                  padding: const EdgeInsets.all(25.0),
+                                  textColor: Colors.white,
+                                  color: _activatebutton1
+                                      ? Colors.grey
+                                      : PrimaryColor,
+                                  onPressed: () {
+                                    cargarmodelos();
+                                    ModelDeVheiculo();
+                                    Modelosdecarro.clear();
+                                  }
+                              ),
+                            ),
+                          ),
                         ],
                       ),
+
                     ),
                     //--------------------------------Second Model
                     Container(
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(bottom: 20, top: 10),
-                                  width: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width,
-                                  child: Text(
-                                    'Selecione Año',
-                                    textAlign: TextAlign.justify,
-                                    //overflow: TextOverflow.ellipsis, ...
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0),
-                                  ),
-                                ),
-                                AbsorbPointer(
-                                  absorbing: _isButtonDisabledyear,
-                                  child: SizedBox(
-                                    width: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width * .5,
-                                    child: FlatButton(
-                                        child: Text(_valueYear),
-                                        splashColor: Colors.black,
-                                        padding: const EdgeInsets.all(25.0),
-                                        textColor: Colors.white,
-                                        color: _activatebutton2
-                                            ? Colors.grey
-                                            : PrimaryColor,
-                                        onPressed: () {
-                                          cargaryears();
-                                          YearsVehiculo();
-                                          Yearsdecarros.clear();
-                                        }
-                                    ),
-                                  ),
-                                ),
-                              ],
+                          Container(
+                            margin: EdgeInsets.only(bottom: 20, top: 10),
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
+                            child: Text(
+                              'Selecione Año',
+                              textAlign: TextAlign.justify,
+                              //overflow: TextOverflow.ellipsis, ...
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0),
                             ),
                           ),
-                          // Image.asset('assets/images/icono_gas.png',width: 80,height: 80,),
+                          AbsorbPointer(
+                            absorbing: _isButtonDisabledyear,
+                            child: SizedBox(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .5,
+                              child: FlatButton(
+                                  child: Text(_valueYear),
+                                  splashColor: Colors.black,
+                                  padding: const EdgeInsets.all(25.0),
+                                  textColor: Colors.white,
+                                  color: _activatebutton2
+                                      ? Colors.grey
+                                      : PrimaryColor,
+                                  onPressed: () {
+                                    cargaryears();
+                                    YearsVehiculo();
+                                    Yearsdecarros.clear();
+                                  }
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    //-------------------------------3 --years
+
                     Container(
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(bottom: 20, top: 10),
-                                  width: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width,
-                                  child: Text(
-                                    'Litros De combustible',
-                                    textAlign: TextAlign.justify,
-                                    //overflow: TextOverflow.ellipsis, ...
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0),
-                                  ),
-                                ),
-                                AbsorbPointer(
-                                  absorbing: _isButtonDisabledcombustible,
-                                  child: SizedBox(
-                                    width: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width * .5,
-                                    child: FlatButton(
-                                        child: Text(_valueCombustible),
-                                        splashColor: Colors.black,
-                                        padding: const EdgeInsets.all(25.0),
-                                        textColor: Colors.white,
-                                        color: _activatebutton3
-                                            ? Colors.grey
-                                            : PrimaryColor,
-                                        onPressed: () {
-                                          CargarCombustible();
-                                          ConbustibleVheiculo();
-                                          Combustibledecarros.clear();
-                                        }
-                                    ),
-                                  ),
-                                ),
-                              ],
+                          Container(
+                            margin: EdgeInsets.only(bottom: 20, top: 10),
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
+                            child: Text(
+                              'Litros De combustible',
+                              textAlign: TextAlign.justify,
+                              //overflow: TextOverflow.ellipsis, ...
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0),
                             ),
                           ),
-                          // Image.asset('assets/images/icono_gas.png',width: 80,height: 110,),
+                          AbsorbPointer(
+                            absorbing: _isButtonDisabledcombustible,
+                            child: SizedBox(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .5,
+                              child: FlatButton(
+                                  child: Text(_valueCombustible),
+                                  splashColor: Colors.black,
+                                  padding: const EdgeInsets.all(25.0),
+                                  textColor: Colors.white,
+                                  color: _activatebutton3
+                                      ? Colors.grey
+                                      : PrimaryColor,
+                                  onPressed: () {
+                                    CargarCombustible();
+                                    ConbustibleVheiculo();
+                                    Combustibledecarros.clear();
+                                  }
+                              ),
+                            ),
+                          ),
                         ],
                       ),
+
+                      // Image.asset('assets/images/icono_gas.png',width: 80,height: 110,),
                     ),
                     Container(
-                      margin: EdgeInsets.only(
-                          left: 30.0, top: 50.0, right: 0.0),
+                        margin: EdgeInsets.only(
+                            left: 30.0, top: 50.0, right: 0.0),
+                        child:AbsorbPointer(
+                          absorbing:_isButtonDisabledSave,
+                          child:  SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: RaisedButton(
+                              padding: const EdgeInsets.all(30.0),
+                              color:_activatesave ? Colors.grey : PrimaryColor,
+                              elevation: 5.0,
+                              textColor: Colors.white,
+                              splashColor: Colors.black,
 
-                      child:AbsorbPointer(
-                           absorbing:_isButtonDisabledSave,
-                        child:  SizedBox(
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
-                          child: RaisedButton(
-                            padding: const EdgeInsets.all(30.0),
-                            color:_activatesave ? Colors.grey : PrimaryColor,
-                            elevation: 5.0,
-                            textColor: Colors.white,
-                            splashColor: Colors.black,
+                              onPressed: () async {
+                                if (await db.queryRowCountCarro() != 0) {
+                                  Vehiculo vehiculoUp = null;
+                                  vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible);
+                                  db.updateCarro(vehiculoUp);
+                                  Navigator.pop(context);
+                                } else {
+                                  print('Verifique valores');
+                                }
+                              },
+                              child: Center(
+                                  child: Center(
+                                      child: Text('Guardar Vehiculo',)
 
-                            onPressed: () async {
-                              if (await db.queryRowCountCarro() != 0) {
-                                Vehiculo vehiculoUp = null;
-                                vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible);
-                                db.updateCarro(vehiculoUp);
-                                Navigator.pop(context);
-                              } else {
-                                print('Verifique valores');
-                              }
-                            },
-                            child: Center(
-                                child: Center(
-                                    child: Text('Guardar Vehiculo',)
-
-                                )
+                                  )
+                              ),
                             ),
                           ),
-                        ),
-                      )
+                        )
                     ),
                   ],
                 ),
+              ),
+
               );
             }
         ),

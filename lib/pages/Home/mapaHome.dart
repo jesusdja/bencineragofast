@@ -11,6 +11,7 @@ import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
+import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
@@ -79,9 +80,15 @@ class _MyHomePageState extends State<mapaHomePage> {
 
       var carro = new Vehiculo(1, _marcaVehiculo, _modeloVehiculo, _years_vehiculo, _combustible,_idMarca,_idModelo,_idYears,_idCombustible);
       db.saveCarro(carro);
-      print("Registro de carro Existoso");
+      print("Registro de carro Existoso" );
 
     }
+    if(await db.queryRowCountFavoritos != 0) {
+
+      print('Tabla de favoritos con registros');
+
+    }
+
 
     if(await db.queryRowCount() != 0){
       print("ya esta registrado el Usuario");
@@ -104,16 +111,16 @@ class _MyHomePageState extends State<mapaHomePage> {
   void initMarkers() {
 
     LatLng latlo = LatLng(8.270346,-62.7579366);
-    placed = Place(id: 'gas2', latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0, marca: 'SHELL', precio: 20.0, favorito: false);
+    placed = Place(id: 2, latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0, marca: 'SHELL', precio: 20.0, favorito: false);
     initMarker(placed);
     latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 'gas4', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'PETROBRAS', precio: 5.0, favorito: false);
+    placed = Place(id: 3, latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'PETROBRAS', precio: 5.0, favorito: false);
     initMarker(placed);
     latlo = LatLng(8.2081334,-62.8328788);
-    placed = Place(id: 'gas3', latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'COPEC', precio: 100.0, favorito: true);
+    placed = Place(id: 1, latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'COPEC', precio: 100.0, favorito: true);
     initMarker(placed);
     latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 'gas1', latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'SHELL', precio: 80.0, favorito: false);
+    placed = Place(id: 4, latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'SHELL', precio: 80.0, favorito: false);
     initMarker(placed);
 
     var_marca = Marca2(id: '1', name: 'Ford');Marcasdecarros.add(var_marca);
@@ -134,7 +141,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           draggable: true,
           flat: false,
           position: place.latLng,
-          infoWindowText: InfoWindowText(place.id, place.description),
+          infoWindowText: InfoWindowText(place.id.toString(), place.description),
           icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
         )
         );
@@ -185,6 +192,19 @@ class _MyHomePageState extends State<mapaHomePage> {
         title: new Text("GoFast Bencineras"),
         backgroundColor: PrimaryColor ,
           actions: <Widget>[
+           Container(
+             margin: EdgeInsets.only(right: 20),
+            child:  IconButton(
+               iconSize: 30,
+               icon: Icon(Icons.refresh),
+               tooltip: 'Actualizar',
+               onPressed: (){
+                 refresh();
+                 initMarkers();
+               },
+             ),
+           ),
+
             IconButton(
               iconSize: 40,
               icon: Icon(Icons.map),
@@ -195,6 +215,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                 );
               },
             ),
+
           ],
       ),
       drawer: new Drawer(

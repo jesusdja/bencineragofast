@@ -1,3 +1,4 @@
+import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'dart:io';
@@ -15,6 +16,7 @@ class DatabaseHelper {
   static Database _database;
   String table = 'Usersx';
   String tablecarro = 'Carro';
+  String tablefavoritos = 'Favoritos';
   String colId = 'idTable';
   String colIdDevice = 'deviceId';
   String colbtngas = 'botonTipoGas';
@@ -46,6 +48,9 @@ class DatabaseHelper {
 
     await db.execute(
         "CREATE TABLE Carro(idTable INT PRIMARY KEY, marcaVehiculo TEXT, modeloVehiculo TEXT , yearsVehiculo TEXT,combustible TEXT, idMarca TEXT,idModelo TEXT,idYears TEXT,idCombustible TEXT)");
+
+    await db.execute(
+        "CREATE TABLE Favoritos(idGasolinera INT)");
   }
 
 
@@ -54,6 +59,13 @@ class DatabaseHelper {
     int res = await dbClient.insert("Usersx", user.toMap());
     return res;
   }
+
+  Future<int> saveFav(Favoritos favoritos) async {
+    var dbClient = await database;
+    int res = await dbClient.insert("Favoritos", favoritos.toMap());
+    return res;
+  }
+
   Future<int> saveCarro(Vehiculo vehiculo) async {
     var dbClient = await database;
     int res = await dbClient.insert("Carro", vehiculo.toMap());
@@ -68,6 +80,10 @@ class DatabaseHelper {
     Database db = await _instance.database;
     return await db.query(tablecarro);
   }
+  Future<List<Map<String, dynamic>>> queryAllRowsFavoritos() async {
+    Database db = await _instance.database;
+    return await db.query(tablefavoritos);
+  }
 
 
   Future<int> queryRowCount() async {
@@ -80,7 +96,10 @@ class DatabaseHelper {
     return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tablecarro'));
   }
 
-
+  Future<int> queryRowCountFavoritos() async {
+    Database db = await _instance.database;
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tablefavoritos'));
+  }
   Future<User> getUser() async {
     var dbClient = await database;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM Usersx');
@@ -94,6 +113,14 @@ class DatabaseHelper {
       list[0]["botonTipoGas"]
     );
     return user;
+  }
+  Future<Favoritos> getfavoritos() async {
+    var dbClient = await database;
+    List<Map> list = await dbClient.rawQuery('SELECT * FROM Favoritos');
+    var favoritos =
+    new Favoritos(list[0]["idGasolinera"],
+    );
+    return favoritos;
   }
 
   Future<Vehiculo> getCarro() async {

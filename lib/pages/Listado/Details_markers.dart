@@ -1,3 +1,5 @@
+import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
+import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
@@ -24,12 +26,15 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
   GoogleMapController mapController;
   bool _isFavorited = true;
 
+  DatabaseHelper db = new DatabaseHelper();
+  Favoritos favoritos;
 
   void _toggleFavorite() {
     setState(() {
       if (_isFavorited) {
         _isFavorited = false;
-        print("ELIMINADO DE FAVORITOS");
+
+
       } else {
         _isFavorited = true;
         print("AGREGADO DE FAVORITOS");

@@ -18,7 +18,7 @@ class Place {
         assert(TipoGas != null),
         assert(name != null);
 
-  final String id;
+  final int id;
   final double DiferenciaDist;
   final LatLng latLng;
   final String TipoGas;
@@ -32,7 +32,7 @@ class Place {
   double get longitude => latLng.longitude;
 
   Place copyWith({
-    String id,
+    int id,
     double DiferenciaDist,
     LatLng latLng,
     String TipoGas,
