@@ -29,9 +29,11 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
     setState(() {
       if (_isFavorited) {
         _isFavorited = false;
+        print(widget.place.id);
         print("ELIMINADO DE FAVORITOS");
       } else {
         _isFavorited = true;
+        print(widget.place.id);
         print("AGREGADO DE FAVORITOS");
       }
     });

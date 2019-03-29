@@ -105,7 +105,7 @@ class _displayState extends State<marcador_fav> {
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(places[index].brand),
-            subtitle: Text(places[index].id),
+            subtitle: Text(places[index].address),// MODIFICAR
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
             onTap: () {
               Navigator.push(

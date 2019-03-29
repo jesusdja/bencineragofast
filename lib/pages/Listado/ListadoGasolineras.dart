@@ -28,6 +28,7 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
   TabController _controller;
   var db;
   String kmActual;
+  String tipoGasActual;
   LatLng MelatLng;
   User u;
 
@@ -35,9 +36,8 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
     db = new DatabaseHelper();
     User u = await db.getUser();
     setState((){
-
       kmActual = u.botonDisGas;
-
+      tipoGasActual = u.botonTipoGas;
     });
   }
 
@@ -45,7 +45,6 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
   Future initState() {
     _controller = TabController(length: 4, vsync: this );
     MelatLng = widget.MelatLng;
-
     TraerUsuario();
     super.initState();
   }
@@ -83,7 +82,7 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
       children: <Widget>[
         marcador_distancia(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,),
         marcador_marca(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,),
-        marcador_precio(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,),
+        marcador_precio(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,tgActual: tipoGasActual,),
         marcador_fav(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,),
       ],
       controller: _controller,

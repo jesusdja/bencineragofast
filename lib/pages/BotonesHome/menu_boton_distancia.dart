@@ -120,9 +120,16 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
     List<String> keyys = new List<String>();
     void iterateMapEntry(key, value) {
       Place p = value;
-      if(((p.TipoGas == ValorTipoGas)||("All" == ValorTipoGas))&(calcularDistancia(lat,lng,p.latitude,p.longitude,distancia))){
+      bool siencontrotipo=false;
+      for(int i=0;i<p.tiposgas.length;i++){
+        String tipo = p.tiposgas[i];
+        if(ValorTipoGas.toString() == tipo){siencontrotipo = true; i = p.prices.length;}
+      }
+      //MODIFICAR
+      if(((siencontrotipo)||("All" == ValorTipoGas))&(calcularDistancia(lat,lng,p.latitude,p.longitude,distancia))){
         keyys.add(key);
         initMarker(p);
+
       }
     }
     if(markerMap != null){
@@ -146,7 +153,7 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
         draggable: true,
         flat: false,
         position: LatLng(place.latitude,place.longitude),
-        infoWindowText: InfoWindowText(place.name, place.description),
+        infoWindowText: InfoWindowText(place.brand, place.address),
         icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
       )
       );

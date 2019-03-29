@@ -93,13 +93,21 @@ class _displayState extends State<marcador_marca> {
     places_total = places;
 
     for(int i = 0; i < lista_tipo_marcas.length; i++){
+
+      LatLng latlo = LatLng(8.270346,-62.7579366);
+      List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');
+      List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');
+      List<String> Servicios = new List<String>(); Servicios.add('SERVICIO 1');Servicios.add('SERVICIO 2');
+      Place placed = Place(id: 1,address: 'Dirección 1', latLng: latlo ,brand: lista_tipo_marcas[i],prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: '0202',favorito: false);
+      places_ordenado.add(placed);
+
       for(int j = 0; j < places_total.length; j++){
         if(lista_tipo_marcas[i] == places_total[j].marca){
           places_ordenado.add(places_total[j]);
         }
       }
     }
-    places = places_ordenado;
+    places = places_ordenado;       //MODIFICAR
 
 
   }
@@ -111,20 +119,29 @@ class _displayState extends State<marcador_marca> {
       body: ListView.builder(
         itemCount: places.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(places[index].brand),
-            subtitle: Text(places[index].marca),
-            leading: Image.asset('assets/images/icono_gas.png',height: 50),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) {
-                      return DetailsMarkers(mapController: widget.mapController, place: places[index]);
-                    }),
-              );
-            },
-          );
+
+          if(places[index].marca != '0202'){
+            return ListTile(
+              title: Text(places[index].brand),
+              subtitle: Text(places[index].marca),//MODIFICAR
+              leading: Image.asset('assets/images/icono_gas.png',height: 50),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) {
+                        return DetailsMarkers(mapController: widget.mapController, place: places[index]);
+                      }),
+                );
+              },
+            );
+          }else{
+            return Container(
+              color: Colors.grey[300],
+              child: Text(places[index].brand,textAlign: TextAlign.center,),
+              //subtitle: Text(places[index].marca),//MODIFICAR
+            );
+          }
         },
       ),
     );

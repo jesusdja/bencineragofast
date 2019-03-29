@@ -106,10 +106,13 @@ class _displayState extends State<marcador_distancia> {
         places_ordenado.add(places_total[pos]);
         places_total.removeAt(pos);
       }
-
     }
     places = places_ordenado;
 
+
+  }
+
+  String Solo3Decimales(){
 
   }
 
@@ -122,7 +125,7 @@ class _displayState extends State<marcador_distancia> {
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(places[index].brand),
-            subtitle: Text(places[index].id),
+            subtitle: Text(calcularDistancia(places[index].latitude,places[index].longitude).toStringAsFixed(2) + ' Km' /*+ (((calcularDistancia(places[index].latitude,places[index].longitude)/ 20)*60).toStringAsFixed(2) + ' min' )*/), //MODIFICAR
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
             onTap: () {
               Navigator.push(
