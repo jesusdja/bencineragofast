@@ -243,7 +243,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         backgroundColor: Color.fromRGBO(11,90,70,60),
-        title: new Text(widget.place.id + ' - ' + widget.place.description),
+        title: new Text(widget.place.id.toString() + ' - ' + widget.place.description),
       ),
       body: GestureDetector(
         onTap: () {
