@@ -16,7 +16,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
     db = new DatabaseHelper();
     VerificarBsadeDato();
-
     // TODO: implement initState
     super.initState();
     /*int x = 9;
