@@ -86,7 +86,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       height: MediaQuery.of(context).size.height *0.7,
       child: _ElementosMarca (
         vehiculo: List.generate(
-          y, (i) => Vehiculo(1,'Marca $i',' ','',''),
+          y, (i) => Vehiculo(1,'Shell',' ','',''),
         ),
       ),
     );

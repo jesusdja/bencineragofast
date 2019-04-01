@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:bencineragofast/pages/Home/walkthrough.dart';
 
 class intro_screen extends StatefulWidget {
   @override
@@ -37,10 +38,29 @@ class intro_screenState extends State<intro_screen> {
             child: Container(),
           ),
           Expanded(
-            flex: 3,
+            flex: 8,
             child: PageView(
               children: <Widget>[
-
+                Walkthrough(
+                  title: 'hola 1',
+                  content: 'Contenido 1',
+                  imageIcon: Icons.mobile_screen_share,
+                ),
+                Walkthrough(
+                  title: 'hola 2',
+                  content: 'Contenido 2',
+                  imageIcon: Icons.search,
+                ),
+                Walkthrough(
+                  title: 'hola 3',
+                  content: 'Contenido 3',
+                  imageIcon: Icons.shopping_cart,
+                ),
+                Walkthrough(
+                  title: 'hola 4',
+                  content: 'Contenido 4',
+                  imageIcon: Icons.verified_user,
+                ),
               ],
               controller: controller,
               onPageChanged: _onPageChanged,
@@ -53,7 +73,7 @@ class intro_screenState extends State<intro_screen> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 FlatButton(
-                  child: Text(lastPage ? "" : "Skip",
+                  child: Text(lastPage ? "" : "Omitir",
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -62,7 +82,7 @@ class intro_screenState extends State<intro_screen> {
                   lastPage ? null : Navigator.pushNamed(context, "/App"),
                 ),
                 FlatButton(
-                  child: Text(lastPage ? "gotIt" : "next",
+                  child: Text(lastPage ? "Finalizar" : "Siguiente",
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
