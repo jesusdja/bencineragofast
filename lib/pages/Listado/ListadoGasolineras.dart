@@ -77,7 +77,6 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
   }
 
   TabBarView getTabBarView(){
-
     return TabBarView(
       children: <Widget>[
         marcador_distancia(mapController: widget.mapController, markerMap: widget.markerMap,kmActual: kmActual,MelatLng: MelatLng,),
@@ -88,4 +87,6 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
       controller: _controller,
     );
   }
+
+
 }

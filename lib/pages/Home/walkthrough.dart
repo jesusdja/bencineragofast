@@ -49,6 +49,7 @@ class WalkthroughState extends State<Walkthrough>
     return new Container(
       padding: EdgeInsets.all(20.0),
       child: Material(
+        color: Colors.white,
         animationDuration: Duration(milliseconds: 500),
         elevation: 2.0,
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -78,12 +79,16 @@ class WalkthroughState extends State<Walkthrough>
                       fontSize: 15.0,
                       color: Colors.black)),
             ),
-            new Icon(
-              widget.imageIcon,
-              size: 200.0,
-              color: widget.imagecolor,
-
+            ClipRRect(
+              borderRadius: new BorderRadius.circular(8.0),
+              child: Image.asset(
+                widget.imageIcon,
+                width: MediaQuery.of(context).size.width * 0.6,
+                height: MediaQuery.of(context).size.height * 0.6,
+                  fit: BoxFit.fill,
+              ),
             )
+            ,
           ],
         ),
       ),

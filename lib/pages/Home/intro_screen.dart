@@ -17,7 +17,7 @@ class intro_screenState extends State<intro_screen> {
   void _onPageChanged(int page) {
     setState(() {
       currentPage = page;
-      if (currentPage == 3) {
+      if (currentPage == 2) {
         lastPage = true;
       } else {
         lastPage = false;
@@ -28,7 +28,7 @@ class intro_screenState extends State<intro_screen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFEEEEEE),
+      color: Color(0xff1f520a),
       padding: EdgeInsets.all(10.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -38,28 +38,23 @@ class intro_screenState extends State<intro_screen> {
             child: Container(),
           ),
           Expanded(
-            flex: 8,
+            flex: 12,
             child: PageView(
               children: <Widget>[
                 Walkthrough(
-                  title: 'hola 1',
-                  content: 'Contenido 1',
-                  imageIcon: Icons.mobile_screen_share,
+                  title: 'Vista principal',
+                  content: 'Localice las bencineras cercanas a usted.',
+                  imageIcon: 'assets/images/ayuda1.png',
                 ),
                 Walkthrough(
-                  title: 'hola 2',
-                  content: 'Contenido 2',
-                  imageIcon: Icons.search,
+                  title: 'Rutas optimas',
+                  content: 'Visualice la ruta mas eficiente.',
+                  imageIcon: 'assets/images/ayuda2.png',
                 ),
                 Walkthrough(
-                  title: 'hola 3',
-                  content: 'Contenido 3',
-                  imageIcon: Icons.shopping_cart,
-                ),
-                Walkthrough(
-                  title: 'hola 4',
-                  content: 'Contenido 4',
-                  imageIcon: Icons.verified_user,
+                  title: 'Registar Vehiculo propio',
+                  content: 'Facilitando busquedas y obteniendo mejores beneficion',
+                  imageIcon: 'assets/images/ayuda3.png',
                 ),
               ],
               controller: controller,
@@ -75,7 +70,7 @@ class intro_screenState extends State<intro_screen> {
                 FlatButton(
                   child: Text(lastPage ? "" : "Omitir",
                       style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0)),
                   onPressed: () =>
@@ -84,7 +79,7 @@ class intro_screenState extends State<intro_screen> {
                 FlatButton(
                   child: Text(lastPage ? "Finalizar" : "Siguiente",
                       style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0)),
                   onPressed: () => lastPage
