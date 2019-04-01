@@ -24,16 +24,22 @@ class DetailsMarkers extends StatefulWidget {
 class _DetailsMarkersState extends State<DetailsMarkers> {
 
   GoogleMapController mapController;
-  bool _isFavorited = true;
+  bool _isFavorited = false;
 
   DatabaseHelper db = new DatabaseHelper();
   Favoritos favoritos;
 
+
+
+  void initState() {
+    db = new DatabaseHelper();
+    super.initState();
+  }
   void _toggleFavorite() {
     setState(() {
       if (_isFavorited) {
         _isFavorited = false;
-
+        print("eliminando DE FAVORITOS");
 
       } else {
         _isFavorited = true;
