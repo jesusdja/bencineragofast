@@ -112,10 +112,6 @@ class _displayState extends State<marcador_distancia> {
 
   }
 
-  String Solo3Decimales(){
-
-  }
-
   @override
   Widget build(BuildContext context) {
 

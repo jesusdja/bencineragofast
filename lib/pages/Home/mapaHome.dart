@@ -9,14 +9,20 @@ import 'package:bencineragofast/main.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'package:vector_math/vector_math_64.dart' as math64;
 import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
+import 'dart:core';
+
 import 'package:bencineragofast/pages/Menu/AboutPage.dart';
 import 'package:bencineragofast/pages/Menu/FavoritesPage.dart';
 import 'package:bencineragofast/pages/Menu/HelpPage.dart';
+import 'package:bencineragofast/pages/Menu/Marca2.dart';
 import 'package:bencineragofast/pages/Menu/OptionsPage.dart';
 import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
+import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
 
@@ -34,9 +40,14 @@ class _MyHomePageState extends State<mapaHomePage> {
   GoogleMapController mapController;
   LatLng MelatLng;
   Map<String,Place> markerMap = Map();
+
+  List<Marca2> Marcasdecarros = new List<Marca2>();
+  Marca2 var_marca;
+
   Place placed;
   var db ;
   String _deviceid = 'Unknown';
+
 
   @override
   void initState() {
@@ -65,11 +76,22 @@ class _MyHomePageState extends State<mapaHomePage> {
       String _modeloVehiculo = 'Desconocido';
       String _years_vehiculo= 'Desconocido';
       String _combustible= 'Desconocido';
-      var carro = new Vehiculo(1, _marcaVehiculo, _modeloVehiculo, _years_vehiculo, _combustible);
+      String _idMarca = 'Desconocido';
+      String _idModelo = 'Desconocido';
+      String _idYears = 'Desconocido';
+      String _idCombustible = 'Desconocido';
+
+      var carro = new Vehiculo(1, _marcaVehiculo, _modeloVehiculo, _years_vehiculo, _combustible,_idMarca,_idModelo,_idYears,_idCombustible);
       db.saveCarro(carro);
-      print("Registro de carro Existoso");
+      print("Registro de carro Existoso" );
 
     }
+    if(await db.queryRowCountFavoritos != 0) {
+
+      print('Tabla de favoritos con registros');
+
+    }
+
 
     if(await db.queryRowCount() != 0){
       print("ya esta registrado el Usuario");
@@ -118,6 +140,11 @@ class _MyHomePageState extends State<mapaHomePage> {
     Servicios = new List<String>(); Servicios.add('SERVICIO 4');Servicios.add('SERVICIO 2');
     placed = Place(id: 3,address: 'Dirección 4', latLng: latlo ,brand: 'Gaslonera 4',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'SHELL',  favorito: false);
     initMarker(placed);
+
+    var_marca = Marca2(id: '1', name: 'Ford');Marcasdecarros.add(var_marca);
+    var_marca = Marca2(id: '2', name: 'Toyota');Marcasdecarros.add(var_marca);
+    var_marca = Marca2(id: '3', name: 'Ferrari');Marcasdecarros.add(var_marca);
+
 
   }
 
@@ -183,6 +210,19 @@ class _MyHomePageState extends State<mapaHomePage> {
         title: new Text("GoFast Bencineras"),
         backgroundColor: PrimaryColor ,
           actions: <Widget>[
+           Container(
+             margin: EdgeInsets.only(right: 20),
+            child:  IconButton(
+               iconSize: 30,
+               icon: Icon(Icons.refresh),
+               tooltip: 'Actualizar',
+               onPressed: (){
+                 refresh();
+                 initMarkers();
+               },
+             ),
+           ),
+
             IconButton(
               iconSize: 40,
               icon: Icon(Icons.map),
@@ -211,7 +251,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                 Navigator.push(
                     context,
                     new MaterialPageRoute(
-                        builder: (BuildContext context) => new  Registrarse()));
+                        builder: (BuildContext context) => new  Registrarse(Marcasdecarros: Marcasdecarros,)));
               },
             ),
             new ListTile(
@@ -276,6 +316,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                 trackCameraPosition: true,
                 rotateGesturesEnabled: true, //Activar gestos de rotación
                 scrollGesturesEnabled: true, //Puede o no mover el mapa
+
             ),
           ),
           Positioned(
@@ -312,7 +353,6 @@ class _MyHomePageState extends State<mapaHomePage> {
       final lng = currentLocation["longitude"];
 
       MelatLng = LatLng(lat,lng);
-
 
       //final dist =
       final center = LatLng(lat, lng);
