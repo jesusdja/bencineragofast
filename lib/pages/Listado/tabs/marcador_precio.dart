@@ -12,12 +12,13 @@ import 'package:location/location.dart' as LocationManager;
 
 class marcador_precio extends StatefulWidget {
 
-  marcador_precio({this.mapController,this.markerMap,this.controller,this.kmActual,this.MelatLng});
+  marcador_precio({this.mapController,this.markerMap,this.controller,this.kmActual,this.MelatLng,this.tgActual});
 
   final Map<String,Place> markerMap;
   final GoogleMapController mapController;
   final TabController controller;
   final String kmActual;
+  final String tgActual;
   final LatLng MelatLng;
 
   @override
@@ -28,8 +29,10 @@ class _displayState extends State<marcador_precio> {
 
   Map<String,Place> markerMap;
   List<Place> places = new List<Place>();
+  List<Place> places_originales = new List<Place>();
   var db;
   String kmActual;
+  String tgActual;
   LatLng MelatLng;
 
   @override
@@ -37,6 +40,7 @@ class _displayState extends State<marcador_precio> {
 
     db = new DatabaseHelper();
     kmActual = widget.kmActual;
+    tgActual = widget.tgActual;
     MelatLng = widget.MelatLng;
 
     TraerUsuario();
@@ -67,8 +71,10 @@ class _displayState extends State<marcador_precio> {
   TraerUsuario() async {
     /*User u = await db.getUser();
     setState(() {
-      kmActual = u.botonDisGas;
+      kmActual = u.botonTipoGas;
     });*/
+
+    print(tgActual);
 
     markerMap = widget.markerMap;
     Future iterateMapEntry(key, value) {
@@ -82,7 +88,24 @@ class _displayState extends State<marcador_precio> {
     }
     markerMap.forEach(iterateMapEntry);
 
-    List<Place> places_total = places;
+/*    places_originales = places;
+
+    List<Place> places_individuales = places;
+    Place placed;
+
+    for(int ipl = 0; ipl<places.length;ipl++){
+      List<String> indi = places[ipl].prices;
+     for(int pri = 0; pri < indi.length; pri++){
+
+       print(indi[pri]);
+
+        places_individuales.add(placed);
+      }
+      print(places[ipl].address);
+    }
+
+
+    List<Place> places_total = places_individuales;
     List<Place> places_ordenado = new List<Place>();
 
     places_total = places;
@@ -96,7 +119,7 @@ class _displayState extends State<marcador_precio> {
       }
       aux = 100000000000.0;
       for(int i = 0; i < places_total.length; i++){
-        dis = places_total[i].precio;
+        dis = double.parse(places_total[i].last_price_update);
         if(dis < aux){
           aux = dis;
           pos = i;
@@ -108,9 +131,7 @@ class _displayState extends State<marcador_precio> {
       }
 
     }
-    places = places_ordenado;
-
-
+    places = places_ordenado;    MODIFICAR*/
   }
 
   @override
@@ -120,20 +141,34 @@ class _displayState extends State<marcador_precio> {
       body: ListView.builder(
         itemCount: places.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(places[index].description),
-            subtitle: Text(places[index].precio.toString()),
-            leading: Image.asset('assets/images/icono_gas.png',height: 50),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) {
-                      return DetailsMarkers(mapController: widget.mapController, place: places[index]);
-                    }),
-              );
-            },
-          );
+          String te = '';
+          for(int i=0; i < places[index].prices.length;i++){
+            if(tgActual == places[index].tiposgas[i]){
+              te =  places[index].tiposgas[i] + ':' + places[index].prices[i] + ' CLP';
+            }
+            if(tgActual == 'All'){
+              te =  te + places[index].tiposgas[i] + ':' + places[index].prices[i] + ' CLP' + ' - ';
+            }
+          }
+          if(te != ''){
+            return ListTile(
+              title: Text(places[index].brand),
+              subtitle: Text(te), //MODIFICAR
+              leading: Image.asset('assets/images/icono_gas.png',height: 50),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) {
+                        return DetailsMarkers(mapController: widget.mapController, place: places[index]);
+                      }),
+                );
+              },
+            );
+          }else{
+            return Container();
+          }
+
         },
       ),
     );

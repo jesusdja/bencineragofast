@@ -1,5 +1,3 @@
-import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
-import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
@@ -41,6 +39,8 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
         _isFavorited = false;
         print("eliminando DE FAVORITOS");
 
+        print(widget.place.id);
+        print("ELIMINADO DE FAVORITOS");
       } else {
         _isFavorited = true;
         print("AGREGADO DE FAVORITOS");
@@ -249,7 +249,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         backgroundColor: Color.fromRGBO(11,90,70,60),
-        title: new Text(widget.place.id.toString() + ' - ' + widget.place.description),
+        title: new Text(widget.place.brand + ' - ' + widget.place.address),
       ),
       body: GestureDetector(
         onTap: () {

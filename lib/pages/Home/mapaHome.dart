@@ -1,5 +1,14 @@
-import 'dart:core';
-import 'dart:core';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as LocationManager;
+import 'package:device_id/device_id.dart';
+import 'dart:math' as math;
+
+import 'place.dart';
+import 'package:bencineragofast/main.dart';
+import 'package:bencineragofast/pages/Listado/Details_markers.dart';
+import 'package:vector_math/vector_math_64.dart' as math64;
+import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 import 'dart:core';
 
 import 'package:bencineragofast/pages/Menu/AboutPage.dart';
@@ -16,18 +25,12 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
-import 'package:location/location.dart' as LocationManager;
-import 'package:device_id/device_id.dart';
-import 'package:bencineragofast/main.dart';
-import 'package:bencineragofast/pages/Listado/Details_markers.dart';
-import 'place.dart';
-import 'dart:math' as math;
-import 'package:vector_math/vector_math_64.dart' as math64;
 
-import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 
 class mapaHomePage extends StatefulWidget {
 
+
+  String _valueMarca;
 
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -109,18 +112,33 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   //AGREGAR MARCADORES
   void initMarkers() {
-
+    //10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
-    placed = Place(id: 2, latLng: latlo , name: 'gase', description: 'menos 10 Km',TipoGas: '91',DiferenciaDist: 0, marca: 'SHELL', precio: 20.0, favorito: false);
+    List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');
+    List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');tipogas.add('91');tipogas.add('95');tipogas.add('93');tipogas.add('91');tipogas.add('95');tipogas.add('93');
+    List<String> Servicios = new List<String>(); Servicios.add('SERVICIO 1');Servicios.add('SERVICIO 2');
+    placed = Place(id: 1,address: 'Dirección 1', latLng: latlo ,brand: 'Gaslonera 1',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'SHELL',favorito: false);
     initMarker(placed);
+    //2 KM
     latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 3, latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'PETROBRAS', precio: 5.0, favorito: false);
+    precios = new List<String>();precios.add('100');precios.add('200');precios.add('600');precios.add('200');
+    tipogas = new List<String>();tipogas.add('93');tipogas.add('95');tipogas.add('91');tipogas.add('80');
+    Servicios = new List<String>(); Servicios.add('SERVICIO 3');Servicios.add('SERVICIO 2');
+    placed = Place(id: 2,address: 'Dirección 2', latLng: latlo ,brand: 'Gaslonera 2',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'PETROBRAS',  favorito: false);
     initMarker(placed);
+    //20 KM
     latlo = LatLng(8.2081334,-62.8328788);
-    placed = Place(id: 1, latLng: latlo , name: 'gase', description: 'menos 20 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'COPEC', precio: 100.0, favorito: true);
+    precios = new List<String>();precios.add('500');precios.add('600');
+    tipogas = new List<String>();tipogas.add('95');tipogas.add('93');
+    Servicios = new List<String>(); Servicios.add('SERVICIO 1');Servicios.add('SERVICIO 2');
+    placed = Place(id: 3,address: 'Dirección 3', latLng: latlo ,brand: 'Gaslonera 3',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'COPEC',  favorito: true);
     initMarker(placed);
+    //2 KM
     latlo = LatLng(8.2965626,-62.7356024);
-    placed = Place(id: 4, latLng: latlo , name: 'gase', description: 'menos 2 Km',TipoGas: '93',DiferenciaDist: 0, marca: 'SHELL', precio: 80.0, favorito: false);
+    precios = new List<String>();precios.add('100');
+    tipogas = new List<String>();tipogas.add('95');
+    Servicios = new List<String>(); Servicios.add('SERVICIO 4');Servicios.add('SERVICIO 2');
+    placed = Place(id: 3,address: 'Dirección 4', latLng: latlo ,brand: 'Gaslonera 4',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'SHELL',  favorito: false);
     initMarker(placed);
 
     var_marca = Marca2(id: '1', name: 'Ford');Marcasdecarros.add(var_marca);
@@ -141,7 +159,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           draggable: true,
           flat: false,
           position: place.latLng,
-          infoWindowText: InfoWindowText(place.id.toString(), place.description),
+          infoWindowText: InfoWindowText(place.brand, place.address),
           icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
         )
         );
@@ -215,7 +233,6 @@ class _MyHomePageState extends State<mapaHomePage> {
                 );
               },
             ),
-
           ],
       ),
       drawer: new Drawer(

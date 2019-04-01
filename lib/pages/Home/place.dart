@@ -4,28 +4,35 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class Place {
   const Place({
     @required this.id,
-    @required this.DiferenciaDist,
+    @required this.address,
     @required this.latLng,
-    @required this.TipoGas,
-    @required this.name,
-    this.description,
-    this.marca,
-    this.precio,
-    this.favorito,
+    @required this.brand,
+    @required this.prices,
+    @required this.tiposgas,
+    @required this.last_price_update,
+    @required this.services,
+    @required this.marca,
+    @required this.favorito,
   })  : assert(id != null),
-        assert(DiferenciaDist != null),
+        assert(address != null),
         assert(latLng != null),
-        assert(TipoGas != null),
-        assert(name != null);
+        assert(brand != null),
+        assert(prices != null),
+        assert(tiposgas != null),
+        assert(last_price_update != null),
+        assert(services != null),
+        assert(marca != null),
+        assert(favorito != null);
 
   final int id;
-  final double DiferenciaDist;
+  final String address;
   final LatLng latLng;
-  final String TipoGas;
-  final String name;
-  final String description;
+  final String brand;
+  final List<String> prices;
+  final List<String> tiposgas;
+  final String last_price_update;
+  final List<String> services;
   final String marca;
-  final double precio;
   final bool favorito;
 
   double get latitude => latLng.latitude;
@@ -33,25 +40,27 @@ class Place {
 
   Place copyWith({
     int id,
-    double DiferenciaDist,
+    String address,
     LatLng latLng,
-    String TipoGas,
-    String name,
-    String description,
+    String brand,
+    List<String> prices,
+    List<String> tiposgas,
+    String last_price_update,
+    List<String> services,
     String marca,
-    double precio,
     bool favorito,
   }) {
     return Place(
       id: id ?? this.id,
-      DiferenciaDist: DiferenciaDist ?? this.DiferenciaDist,
+      address: address ?? this.address,
       latLng: latLng ?? this.latLng,
-      TipoGas: TipoGas ?? this.TipoGas,
-      name: name ?? this.name,
-      description: description ?? this.description,
+      brand: brand ?? this.brand,
+      prices: prices ?? this.prices,
+      tiposgas: tiposgas ?? this.tiposgas,
+      last_price_update: last_price_update ?? this.last_price_update,
+      services: services ?? this.services,
       marca: marca ?? this.marca,
-      precio: precio ?? this.precio,
-     favorito: favorito ?? this.favorito,
+      favorito: favorito ?? this.favorito,
     );
   }
 }

@@ -34,7 +34,7 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
   Animation<double> _translateButton;
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
-
+  List<String> ListaConbustibles = new List<String>();
   String name_gas_button = 'All';
 
 
@@ -72,6 +72,11 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
         curve: _curve,
       ),
     ));
+    ListaConbustibles.add("Todas");ListaConbustibles.add("86");ListaConbustibles.add("87");ListaConbustibles.add("88");
+    ListaConbustibles.add("89");ListaConbustibles.add("90");ListaConbustibles.add("91");ListaConbustibles.add("92");
+    ListaConbustibles.add("93");ListaConbustibles.add("94");ListaConbustibles.add("95");ListaConbustibles.add("96");
+    ListaConbustibles.add("97");ListaConbustibles.add("98");ListaConbustibles.add("15");ListaConbustibles.add("16");
+    ListaConbustibles.add("17");ListaConbustibles.add("18");ListaConbustibles.add("19");ListaConbustibles.add("20");
     super.initState();
   }
 
@@ -104,7 +109,13 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
     List<String> keyys = new List<String>();
     void iterateMapEntry(key, value) {
       Place p = value;
-      if(((p.TipoGas == tipoDegas)||("All" == tipoDegas))&((calcularDistancia(lat,lng,p.latitude,p.longitude,ValorKm))||("All" == ValorKm))){
+      bool siencontrotipo=false;
+      for(int i=0;i<p.tiposgas.length;i++){
+        String tipo = p.tiposgas[i];
+        if(tipoDegas == tipo){siencontrotipo = true; i = p.prices.length;}
+      }
+      //MODIFICAR
+      if(((siencontrotipo)||("All" == tipoDegas))&((calcularDistancia(lat,lng,p.latitude,p.longitude,ValorKm))||("All" == ValorKm))){
         keyys.add(key);
         initMarker(p);
       }
@@ -128,7 +139,7 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
         draggable: true,
         flat: false,
         position: LatLng(place.latitude,place.longitude),
-        infoWindowText: InfoWindowText(place.name, place.description),
+        infoWindowText: InfoWindowText(place.brand, place.address),
         icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
       )
       );
@@ -168,33 +179,6 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
     isOpened = !isOpened;
   }
 
-  Widget textadd(String t){
-    if(t == 'All'){
-      return Icon(Icons.local_gas_station);
-    }else{
-      return Text(
-        t,
-        style: TextStyle(
-            color: Colors.white,
-            fontSize: 18.0
-        ),
-      );
-    }
-  }
-
-
-  Widget add({String text, int tagg, String tipogas}) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: (){animate(); name_gas_button = text;initMarkers(tipogas);},
-        tooltip: 'Add',
-        heroTag: tagg,
-        backgroundColor: Colors.red[900],
-        child: textadd(text),
-      ),
-    );
-  }
-
   Widget texttoggle(){
     if(name_gas_button == 'All'){
       return Icon(Icons.local_gas_station);
@@ -214,12 +198,57 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
       child: FloatingActionButton(
         backgroundColor: Colors.red[900],
         heroTag: 0,
-        onPressed: animate,
+        onPressed: MarksDetiposGas,
         tooltip: 'Toggle',
         child: texttoggle(),
       ),
     );
   }
+
+  Future MarksDetiposGas() async {
+    await showDialog(
+        context: context,
+        // ignore: deprecated_member_use
+        child: SimpleDialog(
+            title: Text('Tipos de Combustibles'),
+            children: <Widget>[
+              Combustibles(),
+            ]
+        )
+    );
+  }
+
+  Combustibles() {
+    var y = 20;
+    return new Container(
+      width: MediaQuery.of(context).size.width ,
+      height: MediaQuery.of(context).size.height *0.7,
+      child: Container(
+        child: ListView.builder(
+          itemCount: ListaConbustibles.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(ListaConbustibles[index]),
+              leading: Image.asset('assets/images/icono_gas.png',height: 50),
+              onTap: () {
+                setState(() {
+                  String te = ListaConbustibles[index] ;
+                  if(te == 'Todas'){
+                    te = 'All';
+                  }
+                  name_gas_button = te;
+                  initMarkers(te);
+                });
+
+                Navigator.pop(context);
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -227,38 +256,6 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
     return Row (
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        Transform(
-          transform: Matrix4.translationValues(
-            _translateButton.value * 4.0,
-            0.0,
-            0.0,
-          ),
-          child: add(text: 'All', tagg: 8,tipogas: 'All'),
-        ),
-        Transform(
-          transform: Matrix4.translationValues(
-            _translateButton.value * 3.0,
-            0.0,
-            0.0,
-          ),
-          child: add(text: '91', tagg: 1,tipogas: '91'),
-        ),
-        Transform(
-          transform: Matrix4.translationValues(
-            _translateButton.value * 2.0,
-            0.0,
-            0.0,
-          ),
-          child: add(text: '93',tagg: 2,tipogas: '93'),
-        ),
-        Transform(
-          transform: Matrix4.translationValues(
-            _translateButton.value,
-            0.0,
-            0.0,
-          ),
-          child: add(text: '95',tagg: 3,tipogas: '95'),
-        ),
         toggle(),
       ],
     );
