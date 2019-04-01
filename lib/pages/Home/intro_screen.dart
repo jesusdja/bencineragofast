@@ -74,7 +74,7 @@ class intro_screenState extends State<intro_screen> {
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0)),
                   onPressed: () =>
-                  lastPage ? null : Navigator.pushNamed(context, "/App"),
+                  lastPage ? null : Navigator.pushReplacementNamed(context, "/App"),
                 ),
                 FlatButton(
                   child: Text(lastPage ? "Finalizar" : "Siguiente",
@@ -83,7 +83,7 @@ class intro_screenState extends State<intro_screen> {
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0)),
                   onPressed: () => lastPage
-                      ? Navigator.pushNamed(context, "/App")
+                      ? Navigator.pushReplacementNamed(context, "/App")
                       : controller.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeIn),

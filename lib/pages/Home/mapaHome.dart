@@ -3,14 +3,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:device_id/device_id.dart';
 import 'dart:math' as math;
-
 import 'place.dart';
 import 'package:bencineragofast/main.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'package:vector_math/vector_math_64.dart' as math64;
 import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 import 'dart:core';
-
 import 'package:bencineragofast/pages/Menu/AboutPage.dart';
 import 'package:bencineragofast/pages/Menu/FavoritesPage.dart';
 import 'package:bencineragofast/pages/Menu/HelpPage.dart';
@@ -20,9 +18,6 @@ import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
-import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
-import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
 
@@ -112,6 +107,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   //AGREGAR MARCADORES
   void initMarkers() {
+
     //10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
     List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');
@@ -217,8 +213,11 @@ class _MyHomePageState extends State<mapaHomePage> {
                icon: Icon(Icons.refresh),
                tooltip: 'Actualizar',
                onPressed: (){
-                 refresh();
-                 initMarkers();
+                 /*refresh();
+                 initMarkers();*/
+                 //Navigator.pop(context);
+                 //MaterialPageRoute(builder: (context) => mapaHomePage());
+                 Navigator.popAndPushNamed(context, "/App");
                },
              ),
            ),
@@ -337,7 +336,6 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   void refresh() async {
-
     mapController.onInfoWindowTapped.add(_onInfoWindowTapped);
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(

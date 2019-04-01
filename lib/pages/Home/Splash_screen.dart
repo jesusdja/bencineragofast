@@ -15,9 +15,10 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
 
     db = new DatabaseHelper();
-    VerificarBsadeDato();
     // TODO: implement initState
     super.initState();
+
+    VerificarBsadeDato();
     /*int x = 9;
     if(x != 9){
       Timer(Duration(seconds: 4), () => Navigator.pushNamed(context, "/App"));
@@ -28,16 +29,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   VerificarBsadeDato() async {
-
-    /*if(await db.queryRowCount() != 0){
+    if(await db.queryRowCount() != 0){
       print("ya esta registrado el Usuario");
-      Timer(Duration(seconds: 4), () => Navigator.pushNamed(context, "/App"));
-
+      Timer(Duration(seconds: 4), () => Navigator.pushReplacementNamed(context, "/App"));
     }else{
-      print("registro Exitoso de Usuario");*/
-      Timer(Duration(seconds: 4), () => Navigator.pushNamed(context, "/intro"));
-    //}
-
+      print("registro Exitoso de Usuario");
+      Timer(Duration(seconds: 4), () => Navigator.pushReplacementNamed(context, "/intro"));
+    }
   }
 
   @override

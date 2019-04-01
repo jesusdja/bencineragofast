@@ -10,7 +10,7 @@ void main() async {
 const PrimaryColor = const Color( 0xff1f520a);
 
 var routes = <String, WidgetBuilder>{
-  "/App": (BuildContext context) => App(),
+  "/App": (BuildContext context) =>App(),
   "/intro": (BuildContext context) => intro_screen(),
 };
 
@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         //  brightness: Brightness.light,
-          primaryColor: PrimaryColor,
-          accentColor: PrimaryColor,
+        primaryColor: PrimaryColor,
+        accentColor: PrimaryColor,
         textTheme: TextTheme(
           headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.w900),
 
