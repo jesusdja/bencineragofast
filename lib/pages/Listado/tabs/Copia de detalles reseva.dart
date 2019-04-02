@@ -273,7 +273,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
 
   @override
   Widget build(BuildContext context) {
-    print('----1   $_isFavorited');
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(

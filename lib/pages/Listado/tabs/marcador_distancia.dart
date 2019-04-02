@@ -124,6 +124,7 @@ class _displayState extends State<marcador_distancia> {
             subtitle: Text(calcularDistancia(places[index].latitude,places[index].longitude).toStringAsFixed(2) + ' Km' /*+ (((calcularDistancia(places[index].latitude,places[index].longitude)/ 20)*60).toStringAsFixed(2) + ' min' )*/), //MODIFICAR
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
             onTap: () {
+
               Navigator.push(
                 context,
                 MaterialPageRoute(

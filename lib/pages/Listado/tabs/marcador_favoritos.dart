@@ -33,6 +33,9 @@ class _displayState extends State<marcador_fav> {
   String kmActual;
   LatLng MelatLng;
 
+  List<Favoritos> Fav_Guardados = new List<Favoritos>() ;
+  List<int> fav_com = List<int>();
+
 
   @override
   void initState() {
@@ -72,6 +75,10 @@ class _displayState extends State<marcador_fav> {
       kmActual = u.botonDisGas;
     });*/
 
+    List<int> aux = await db.getfavo();
+    for(int i=0 ; i< aux.length; i++){
+    }
+
     markerMap = widget.markerMap;
     Future iterateMapEntry(key, value) {
       Place p = value;
@@ -89,14 +96,20 @@ class _displayState extends State<marcador_fav> {
 
     places_total = places;
 
-    for(int i = 0; i < places_total.length; i++){
-        if(places_total[i].favorito ){//MODIFICAR FAVORITOSSS
-          places_ordenado.add(places_total[i]);
+    for(int i = 0; i < aux.length; i++){
+
+      for(int j = 0; j < places_total.length; j++){
+
+        if(aux[i] == places_total[j].id){
+
+          places_ordenado.add(places_total[j]);
+
         }
+      }
     }
-    places = places_ordenado;
-
-
+    setState(() {
+      places = places_ordenado;
+    });
   }
 
   @override
@@ -110,6 +123,7 @@ class _displayState extends State<marcador_fav> {
             subtitle: Text(places[index].address),// MODIFICAR
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
             onTap: () {
+              Navigator.of(context).pop();
               Navigator.push(
                 context,
                 MaterialPageRoute(

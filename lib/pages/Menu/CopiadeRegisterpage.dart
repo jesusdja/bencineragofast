@@ -77,7 +77,6 @@ class MyCustomFormState extends State<MyCustomForm> {
 
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
-              print(_valueMarca);
               Navigator.pop(context);
             },
           );

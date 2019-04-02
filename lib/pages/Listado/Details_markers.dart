@@ -31,7 +31,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
   Favoritos favoritos;
   int _idGadolinerasave;
 
-  /*  // print(widget.place.id);
+  /*
         _idGadolinerasave = widget.place.id;
         favoritos.idGasolinera = _idGadolinerasave;
         db.saveFav(favoritos);*/
@@ -39,7 +39,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
     setState(() {
       if (_isFavorited) {
         _isFavorited = false;
-        print(widget.place.id);
         _idGadolinerasave = widget.place.id;
         favoritos = Favoritos(_idGadolinerasave);
         db.deleteFavoritos(favoritos);
@@ -49,7 +48,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
 
       } else {
         _isFavorited = true;
-        print(widget.place.id);
         _idGadolinerasave = widget.place.id;
         favoritos = Favoritos(_idGadolinerasave);
         db.saveFav(favoritos);
@@ -283,7 +281,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
   }
   @override
   Widget build(BuildContext context) {
-    print('----1   $_isFavorited');
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(

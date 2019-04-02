@@ -128,10 +128,6 @@ class _MenuFABState extends State<MenuFAB> with SingleTickerProviderStateMixin {
     );
   }
 
-  void mostrar(){
-    debugPrint('ENTRE ACA');
-
-  }
 
   @override
   Widget build(BuildContext context) {
