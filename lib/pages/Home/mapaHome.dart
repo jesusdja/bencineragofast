@@ -88,7 +88,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     }
     if(await db.queryRowCountFavoritos != 0) {
 
-      print('Tabla de favoritos con registros');
+      print('Tabla de favoritos');
 
     }
 
@@ -112,6 +112,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   //AGREGAR MARCADORES
   void initMarkers() {
+
     //10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
     List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');
@@ -203,6 +204,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     return rango;
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,8 +219,8 @@ class _MyHomePageState extends State<mapaHomePage> {
                icon: Icon(Icons.refresh),
                tooltip: 'Actualizar',
                onPressed: (){
-                 refresh();
-                 initMarkers();
+                 //refresh();
+              //   initMarkers();
                },
              ),
            ),
@@ -236,6 +238,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           ],
       ),
       drawer: new Drawer(
+
         child: new ListView(
           children: <Widget>[
             new UserAccountsDrawerHeader(
@@ -263,7 +266,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                     new MaterialPageRoute(builder: (context) => new opciones(mapController: mapController)));//Modificacion
               },
             ),
-            new ListTile(
+           /* new ListTile(
               title: new Text("Favoritos"),
               trailing: new Icon(Icons.star),
               onTap: () {
@@ -273,7 +276,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                 ),
                 );
               },
-            ),
+            ),*/
             Divider(
               height: 30.0,
             ),

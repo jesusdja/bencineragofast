@@ -87,7 +87,7 @@ class _displayState extends State<marcador_fav> {
 
     places_total = places;
 
-    for(int i = 0; i < places_total.length; i++){
+    for(int i = 0; i < places_total.length; i++){//MODIFICAR FAVORITOSSS
         if(places_total[i].favorito){
           places_ordenado.add(places_total[i]);
         }

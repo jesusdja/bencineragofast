@@ -24,63 +24,57 @@ class DetailsMarkers extends StatefulWidget {
 class _DetailsMarkersState extends State<DetailsMarkers> {
 
   GoogleMapController mapController;
-  bool _isFavorited = false;
-  bool _estadodeboton = false;
+  bool _isFavorited = true;
 
   DatabaseHelper db = new DatabaseHelper();
   Favoritos favoritos;
   int _idGadolinerasave;
 
-  /*  // print(widget.place.id);
-        _idGadolinerasave = widget.place.id;
-        favoritos.idGasolinera = _idGadolinerasave;
-        db.saveFav(favoritos);*/
+
+  void initState() {
+    setState(() {
+    });
+    super.initState();
+  }
   void _toggleFavorite() {
     setState(() {
       if (_isFavorited) {
-        _isFavorited = false;
-        print(widget.place.id);
-        _idGadolinerasave = widget.place.id;
-        favoritos = Favoritos(_idGadolinerasave);
-        db.deleteFavoritos(favoritos);
+
+        _isFavorited = true;
+
         print("ELIMINADO DE FAVORITOS");
 
-        imprimir();
-
       } else {
-        _isFavorited = true;
-        print(widget.place.id);
-        _idGadolinerasave = widget.place.id;
-        favoritos = Favoritos(_idGadolinerasave);
-        db.saveFav(favoritos);
+
+        _isFavorited = false;
+        /*    _
+          print(widget.place.id);
+          _idGadolinerasave = widget.place.id;
+
+          favoritos = new Favoritos(_idGadolinerasave);
+
+          db.saveFav(favoritos);
+
+          final allRows = await db.queryAllRowsFavoritos();
+          print('query all rows:');
+          allRows.forEach((row) => print(row));*/
+
         print("AGREGADO DE FAVORITOS");
-        imprimir();
       }
     });
   }
 
-  initFavoritos()async{
-
-   if(await db.verificarIdFavoritos(widget.place.id) > 0)
+  @override
+  void setState(fn) {
+    if(_isFavorited == true )
     {
-     setState(() {
-       _isFavorited = true ;
-     });
-    } else{
-      setState(() {
-        _isFavorited = false;
-      });
+      _isFavorited = true;
+
+    }else{
+      _isFavorited = false;
     }
-   print(await db.verificarIdFavoritos(widget.place.id));
-
+    super.setState(fn);
   }
-
-  @override
-  void initState() {
-    initFavoritos();
-    super.initState();
-  }
-  @override
 
   void onMapCreated(controller) {
     mapController = controller;
@@ -161,12 +155,12 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
               children: <Widget>[
                 Icon(ico),
                 Expanded(child: Text(
-                    Descripcion,
-                    style: TextStyle(
-                      color: Colors.grey[500],
-                    ),
-                    textAlign: TextAlign.center,
+                  Descripcion,
+                  style: TextStyle(
+                    color: Colors.grey[500],
                   ),
+                  textAlign: TextAlign.center,
+                ),
                 ),
               ],
             ),
@@ -277,11 +271,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
     );
   }
 
-  imprimir() async {
-    final allRows = await db.queryAllRowsFavoritos();
-    print('query all rows:');
-    allRows.forEach((row) => print(row));
-  }
   @override
   Widget build(BuildContext context) {
     print('----1   $_isFavorited');
