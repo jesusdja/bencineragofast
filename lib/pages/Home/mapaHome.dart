@@ -45,7 +45,6 @@ class _MyHomePageState extends State<mapaHomePage> {
   String KmActual;
   String TipoGasActual;
 
-
   @override
   void initState() {
     db = new DatabaseHelper();
@@ -115,7 +114,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     //10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
     List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');
-    List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');tipogas.add('91');tipogas.add('95');tipogas.add('93');tipogas.add('91');tipogas.add('95');tipogas.add('93');
+    List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');tipogas.add('98');tipogas.add('80');tipogas.add('86');tipogas.add('87');tipogas.add('88');tipogas.add('89');
     List<String> Servicios = new List<String>(); Servicios.add('SERVICIO 1');Servicios.add('SERVICIO 2');
     placed = Place(id: 1,address: 'Dirección 1', latLng: latlo ,brand: 'Gaslonera 1',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'SHELL',favorito: false);
     initMarker(placed);
@@ -352,8 +351,8 @@ class _MyHomePageState extends State<mapaHomePage> {
                   builder: (BuildContext context) => favoritos(),
                 ),
                 );
-              },*/
-            ),
+              },
+            ),*/
             Divider(
               height: 30.0,
             ),

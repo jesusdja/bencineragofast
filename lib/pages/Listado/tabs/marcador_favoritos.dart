@@ -81,7 +81,6 @@ class _displayState extends State<marcador_fav> {
       }
     }
     markerMap.forEach(iterateMapEntry);
-
     List<Place> places_total = places;
     List<Place> places_ordenado = new List<Place>();
 
@@ -93,8 +92,6 @@ class _displayState extends State<marcador_fav> {
         }
     }
     places = places_ordenado;
-
-
   }
 
   @override

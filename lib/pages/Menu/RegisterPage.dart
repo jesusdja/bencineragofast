@@ -400,7 +400,7 @@ class _RegistrarseState extends State<Registrarse> {
 
                           ),
                           Image.asset(
-                            'assets/images/icono_shell.png', width: 100,
+                            'assets/images/toyota.png', width: 100,
                             height: 100,
                           ), //=====No va , icono de otra cosa
                         ],
