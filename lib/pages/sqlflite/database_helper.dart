@@ -18,6 +18,7 @@ class DatabaseHelper {
   String tablecarro = 'Carro';
   String tablefavoritos = 'Favoritos';
   String colId = 'idTable';
+  String idGasolinera = 'idGasolinera';
   String colIdDevice = 'deviceId';
   String colbtngas = 'botonTipoGas';
   String colBtnDis = 'botonDisGas';
@@ -141,11 +142,12 @@ class DatabaseHelper {
     return vehiculo;
   }
 
-  Future<int> deleteUsers(User user) async {
+
+  Future<int> deleteFavoritos(Favoritos favoritos) async {
     var dbClient = await database;
 
     int res =
-    await dbClient.rawDelete('DELETE FROM User WHERE id = ?', [user.idTable]);
+    await dbClient.rawDelete('DELETE FROM Favoritos WHERE idGasolinera = ?', [favoritos.idGasolinera]);
     return res;
   }
   Future close() async {
@@ -217,6 +219,14 @@ class DatabaseHelper {
 
     return null;
   }
+
+  Future<int> verificarIdFavoritos(int id) async {
+    var dbClient = await database;
+
+    var result = await dbClient.rawQuery('SELECT * FROM $tablefavoritos WHERE $idGasolinera = $id');
+    return result.length;
+  }
+
   Future<Vehiculo> getmarca(int id) async {
     var dbClient = await database;
 

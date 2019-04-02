@@ -1,27 +1,27 @@
 class Favoritos {
 
-  int _idGasolinera;
+  int idGasolinera;
 
 
-  Favoritos(this._idGasolinera);
+  Favoritos(this.idGasolinera);
 
   Favoritos.map(dynamic obj) {
-    this._idGasolinera = obj["idGasolinera"];
+    this.idGasolinera = obj["idGasolinera"];
 
   }
 
-  int get idGasolinera => _idGasolinera;
+  int get idGasolineras => idGasolinera;
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
-    map["idGasolinera"] = _idGasolinera;
+    map["idGasolinera"] = idGasolinera;
 
     return map;
   }
 
   Favoritos.fromMap(Map<String, dynamic> map) {
 
-    this._idGasolinera = map["idGasolinera"];
+    this.idGasolinera = map["idGasolinera"];
   }
 
 }

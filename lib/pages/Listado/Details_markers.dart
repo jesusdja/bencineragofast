@@ -25,30 +25,61 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
 
   GoogleMapController mapController;
   bool _isFavorited = false;
+  bool _estadodeboton = false;
 
   DatabaseHelper db = new DatabaseHelper();
   Favoritos favoritos;
+  int _idGadolinerasave;
 
-
-
-  void initState() {
-    db = new DatabaseHelper();
-    super.initState();
-  }
+  /*  // print(widget.place.id);
+        _idGadolinerasave = widget.place.id;
+        favoritos.idGasolinera = _idGadolinerasave;
+        db.saveFav(favoritos);*/
   void _toggleFavorite() {
     setState(() {
       if (_isFavorited) {
         _isFavorited = false;
-        print("eliminando DE FAVORITOS");
-
         print(widget.place.id);
+        _idGadolinerasave = widget.place.id;
+        favoritos = Favoritos(_idGadolinerasave);
+        db.deleteFavoritos(favoritos);
         print("ELIMINADO DE FAVORITOS");
+
+        imprimir();
+
       } else {
         _isFavorited = true;
+        print(widget.place.id);
+        _idGadolinerasave = widget.place.id;
+        favoritos = Favoritos(_idGadolinerasave);
+        db.saveFav(favoritos);
         print("AGREGADO DE FAVORITOS");
+        imprimir();
       }
     });
   }
+  initFavoritos()async{
+
+   if(await db.verificarIdFavoritos(widget.place.id) > 0)
+    {
+     setState(() {
+       _isFavorited = true ;
+     });
+    } else{
+      setState(() {
+        _isFavorited = false;
+      });
+    }
+   print(await db.verificarIdFavoritos(widget.place.id));
+
+  }
+
+  @override
+  void initState() {
+    initFavoritos();
+    super.initState();
+  }
+  @override
 
   void onMapCreated(controller) {
     mapController = controller;
@@ -245,8 +276,14 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
     );
   }
 
+  imprimir() async {
+    final allRows = await db.queryAllRowsFavoritos();
+    print('query all rows:');
+    allRows.forEach((row) => print(row));
+  }
   @override
   Widget build(BuildContext context) {
+    print('----1   $_isFavorited');
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(

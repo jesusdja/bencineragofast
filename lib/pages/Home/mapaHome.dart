@@ -343,7 +343,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                     new MaterialPageRoute(builder: (context) => new opciones(mapController: mapController)));//Modificacion
               },
             ),
-            new ListTile(
+           /* new ListTile(
               title: new Text("Favoritos"),
               trailing: new Icon(Icons.star),
               onTap: () {
@@ -352,7 +352,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                   builder: (BuildContext context) => favoritos(),
                 ),
                 );
-              },
+              },*/
             ),
             Divider(
               height: 30.0,
@@ -446,7 +446,6 @@ class _MyHomePageState extends State<mapaHomePage> {
     setState(() {
       mapController = controller;
     });
-    print('ccccccccccccccccccc');
     refresh();
     initMarkers();
   }
