@@ -12,12 +12,13 @@ import 'package:location/location.dart' as LocationManager;
 
 class marcador_distancia extends StatefulWidget {
 
-  marcador_distancia({this.mapController,this.markerMap,this.controller,this.kmActual,this.MelatLng});
+  marcador_distancia({this.mapController,this.markerMap,this.controller,this.kmActual,this.tiposGasActual,this.MelatLng});
 
   final Map<String,Place> markerMap;
   final GoogleMapController mapController;
   final TabController controller;
   final String kmActual;
+  final String tiposGasActual;
   final LatLng MelatLng;
 
   @override
@@ -31,6 +32,7 @@ class _displayState extends State<marcador_distancia> {
   var db;
   String kmActual;
   LatLng MelatLng;
+  String tiposGasActual;
 
   @override
   void initState() {
@@ -38,6 +40,7 @@ class _displayState extends State<marcador_distancia> {
     db = new DatabaseHelper();
     kmActual = widget.kmActual;
     MelatLng = widget.MelatLng;
+    tiposGasActual = widget.tiposGasActual;
 
     TraerUsuario();
 
@@ -68,14 +71,24 @@ class _displayState extends State<marcador_distancia> {
     User u = await db.getUser();
     setState(() {
       kmActual = u.botonDisGas;
+      tiposGasActual = u.botonTipoGas;
     });
 
     markerMap = widget.markerMap;
     Future iterateMapEntry(key, value) {
       Place p = value;
       double d = calcularDistancia(p.latitude,p.longitude);
+      bool siencontrotipo=false;
       if(kmActual != null){
-        if(double.parse('$kmActual') > d){
+
+        siencontrotipo=false;
+        for(int i=0;i<p.tiposgas.length;i++){
+          String tipo = p.tiposgas[i];
+          if(tiposGasActual == tipo){ siencontrotipo = true;i = p.prices.length;}
+        }
+        if(tiposGasActual == 'All'){siencontrotipo = true;}
+
+        if((double.parse('$kmActual') > d)&(siencontrotipo)){
           places.add(p);
         }
       }

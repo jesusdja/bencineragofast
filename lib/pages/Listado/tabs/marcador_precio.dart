@@ -74,8 +74,6 @@ class _displayState extends State<marcador_precio> {
       kmActual = u.botonTipoGas;
     });*/
 
-    print(tgActual);
-
     markerMap = widget.markerMap;
     Future iterateMapEntry(key, value) {
       Place p = value;
