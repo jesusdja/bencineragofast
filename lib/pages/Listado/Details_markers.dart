@@ -58,7 +58,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       }
     });
   }
-
   initFavoritos()async{
 
    if(await db.verificarIdFavoritos(widget.place.id) > 0)
