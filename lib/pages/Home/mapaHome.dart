@@ -139,7 +139,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     precios = new List<String>();precios.add('100');
     tipogas = new List<String>();tipogas.add('95');
     Servicios = new List<String>(); Servicios.add('SERVICIO 4');Servicios.add('SERVICIO 2');
-    placed = Place(id: 3,address: 'Dirección 4', latLng: latlo ,brand: 'Gaslonera 4',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'SHELL',  favorito: false);
+    placed = Place(id: 4,address: 'Dirección 4', latLng: latlo ,brand: 'Gaslonera 4',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'SHELL',  favorito: false);
     initMarker(placed);
 
     var_marca = Marca2(id: '1', name: 'Ford');Marcasdecarros.add(var_marca);

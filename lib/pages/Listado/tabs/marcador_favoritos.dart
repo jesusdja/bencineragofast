@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bencineragofast/pages/Home/place.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
+import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -31,6 +32,7 @@ class _displayState extends State<marcador_fav> {
   var db;
   String kmActual;
   LatLng MelatLng;
+
 
   @override
   void initState() {
@@ -87,8 +89,8 @@ class _displayState extends State<marcador_fav> {
 
     places_total = places;
 
-    for(int i = 0; i < places_total.length; i++){//MODIFICAR FAVORITOSSS
-        if(places_total[i].favorito){
+    for(int i = 0; i < places_total.length; i++){
+        if(places_total[i].favorito ){//MODIFICAR FAVORITOSSS
           places_ordenado.add(places_total[i]);
         }
     }

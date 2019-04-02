@@ -164,6 +164,7 @@ class DatabaseHelper {
     return res > 0 ? true : false;
   }
 
+
   Future<int> updatebtngas(User user) async {
     var dbClient = await  database;
     //   return await dbClient.update(tableNote, note.toMap(), where: "$columnId = ?", whereArgs: [note.id]);
