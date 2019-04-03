@@ -3,14 +3,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:device_id/device_id.dart';
 import 'dart:math' as math;
-
 import 'place.dart';
 import 'package:bencineragofast/main.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'package:vector_math/vector_math_64.dart' as math64;
 import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 import 'dart:core';
-
 import 'package:bencineragofast/pages/Menu/AboutPage.dart';
 import 'package:bencineragofast/pages/Menu/FavoritesPage.dart';
 import 'package:bencineragofast/pages/Menu/HelpPage.dart';
@@ -20,9 +18,6 @@ import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
 import 'package:bencineragofast/pages/Listado/ListadoGasolineras.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
-import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
-import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
 
@@ -47,7 +42,8 @@ class _MyHomePageState extends State<mapaHomePage> {
   Place placed;
   var db ;
   String _deviceid = 'Unknown';
-
+  String KmActual;
+  String TipoGasActual;
 
   @override
   void initState() {
@@ -88,7 +84,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     }
     if(await db.queryRowCountFavoritos != 0) {
 
-      print('Tabla de favoritos');
+      print('Tabla de favoritos con registros');
 
     }
 
@@ -102,9 +98,9 @@ class _MyHomePageState extends State<mapaHomePage> {
       print('query all rows:');
       allRows.forEach((row) => print(row));
     }else{
-      String btngas = "All";
-      String btndis = "20";
-      var user = new User(1,_deviceid,btndis,btngas);
+      TipoGasActual = "All";
+      KmActual = "20";
+      var user = new User(1,_deviceid,KmActual,TipoGasActual);
       db.saveUser(user);
       print("registro Exitoso de Usuario");
     }
@@ -113,10 +109,12 @@ class _MyHomePageState extends State<mapaHomePage> {
   //AGREGAR MARCADORES
   void initMarkers() {
 
+    markerMap.clear();
+
     //10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
     List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');
-    List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');tipogas.add('91');tipogas.add('95');tipogas.add('93');tipogas.add('91');tipogas.add('95');tipogas.add('93');
+    List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');tipogas.add('98');tipogas.add('80');tipogas.add('86');tipogas.add('87');tipogas.add('88');tipogas.add('89');
     List<String> Servicios = new List<String>(); Servicios.add('SERVICIO 1');Servicios.add('SERVICIO 2');
     placed = Place(id: 1,address: 'Dirección 1', latLng: latlo ,brand: 'Gaslonera 1',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'SHELL',favorito: false);
     initMarker(placed);
@@ -204,6 +202,65 @@ class _MyHomePageState extends State<mapaHomePage> {
     return rango;
   }
 
+  BotonActualizar() async {
+
+    User u = await db.getUser();
+    String StipoGas = u.botonTipoGas;
+    String Sdis = u.botonDisGas;
+    var currentLocation = <String, double>{};
+    final location = LocationManager.Location();
+    currentLocation = await location.getLocation();
+    final lat = currentLocation["latitude"];
+    final lng = currentLocation["longitude"];
+
+    void iterateMapEntry(key, value) {
+      Place p = value;
+      bool siencontrotipo=false;
+      for(int i=0;i<p.tiposgas.length;i++){
+        String tipo = p.tiposgas[i];
+        if(StipoGas == tipo){siencontrotipo = true; i = p.prices.length;}
+      }
+      //MODIFICAR
+      if(((siencontrotipo)||("All" == StipoGas))&(calcularDistancia22(lat,lng,p.latitude,p.longitude,Sdis))){
+        initMarker22(p);
+      }
+    }
+    if(markerMap != null){
+      markerMap.forEach(iterateMapEntry);
+    }
+
+  }
+
+  initMarker22(Place place) {
+    GoogleMapController mapController2 = mapController;
+    mapController2.clearMarkers().then((val) async {
+      final Marker marker = await mapController2.addMarker(MarkerOptions(
+        visible: true,
+        draggable: true,
+        flat: false,
+        position: LatLng(place.latitude,place.longitude),
+        infoWindowText: InfoWindowText(place.brand, place.address),
+        icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+      )
+      );
+    });
+  }
+
+  bool calcularDistancia22(double lat1, double lg1, double lat2, double lg2, String distancia){
+    bool rango = false;
+    double d = 0.0;
+    double radio = 6378;
+    double SumLat = math64.radians(lat2 - lat1);
+    double Sumlg = math64.radians(lg2 - lg1);
+    double a =  math.pow((math.sin(SumLat / 2)),2) +
+        math.cos(math64.radians(lat1)) *
+            math.cos(math64.radians(lat2)) *
+            math.pow((math.sin(Sumlg / 2)),2) ;
+    double c = 2 * (math.atan2(math.sqrt(a),math.sqrt(1 - a)));
+    d = radio * c;
+    if(d <= double.parse('$distancia')){rango = true;}
+    return rango;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,8 +276,28 @@ class _MyHomePageState extends State<mapaHomePage> {
                icon: Icon(Icons.refresh),
                tooltip: 'Actualizar',
                onPressed: (){
-                 //refresh();
-              //   initMarkers();
+
+
+                 mapController.clearMarkers();
+                 BotonActualizar();
+
+                /*setState(() {
+
+
+                   initMarkers();
+                 });
+
+                 //Navigator.pop(context);
+                 //MaterialPageRoute(builder: (context) => mapaHomePage());
+                 try{
+                   Navigator.popAndPushNamed(context, "/App");
+                 }catch(e){
+                   Navigator.popAndPushNamed(context, "/App");
+                   print('*****************');
+                   print(e.toString());
+                   print('*****************');
+                 }*/
+
                },
              ),
            ),
@@ -238,7 +315,6 @@ class _MyHomePageState extends State<mapaHomePage> {
           ],
       ),
       drawer: new Drawer(
-
         child: new ListView(
           children: <Widget>[
             new UserAccountsDrawerHeader(
@@ -340,7 +416,6 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   void refresh() async {
-
     mapController.onInfoWindowTapped.add(_onInfoWindowTapped);
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
@@ -370,7 +445,6 @@ class _MyHomePageState extends State<mapaHomePage> {
     setState(() {
       mapController = controller;
     });
-
     refresh();
     initMarkers();
   }

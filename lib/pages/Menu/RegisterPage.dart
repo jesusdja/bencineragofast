@@ -131,12 +131,10 @@ class _RegistrarseState extends State<Registrarse> {
               Navigator.pop(context);
             },
           );
-
         },
       ),
     );
   }
-
   Model() {
     var y = Modelosdecarro.length;
     return new Container(
@@ -182,7 +180,6 @@ class _RegistrarseState extends State<Registrarse> {
       ),
     );
   }
-
   Years() {
     var y = Yearsdecarros.length;
     return new Container(
@@ -252,7 +249,6 @@ class _RegistrarseState extends State<Registrarse> {
 
 }
   void initvalues() async {
-
     carropull = await db.getCarro();
 
     setState(() {
@@ -280,7 +276,6 @@ class _RegistrarseState extends State<Registrarse> {
       _valueIdCombustible = carropull.idCombustible;
     });
   }
-
   @override
   void initState() {
     super.initState();
@@ -403,7 +398,7 @@ class _RegistrarseState extends State<Registrarse> {
 
                           ),
                           Image.asset(
-                            'assets/images/icono_shell.png', width: 100,
+                            'assets/images/toyota.png', width: 100,
                             height: 100,
                           ), //=====No va , icono de otra cosa
                         ],
@@ -432,6 +427,7 @@ class _RegistrarseState extends State<Registrarse> {
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width * .5,
                               child: FlatButton(
+
                                   child: Text(_valueModel),
                                   splashColor: Colors.black,
                                   padding: const EdgeInsets.all(25.0),

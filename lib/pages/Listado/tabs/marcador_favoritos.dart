@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bencineragofast/pages/Home/place.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
-import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
