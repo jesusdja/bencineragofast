@@ -24,14 +24,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
     //ACCESS_COARSE_LOCATION
 
-    /*if(await db.queryRowCount() != 0){
+    if(await db.queryRowCount() != 0){
       print("ya esta registrado el Usuario");
       Timer(Duration(seconds: 2), () => Navigator.pushReplacementNamed(context, "/App"));
     }else{
-      print("registro Exitoso de Usuario");*/
+      print("registro Exitoso de Usuario");
       Timer(Duration(seconds: 2), () => Navigator.pushReplacementNamed(context, "/intro"));
-    //}
-
+    }
+    /**/
 
   }
 

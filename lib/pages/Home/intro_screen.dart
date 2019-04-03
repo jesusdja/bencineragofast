@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Home/walkthrough.dart';
 
+
 class intro_screen extends StatefulWidget {
   @override
   intro_screenState createState() {
@@ -17,7 +18,7 @@ class intro_screenState extends State<intro_screen> {
   void _onPageChanged(int page) {
     setState(() {
       currentPage = page;
-      if (currentPage == 2) {
+      if (currentPage == 3) {
         lastPage = true;
       } else {
         lastPage = false;
@@ -41,6 +42,9 @@ class intro_screenState extends State<intro_screen> {
             flex: 12,
             child: PageView(
               children: <Widget>[
+                /*Container(
+
+                ),*/
                 Walkthrough(
                   title: 'Vista principal',
                   content: 'Localice las bencineras cercanas a usted.',
