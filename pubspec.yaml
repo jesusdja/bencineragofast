@@ -35,6 +35,8 @@ dependencies:
 
   url_launcher: ^5.0.1
 
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -59,4 +61,7 @@ flutter:
   - assets/images/ayuda1.png
   - assets/images/ayuda2.png
   - assets/images/ayuda3.png
+  - assets/images/sprite1.jpg
+  - assets/images/sprite2.jpg
+  - assets/images/sprite3.png
 
