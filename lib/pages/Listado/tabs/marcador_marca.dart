@@ -105,13 +105,14 @@ class _displayState extends State<marcador_marca> {
     places_total = places;
 
     for(int i = 0; i < lista_tipo_marcas.length; i++){
-
-      LatLng latlo = LatLng(8.270346,-62.7579366);
-      List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');
-      List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');
-      List<String> Servicios = new List<String>(); Servicios.add('SERVICIO 1');Servicios.add('SERVICIO 2');
-      Place placed = Place(id: 1,address: 'Dirección 1', latLng: latlo ,brand: lista_tipo_marcas[i],prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: '0202',favorito: false);
-      places_ordenado.add(placed);
+      if(places_total.length != 0){
+        LatLng latlo = LatLng(8.270346,-62.7579366);
+        List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');
+        List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');
+        List<String> Servicios = new List<String>(); Servicios.add('SERVICIO 1');Servicios.add('SERVICIO 2');
+        Place placed = Place(id: 1,address: 'Dirección 1', latLng: latlo ,brand: lista_tipo_marcas[i],prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: '0202',favorito: false);
+        places_ordenado.add(placed);
+      }
 
       for(int j = 0; j < places_total.length; j++){
         if(lista_tipo_marcas[i] == places_total[j].marca){
@@ -124,11 +125,26 @@ class _displayState extends State<marcador_marca> {
 
   }
 
-  @override
-  Widget build(BuildContext context) {
+  verificar() {
+    if (places.length == 0) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Text('No hay Bencineras Cercas'),
+          Center(
 
-    return Scaffold(
-      body: ListView.builder(
+            child: Icon(
+              Icons.directions_car,
+              size: 120,
+              color: Colors.grey[300],
+            ),
+
+          ),
+        ],
+      );
+    } else {
+      return  ListView.builder(
         itemCount: places.length,
         itemBuilder: (context, index) {
 
@@ -155,7 +171,16 @@ class _displayState extends State<marcador_marca> {
             );
           }
         },
-      ),
+      );
+
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      body:verificar(),
     );
   }
 }

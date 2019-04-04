@@ -34,7 +34,7 @@ dependencies:
   geocoder: 0.1.2
 
   url_launcher: ^5.0.1
-
+  spritewidget: ^0.9.18
 
 
 dev_dependencies:
@@ -61,7 +61,3 @@ flutter:
   - assets/images/ayuda1.png
   - assets/images/ayuda2.png
   - assets/images/ayuda3.png
-  - assets/images/sprite1.jpg
-  - assets/images/sprite2.jpg
-  - assets/images/sprite3.png
-

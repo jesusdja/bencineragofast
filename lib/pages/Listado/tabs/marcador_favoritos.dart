@@ -112,10 +112,27 @@ class _displayState extends State<marcador_fav> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
+  verificar() {
+    if (places.length == 0) {
+      return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text('No hay Bencineras Agregadas'),
+              Center(
+
+                child: Icon(
+                  Icons.star,
+                  size: 120,
+                  color: Colors.grey[300],
+                ),
+
+              ),
+            ],
+          );
+    }else{
+
+      return ListView.builder(
         itemCount: places.length,
         itemBuilder: (context, index) {
           return ListTile(
@@ -134,7 +151,39 @@ class _displayState extends State<marcador_fav> {
             },
           );
         },
-      ),
+      );
+    }
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body:verificar(),
     );
   }
 }
+
+
+
+/* ListView.builder(
+        itemCount: places.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(places[index].brand),
+            subtitle: Text(places[index].address),// MODIFICAR
+            leading: Image.asset('assets/images/icono_gas.png',height: 50),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) {
+                      return DetailsMarkers(mapController: widget.mapController, place: places[index]);
+                    }),
+              );
+            },
+          );
+        },
+      ),*/
