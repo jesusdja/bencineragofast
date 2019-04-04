@@ -8,6 +8,8 @@ import 'dart:core';
 import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/scheduler.dart';
+import 'dart:io' as Io;
+import 'package:image/image.dart' as copy;
 
 
 class Registrarse extends StatefulWidget {
@@ -250,6 +252,11 @@ class _RegistrarseState extends State<Registrarse> {
 
 }
   void initvalues() async {
+
+    copy.Image imagen = copy.readPng(new Io.File('assets/images/ayuda2.png').readAsBytesSync());
+    //Image copyCrop(Image src, int x, int y, int w, int h);
+    copy.Image imagenCortada = copy.copyCrop(imagen,20,20,10,10);
+
 
     carropull = await db.getCarro();
 

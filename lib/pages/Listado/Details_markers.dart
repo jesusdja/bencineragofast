@@ -134,7 +134,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       onPressed: _launchURL,
       //child: Image.asset("assets/images/translade.png"),
       child: Icon(Icons.place),
-      backgroundColor: Colors.teal[800],
+      backgroundColor: Colors.teal[800],elevation: 20,
     );
   }
 

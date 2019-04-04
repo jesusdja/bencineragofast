@@ -197,7 +197,6 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
     return Container(
       child: FloatingActionButton(
         backgroundColor: Colors.red[900],
-        heroTag: 0,
         onPressed: MarksDetiposGas,
         tooltip: 'Toggle',
         child: texttoggle(),
