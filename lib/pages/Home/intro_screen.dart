@@ -18,7 +18,7 @@ class intro_screenState extends State<intro_screen> {
   void _onPageChanged(int page) {
     setState(() {
       currentPage = page;
-      if (currentPage == 3) {
+      if (currentPage == 2) {
         lastPage = true;
       } else {
         lastPage = false;
@@ -42,9 +42,6 @@ class intro_screenState extends State<intro_screen> {
             flex: 12,
             child: PageView(
               children: <Widget>[
-                /*Container(
-
-                ),*/
                 Walkthrough(
                   title: 'Vista principal',
                   content: 'Localice las bencineras cercanas a usted.',

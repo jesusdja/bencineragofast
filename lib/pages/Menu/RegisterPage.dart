@@ -9,6 +9,7 @@ import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/scheduler.dart';
 
+
 class Registrarse extends StatefulWidget {
 
   Registrarse({this.Marcasdecarros});
@@ -249,6 +250,7 @@ class _RegistrarseState extends State<Registrarse> {
 
 }
   void initvalues() async {
+
     carropull = await db.getCarro();
 
     setState(() {
@@ -276,8 +278,12 @@ class _RegistrarseState extends State<Registrarse> {
       _valueIdCombustible = carropull.idCombustible;
     });
   }
+
   @override
   void initState() {
+
+
+
     super.initState();
     initvalues();
   }
@@ -400,7 +406,7 @@ class _RegistrarseState extends State<Registrarse> {
                           Image.asset(
                             'assets/images/toyota.png', width: 100,
                             height: 100,
-                          ), //=====No va , icono de otra cosa
+                          ),
                         ],
                       ),
                     ),
