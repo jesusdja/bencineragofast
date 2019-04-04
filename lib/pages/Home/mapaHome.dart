@@ -319,15 +319,15 @@ class _MyHomePageState extends State<mapaHomePage> {
                         builder: (BuildContext context) => new  Registrarse(Marcasdecarros: Marcasdecarros,)));
               },
             ),
-         /*   new ListTile(
+           new ListTile(
               title: new Text("Opciones"),
               trailing: new Icon(Icons.build),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,
-                    new MaterialPageRoute(builder: (context) => new opciones(mapController: mapController)));//Modificacion
+                    new MaterialPageRoute(builder: (context) => new opciones(mapController: mapController,place: placed,)));//Modificacion
               },
-            ),*/
+            ),
            /* new ListTile(
               title: new Text("Favoritos"),
               trailing: new Icon(Icons.star),
