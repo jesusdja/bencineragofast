@@ -132,11 +132,26 @@ class _displayState extends State<marcador_precio> {
     places = places_ordenado;    MODIFICAR*/
   }
 
-  @override
-  Widget build(BuildContext context) {
+  verificar() {
+    if (places.length == 0) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Text('No hay Bencineras Cercas'),
+          Center(
 
-    return Scaffold(
-      body: ListView.builder(
+            child: Icon(
+              Icons.directions_car,
+              size: 120,
+              color: Colors.grey[300],
+            ),
+
+          ),
+        ],
+      );
+    } else {
+      return ListView.builder(
         itemCount: places.length,
         itemBuilder: (context, index) {
           String te = '';
@@ -163,12 +178,19 @@ class _displayState extends State<marcador_precio> {
                 );
               },
             );
-          }else{
-            return Container();
           }
 
         },
-      ),
+      );
+
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      body:verificar(),
     );
   }
 }

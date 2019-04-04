@@ -276,7 +276,6 @@ class _ElementosVehiculosState extends State<ElementosVehiculos> {
             title: Text(widget.vehiculo[index].NombreMarca),
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
             onTap: () {
-              print(widget.vehiculo[index].NombreMarca);
               // cambiarNombreMarca(widget.marca[index].title);
               _setValueMarca(widget.vehiculo[index].NombreMarca);
               Navigator.pop(context);

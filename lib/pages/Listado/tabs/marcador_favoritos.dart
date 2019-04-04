@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bencineragofast/pages/Home/place.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
+import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -31,6 +32,10 @@ class _displayState extends State<marcador_fav> {
   var db;
   String kmActual;
   LatLng MelatLng;
+
+  List<Favoritos> Fav_Guardados = new List<Favoritos>() ;
+  List<int> fav_com = List<int>();
+
 
   @override
   void initState() {
@@ -70,6 +75,10 @@ class _displayState extends State<marcador_fav> {
       kmActual = u.botonDisGas;
     });*/
 
+    List<int> aux = await db.getfavo();
+    for(int i=0 ; i< aux.length; i++){
+    }
+
     markerMap = widget.markerMap;
     Future iterateMapEntry(key, value) {
       Place p = value;
@@ -81,23 +90,49 @@ class _displayState extends State<marcador_fav> {
       }
     }
     markerMap.forEach(iterateMapEntry);
+
     List<Place> places_total = places;
     List<Place> places_ordenado = new List<Place>();
 
     places_total = places;
 
-    for(int i = 0; i < places_total.length; i++){//MODIFICAR FAVORITOSSS
-        if(places_total[i].favorito){
-          places_ordenado.add(places_total[i]);
+    for(int i = 0; i < aux.length; i++){
+
+      for(int j = 0; j < places_total.length; j++){
+
+        if(aux[i] == places_total[j].id){
+
+          places_ordenado.add(places_total[j]);
+
         }
+      }
     }
-    places = places_ordenado;
+    setState(() {
+      places = places_ordenado;
+    });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
+  verificar() {
+    if (places.length == 0) {
+      return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text('No hay Bencineras Agregadas'),
+              Center(
+
+                child: Icon(
+                  Icons.star,
+                  size: 120,
+                  color: Colors.grey[300],
+                ),
+
+              ),
+            ],
+          );
+    }else{
+
+      return ListView.builder(
         itemCount: places.length,
         itemBuilder: (context, index) {
           return ListTile(
@@ -105,6 +140,7 @@ class _displayState extends State<marcador_fav> {
             subtitle: Text(places[index].address),// MODIFICAR
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
             onTap: () {
+              Navigator.of(context).pop();
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -115,7 +151,39 @@ class _displayState extends State<marcador_fav> {
             },
           );
         },
-      ),
+      );
+    }
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body:verificar(),
     );
   }
 }
+
+
+
+/* ListView.builder(
+        itemCount: places.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(places[index].brand),
+            subtitle: Text(places[index].address),// MODIFICAR
+            leading: Image.asset('assets/images/icono_gas.png',height: 50),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) {
+                      return DetailsMarkers(mapController: widget.mapController, place: places[index]);
+                    }),
+              );
+            },
+          );
+        },
+      ),*/

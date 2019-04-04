@@ -87,7 +87,6 @@ class _RegistrarseState extends State<Registrarse> {
 
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
-              print(marca[index].id);
               Navigator.pop(context);
             },
           );
@@ -150,7 +149,6 @@ class _RegistrarseState extends State<Registrarse> {
 
   cargarmodelos()
   {
-    print(_valueIdMarca); // para albert
     var_modelo= Modelo(id: '1',name: 'fiesta');Modelosdecarro.add(var_modelo);
     var_modelo= Modelo(id: '2',name: 'malibu');Modelosdecarro.add(var_modelo);
     var_modelo= Modelo(id: '3',name: 'Fox');Modelosdecarro.add(var_modelo);
@@ -570,7 +568,6 @@ class _RegistrarseState extends State<Registrarse> {
                                   db.updateCarro(vehiculoUp);
                                   Navigator.pop(context);
                                 } else {
-                                  print('Verifique valores');
                                 }
                               },
                               child: Center(

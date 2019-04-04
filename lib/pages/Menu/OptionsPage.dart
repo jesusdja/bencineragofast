@@ -282,19 +282,7 @@ class _opcionesState extends State<opciones> {
                   ),
                 ),
 
-                Container(
-                  margin: EdgeInsets.only(left: 0.0,top: 10.0,right: 0.0,bottom: 10.0),
-                  child: TextField(
 
-                    autofocus: false,
-                    decoration: new InputDecoration(
-
-                      labelText: "Entre 100-1000",border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.attach_money),
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
 
 
 

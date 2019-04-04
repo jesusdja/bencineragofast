@@ -123,7 +123,15 @@ class DatabaseHelper {
     );
     return favoritos;
   }
-
+  Future<List<int>> getfavo() async {
+    var dbClient = await database;
+    List<int> res = new List<int>();
+    List<Map> list = await dbClient.rawQuery('SELECT idGasolinera FROM Favoritos');
+    for(int i=0 ; i< list.length; i++){
+      res.add(list[i]["idGasolinera"]);
+    }
+    return res;
+  }
   Future<Vehiculo> getCarro() async {
     var dbClient = await database;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM Carro');
@@ -164,6 +172,7 @@ class DatabaseHelper {
     return res > 0 ? true : false;
   }
 
+
   Future<int> updatebtngas(User user) async {
     var dbClient = await  database;
     //   return await dbClient.update(tableNote, note.toMap(), where: "$columnId = ?", whereArgs: [note.id]);
@@ -197,8 +206,6 @@ class DatabaseHelper {
         where: '$colId = ?',
         whereArgs: [id]);
     var result2 = await dbClient.rawQuery('SELECT * FROM $table WHERE $colId = $id');
-
-   // print(result.length);
 
     if (result.length > 0) {
       return new User.fromMap(result.first);

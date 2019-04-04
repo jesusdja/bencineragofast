@@ -124,12 +124,26 @@ class _displayState extends State<marcador_distancia> {
 
 
   }
+  verificar() {
+    if (places.length == 0) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Text('No hay Bencineras Cercas'),
+          Center(
 
-  @override
-  Widget build(BuildContext context) {
+            child: Icon(
+              Icons.directions_car,
+              size: 120,
+              color: Colors.grey[300],
+            ),
 
-    return Scaffold(
-      body: ListView.builder(
+          ),
+        ],
+      );
+    }else {
+      return  ListView.builder(
         itemCount: places.length,
         itemBuilder: (context, index) {
           return ListTile(
@@ -137,6 +151,7 @@ class _displayState extends State<marcador_distancia> {
             subtitle: Text(calcularDistancia(places[index].latitude,places[index].longitude).toStringAsFixed(2) + ' Km' /*+ (((calcularDistancia(places[index].latitude,places[index].longitude)/ 20)*60).toStringAsFixed(2) + ' min' )*/), //MODIFICAR
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
             onTap: () {
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -147,7 +162,14 @@ class _displayState extends State<marcador_distancia> {
             },
           );
         },
-      ),
+      );
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      body:verificar(),
     );
   }
 }

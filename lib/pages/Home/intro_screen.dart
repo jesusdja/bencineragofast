@@ -54,7 +54,7 @@ class intro_screenState extends State<intro_screen> {
                 ),
                 Walkthrough(
                   title: 'Registar Vehiculo propio',
-                  content: 'Facilitando busquedas y obteniendo mejores beneficion',
+                  content: 'Facilitando busquedas y obteniendo mejores beneficios',
                   imageIcon: 'assets/images/ayuda3.png',
                 ),
               ],
