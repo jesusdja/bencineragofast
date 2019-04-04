@@ -1,3 +1,4 @@
+import 'package:bencineragofast/pages/Home/intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
@@ -271,7 +272,7 @@ class _MyHomePageState extends State<mapaHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("GoFast Bencineras"),
+        title: new Text("GoFast Bencineras",style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.0488),),
         backgroundColor: PrimaryColor ,
           actions: <Widget>[
            Container(
@@ -357,11 +358,7 @@ class _MyHomePageState extends State<mapaHomePage> {
               title: new Text("Ayuda"),
               trailing: new Icon(Icons.help),
               onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Ayuda(),
-                ),
-                );
+                Navigator.pushReplacementNamed(context, "/intro");
               },
             ),
           ],
