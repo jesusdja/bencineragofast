@@ -153,7 +153,8 @@ class _MyHomePageState extends State<mapaHomePage> {
       GoogleMapController mapController2 = mapController;
       //mapController.onMarkerTapped.add(_onInfoWindowTapped);
       mapController2.clearMarkers().then((val) async {
-        final Marker marker = await mapController2.addMarker(MarkerOptions(
+        final Marker marker = await mapController2.addMarker(
+          MarkerOptions(
           visible: true,
           draggable: true,
           flat: false,
@@ -203,6 +204,10 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   BotonActualizar() async {
+
+    final center = await getUserLocation();
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: center == null ? LatLng(0, 0) : center, zoom: 11.0)));
 
     User u = await db.getUser();
     String StipoGas = u.botonTipoGas;
@@ -276,28 +281,9 @@ class _MyHomePageState extends State<mapaHomePage> {
                icon: Icon(Icons.refresh),
                tooltip: 'Actualizar',
                onPressed: (){
-
-
                  mapController.clearMarkers();
-                 BotonActualizar();
-
-                /*setState(() {
-
-
-                   initMarkers();
-                 });
-
-                 //Navigator.pop(context);
-                 //MaterialPageRoute(builder: (context) => mapaHomePage());
-                 try{
-                   Navigator.popAndPushNamed(context, "/App");
-                 }catch(e){
-                   Navigator.popAndPushNamed(context, "/App");
-                   print('*****************');
-                   print(e.toString());
-                   print('*****************');
-                 }*/
-
+                 Navigator.pushReplacementNamed(context, "/App");
+                 //BotonActualizar();
                },
              ),
            ),

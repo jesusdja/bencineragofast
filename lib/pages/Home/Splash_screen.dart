@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
       print("registro Exitoso de Usuario");
       Timer(Duration(seconds: 2), () => Navigator.pushReplacementNamed(context, "/intro"));
     }
-    /**/
+
 
   }
 
