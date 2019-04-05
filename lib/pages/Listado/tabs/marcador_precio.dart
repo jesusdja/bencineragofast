@@ -30,6 +30,7 @@ class _displayState extends State<marcador_precio> {
   Map<String,Place> markerMap;
   List<Place> places = new List<Place>();
   List<Place> places_originales = new List<Place>();
+  List<Place> places_individuales;
   var db;
   String kmActual;
   String tgActual;
@@ -67,13 +68,12 @@ class _displayState extends State<marcador_precio> {
     d = radio * c;
     return d;
   }
-
+  String tama;
   TraerUsuario() async {
     /*User u = await db.getUser();
     setState(() {
       kmActual = u.botonTipoGas;
     });*/
-
     markerMap = widget.markerMap;
     Future iterateMapEntry(key, value) {
       Place p = value;
@@ -85,6 +85,21 @@ class _displayState extends State<marcador_precio> {
       }
     }
     markerMap.forEach(iterateMapEntry);
+
+
+    places_individuales = new List<Place>();
+    tama = '';
+    for(int ind=0; ind < places.length;ind++){
+      for(int i=0; i < places[ind].prices.length;i++){
+        if(tgActual == places[ind].tiposgas[i]){
+          places_individuales.add(places[ind]); i = places[ind].prices.length;
+        }
+        if(tgActual == 'All'){
+          places_individuales.add(places[ind]); i = places[ind].prices.length;
+        }
+      }
+    }
+
 
 /*    places_originales = places;
 
@@ -133,7 +148,7 @@ class _displayState extends State<marcador_precio> {
   }
 
   verificar() {
-    if (places.length == 0) {
+    if (places_individuales.length == 0) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -152,20 +167,20 @@ class _displayState extends State<marcador_precio> {
       );
     } else {
       return ListView.builder(
-        itemCount: places.length,
+        itemCount: places_individuales.length,
         itemBuilder: (context, index) {
           String te = '';
-          for(int i=0; i < places[index].prices.length;i++){
-            if(tgActual == places[index].tiposgas[i]){
-              te =  places[index].tiposgas[i] + ':' + places[index].prices[i] + ' CLP';
+          for(int i=0; i < places_individuales[index].prices.length;i++){
+            if(tgActual == places_individuales[index].tiposgas[i]){
+              te =  te + places_individuales[index].tiposgas[i] + ':' + places_individuales[index].prices[i] + ' CLP';
             }
             if(tgActual == 'All'){
-              te =  te + places[index].tiposgas[i] + ':' + places[index].prices[i] + ' CLP' + ' - ';
+              te =  te + places_individuales[index].tiposgas[i] + ':' + places_individuales[index].prices[i] + ' CLP' + ' - ';
             }
           }
           if(te != ''){
             return ListTile(
-              title: Text(places[index].brand),
+              title: Text(places_individuales[index].brand),
               subtitle: Text(te), //MODIFICAR
               leading: Image.asset('assets/images/icono_gas.png',height: 50),
               onTap: () {
@@ -173,13 +188,12 @@ class _displayState extends State<marcador_precio> {
                   context,
                   MaterialPageRoute(
                       builder: (context) {
-                        return DetailsMarkers(mapController: widget.mapController, place: places[index]);
+                        return DetailsMarkers(mapController: widget.mapController, place: places_individuales[index]);
                       }),
                 );
               },
             );
           }
-
         },
       );
 
@@ -188,7 +202,6 @@ class _displayState extends State<marcador_precio> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body:verificar(),
     );
