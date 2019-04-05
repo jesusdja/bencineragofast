@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
-      title: 'Tasks App',
+      title: 'Bencinera GoFast',
       home: SplashScreen(),
       routes: routes,
     );

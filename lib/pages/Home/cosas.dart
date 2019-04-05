@@ -45,13 +45,8 @@ class _MyHomePageState extends State<mapaHomePage> {
   String _deviceid = 'Unknown';
   String KmActual;
   String TipoGasActual;
-  String NameVehiculo = '';
+  String NameVehiculo;
   Vehiculo Nombrecarro;
-  bool estadoNombre =true;
-
-  String parte1;
-  String parte2;
-  String parte3;
 
   @override
   void initState() {
@@ -69,21 +64,6 @@ class _MyHomePageState extends State<mapaHomePage> {
       _deviceid = deviceid;
     });
     if(await db.queryRowCountCarro() != 0){
-      Nombrecarro = await  db.getCarro();
-      parte1 = Nombrecarro.marcaVehiculo;
-      parte2 = Nombrecarro.modeloVehiculo;
-      parte3 = Nombrecarro.yearsVehiculo;
-      if(Nombrecarro.idMarca == 'Desconocido')
-      {
-        setState(() {
-          NameVehiculo = 'Vehiculo No Registrado';
-        });
-      }else{
-        setState(() {
-          NameVehiculo = parte1 + ' ' + parte2+ ' ' + parte3;
-          estadoNombre = false;
-        });
-      }
       print("ya esta registrado el carro");
 
       final allRows = await db.queryAllRowsCarro();
@@ -177,14 +157,14 @@ class _MyHomePageState extends State<mapaHomePage> {
       //mapController.onMarkerTapped.add(_onInfoWindowTapped);
       mapController2.clearMarkers().then((val) async {
         final Marker marker = await mapController2.addMarker(
-          MarkerOptions(
-          visible: true,
-          draggable: true,
-          flat: false,
-          position: place.latLng,
-          infoWindowText: InfoWindowText(place.brand, place.address),
-          icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
-        )
+            MarkerOptions(
+              visible: true,
+              draggable: true,
+              flat: false,
+              position: place.latLng,
+              infoWindowText: InfoWindowText(place.brand, place.address),
+              icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+            )
         );
         markerMap[marker.id] = place;
       });
@@ -290,54 +270,61 @@ class _MyHomePageState extends State<mapaHomePage> {
     return rango;
   }
 
+  Nombre(){
+
+    Nombrecarro = db.getCarro();
+
+    if(Nombrecarro.idMarca == 'Desconocido')
+    {
+      NameVehiculo = 'Desconocido';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
         title: new Text("GoFast Bencineras",style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.047),),
         backgroundColor: PrimaryColor ,
-          actions: <Widget>[
-           Container(
-             margin: EdgeInsets.only(right: 20),
+        actions: <Widget>[
+          Container(
+            margin: EdgeInsets.only(right: 0),
             child:  IconButton(
-               iconSize: 30,
-               icon: Icon(Icons.refresh),
-               tooltip: 'Actualizar',
-               onPressed: (){
-                 mapController.clearMarkers();
-                 Navigator.pushReplacementNamed(context, "/App");
-                 //BotonActualizar();
-               },
-             ),
-           ),
-
-            IconButton(
-              iconSize: 40,
-              icon: Icon(Icons.map),
-              tooltip: 'Lista de Gasolineras',
+              iconSize: 30,
+              icon: Icon(Icons.refresh),
+              tooltip: 'Actualizar',
               onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,MelatLng: MelatLng,)),
-                );
+                mapController.clearMarkers();
+                Navigator.pushReplacementNamed(context, "/App");
+                //BotonActualizar();
               },
             ),
-          ],
+          ),
+
+          IconButton(
+            iconSize: 40,
+            icon: Icon(Icons.map),
+            tooltip: 'Lista de Gasolineras',
+            onPressed: (){
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,MelatLng: MelatLng,)),
+              );
+            },
+          ),
+        ],
       ),
       drawer: new Drawer(
         child: new ListView(
           children: <Widget>[
             new UserAccountsDrawerHeader(
                 decoration: new BoxDecoration(color: PrimaryColor,
-                 ),
+                ),
                 accountName: new Text('Vehiculo:',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 20,
                   ),
                 ),
-                accountEmail : Text( NameVehiculo,
-                style: TextStyle(
-                  fontSize: 17,
-                ),),),
+                accountEmail: new Text(NameVehiculo)),
             new ListTile(
               title: new Text('Registrar Vehiculo'),
               trailing: new Icon(Icons.directions_car),
@@ -349,7 +336,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                         builder: (BuildContext context) => new  Registrarse(Marcasdecarros: Marcasdecarros,)));
               },
             ),
-           new ListTile(
+            new ListTile(
               title: new Text("Opciones"),
               trailing: new Icon(Icons.build),
               onTap: () {
@@ -358,7 +345,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                     new MaterialPageRoute(builder: (context) => new opciones(mapController: mapController,place: placed,)));//Modificacion
               },
             ),
-           /* new ListTile(
+            /* new ListTile(
               title: new Text("Favoritos"),
               trailing: new Icon(Icons.star),
               onTap: () {
@@ -398,15 +385,15 @@ class _MyHomePageState extends State<mapaHomePage> {
           GoogleMap(
             onMapCreated: onMapCreated,
             options: GoogleMapOptions(
-                cameraPosition: CameraPosition(
-                    target: LatLng(0,0),
-                    zoom: 0.1),
-                myLocationEnabled: true,
-                mapType: MapType.normal,
-                compassEnabled: true,
-                trackCameraPosition: true,
-                rotateGesturesEnabled: true, //Activar gestos de rotación
-                scrollGesturesEnabled: true, //Puede o no mover el mapa
+              cameraPosition: CameraPosition(
+                  target: LatLng(0,0),
+                  zoom: 0.1),
+              myLocationEnabled: true,
+              mapType: MapType.normal,
+              compassEnabled: true,
+              trackCameraPosition: true,
+              rotateGesturesEnabled: true, //Activar gestos de rotación
+              scrollGesturesEnabled: true, //Puede o no mover el mapa
 
             ),
           ),
@@ -416,10 +403,10 @@ class _MyHomePageState extends State<mapaHomePage> {
             width: MediaQuery.of(context).size.width,
             child: Menu_tgas(mapController: mapController,markerMap: markerMap,),
           ),
-         Positioned(
+          Positioned(
             right: 10.0,
             bottom: 90.0,
-           width: MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width,
             child: Menu_bdis(mapController: mapController,markerMap: markerMap,),
           ),
         ],

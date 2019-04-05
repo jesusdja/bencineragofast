@@ -101,9 +101,7 @@ class _displayState extends State<marcador_marca> {
     lista_tipo_marcas.add('SHELL');
     lista_tipo_marcas.add('PETROBRAS');
     lista_tipo_marcas.add('COPEC');
-
     places_total = places;
-
     for(int i = 0; i < lista_tipo_marcas.length; i++){
       if(places_total.length != 0){
         LatLng latlo = LatLng(8.270346,-62.7579366);
@@ -121,10 +119,7 @@ class _displayState extends State<marcador_marca> {
       }
     }
     places = places_ordenado;       //MODIFICAR
-
-
   }
-
   verificar() {
     if (places.length == 0) {
       return Column(
@@ -175,7 +170,6 @@ class _displayState extends State<marcador_marca> {
 
     }
   }
-
   @override
   Widget build(BuildContext context) {
 

@@ -1,3 +1,4 @@
+import 'package:bencineragofast/pages/Home/place.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';//Desde Dependencias
@@ -8,9 +9,10 @@ import 'package:bencineragofast/main.dart';
 
 class opciones extends StatefulWidget {
 
-  opciones({this.mapController});
+  opciones({this.mapController, this.place});
 
   final GoogleMapController mapController;
+  final Place place;
 
   @override
   _opcionesState createState() => new _opcionesState();
@@ -22,11 +24,11 @@ enum TipodeMapa{Normal,Satelital,Otro} //Vairables de tipo Mapa
 
 class _opcionesState extends State<opciones> {
 
-
-
+  GoogleMapController mapController;
+  LatLng MelatLng;
   String _valueMapa = 'Seleccione mapa';
+  MapType _valueMapaOption = MapType.normal;
   void _setValueMapa(String valueMapa) => setState(() => _valueMapa = valueMapa);
-
 
   String _valueMarca = 'Marca Favorita';
   void _setValueMarca(String value) => setState(() => _valueMarca = value);
@@ -50,7 +52,7 @@ class _opcionesState extends State<opciones> {
                 textColor: Colors.white,
                 color: PrimaryColor,
                 child: new Text("Satelital"),
-                  onPressed: (){Navigator.pop(context ,TipodeMapa.Satelital); CambiarmapaSatelital();refresh(15);},//LLamar a la funcion CambiarmapaSatelital
+                  onPressed: (){Navigator.pop(context ,TipodeMapa.Satelital); },//LLamar a la funcion CambiarmapaSatelital
               ),
 
 
@@ -64,7 +66,7 @@ class _opcionesState extends State<opciones> {
                 textColor: Colors.white,
                  color: PrimaryColor,
                 child: new Text("Normal"),
-                onPressed: (){Navigator.pop(context, TipodeMapa.Normal) ; CambiarmapaNormal();refresh(15);
+                onPressed: (){Navigator.pop(context, TipodeMapa.Normal) ;
                 },
               ),
 
@@ -77,7 +79,7 @@ class _opcionesState extends State<opciones> {
                 textColor: Colors.white,
                 color: PrimaryColor,
                 child: new Text("Otro"),
-                onPressed: (){Navigator.pop(context, TipodeMapa.Otro);CambiarmapaOtro();refresh(15);
+                onPressed: (){Navigator.pop(context, TipodeMapa.Otro);
                 },
               ),
 
@@ -190,11 +192,82 @@ class _opcionesState extends State<opciones> {
         break;
     }
   }
+
+  Widget _MapPlace() {
+    if(_valueMapa == 'Normal')
+    {
+        _valueMapaOption = MapType.normal;
+
+    }
+    if(_valueMapa == 'Satelital')
+    {
+
+        _valueMapaOption = MapType.satellite;
+
+    }
+    if(_valueMapa == 'Otro')
+    {
+        _valueMapaOption = MapType.terrain;
+    }
+    print(_valueMapaOption);
+    print(_valueMapa);
+    return
+
+      Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        margin: const EdgeInsets.symmetric(vertical: 2.0),
+        elevation: 10.0,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.3,
+          child: GoogleMap(
+            onMapCreated: onMapCreated,
+            options: GoogleMapOptions(
+              mapType: _valueMapaOption,
+              cameraPosition: CameraPosition(
+                target: LatLng(8.29609, -62.7355),
+                zoom: 16.0,
+              ),
+              zoomGesturesEnabled: false,
+              rotateGesturesEnabled: false,
+              tiltGesturesEnabled: false,
+              scrollGesturesEnabled: false,
+
+            ),
+          ),
+        ),
+      );
+  }
+
+  void onMapCreated(controller) {
+    mapController = controller;
+
+  }
+
+  @override
+  void setState(fn) {
+
+    if(_valueMapa == 'Normal')
+    {
+      _valueMapaOption = MapType.normal;
+
+    }
+    if(_valueMapa == 'Satelital')
+    {
+
+      _valueMapaOption = MapType.satellite;
+
+    }
+    if(_valueMapa == 'Otro')
+    {
+      _valueMapaOption = MapType.terrain;
+    }
+    super.setState(fn);
+  }
   @override
   Widget build(BuildContext context) {
-
-
-
 
     return new Scaffold(
       //key: _formKey,
@@ -214,7 +287,7 @@ class _opcionesState extends State<opciones> {
             child: new Column( //centrar all content
               children: <Widget>[ //trabajar y permitir multiples widgets
                 Container(
-                  margin: EdgeInsets.only(left: 0.0,top: 50.0,right: 0.0,bottom: 10.0),
+                  margin: EdgeInsets.only(left: 0.0,top: 10.0,right: 0.0,bottom: 10.0),
                   child: Text(
                     'Tipo de Mapa',
                     textAlign: TextAlign.justify,
@@ -247,7 +320,7 @@ class _opcionesState extends State<opciones> {
                     ),
                   ),
                 ),
-                Text(
+               /* Text(
                   'Marca Favorita',
                   textAlign: TextAlign.justify,
                   overflow: TextOverflow.ellipsis,
@@ -282,12 +355,11 @@ class _opcionesState extends State<opciones> {
                   ),
                 ),
 
-
-
+                */
 
 
                 Container(
-                  margin: EdgeInsets.only(left: 0.0,top: 50.0,right: 0.0,bottom: 40.0),
+                  margin: EdgeInsets.only(left: 0.0,top: 100.0,right: 0.0,bottom: 40.0),
 
                   child: SizedBox(
                     width: double.infinity,
@@ -299,6 +371,23 @@ class _opcionesState extends State<opciones> {
                       textColor: Colors.white,
                       splashColor: Colors.black,
                       onPressed: () {
+                          if(_valueMapa == 'Normal')
+                          {
+                            CambiarmapaNormal();
+                            refresh(15);
+                          }
+                          if(_valueMapa =='Satelital')
+                          {
+                              CambiarmapaSatelital();
+                              refresh(15);
+
+                          }
+                          if(_valueMapa =='Otro')
+                          {
+                            CambiarmapaOtro();
+                            refresh(15);
+
+                          }
                         Navigator.pop(context);
                       },
                       child: Center(child: Center(child: Text('Establecer Configuracion'))),
@@ -323,20 +412,17 @@ class _opcionesState extends State<opciones> {
 
 
   }
-
-  void CambiarmapaOtro()  {
+  Future CambiarmapaOtro()  async {
 
     GoogleMapController mapController2 = widget.mapController;
     print(mapController2);
+    final center = await getUserLocation();
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: center == null ? LatLng(0, 0) : center, zoom: 11.0)));
 
-    mapController2.updateMapOptions(
+         mapController2.updateMapOptions(
 
         GoogleMapOptions(
-
-          cameraPosition: CameraPosition(
-            target: LatLng(8.29609, -62.7355),
-          ),
-
           mapType: MapType.terrain,
 
         )
@@ -368,7 +454,6 @@ class _opcionesState extends State<opciones> {
 
 
   }
-
   void CambiarmapaSatelital()  {
 
       GoogleMapController mapController2 = widget.mapController;
@@ -387,9 +472,6 @@ class _opcionesState extends State<opciones> {
         )
       );
 
-
-
-
 }
   void refresh(double zoomcam) async {
 
@@ -398,7 +480,6 @@ class _opcionesState extends State<opciones> {
     mapController2.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: center == null ? LatLng(0, 0) : center, zoom: zoomcam)));
   }
-
   Future<LatLng> getUserLocation() async {
     var currentLocation = <String, double>{};
     final location = LocationManager.Location();
@@ -415,5 +496,6 @@ class _opcionesState extends State<opciones> {
   }
 
 }
+
 
 

@@ -151,6 +151,8 @@ class DatabaseHelper {
   }
 
 
+
+
   Future<int> deleteFavoritos(Favoritos favoritos) async {
     var dbClient = await database;
 
