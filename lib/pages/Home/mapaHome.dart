@@ -228,10 +228,6 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   BotonActualizar() async {
 
-    final center = await getUserLocation();
-    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: center == null ? LatLng(0, 0) : center, zoom: 11.0)));
-
     User u = await db.getUser();
     String StipoGas = u.botonTipoGas;
     String Sdis = u.botonDisGas;
@@ -240,6 +236,13 @@ class _MyHomePageState extends State<mapaHomePage> {
     currentLocation = await location.getLocation();
     final lat = currentLocation["latitude"];
     final lng = currentLocation["longitude"];
+
+    double zoom = 11.0;
+    if(Sdis == '10'){zoom = 13.0;}if(Sdis == '2'){zoom = 15.0;}
+
+    final center = await getUserLocation();
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: center == null ? LatLng(0, 0) : center, zoom: zoom)));
 
     void iterateMapEntry(key, value) {
       Place p = value;
@@ -304,9 +307,9 @@ class _MyHomePageState extends State<mapaHomePage> {
                icon: Icon(Icons.refresh),
                tooltip: 'Actualizar',
                onPressed: (){
-                 mapController.clearMarkers();
-                 Navigator.pushReplacementNamed(context, "/App");
-                 //BotonActualizar();
+                 //mapController.clearMarkers();
+                 //Navigator.pushReplacementNamed(context, "/App");
+                 BotonActualizar();
                },
              ),
            ),
