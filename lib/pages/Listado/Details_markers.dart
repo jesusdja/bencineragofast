@@ -1,3 +1,4 @@
+import 'package:bencineragofast/main.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +135,8 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       onPressed: _launchURL,
       //child: Image.asset("assets/images/translade.png"),
       child: Icon(Icons.place),
-      backgroundColor: Colors.teal[800],elevation: 20,
+      backgroundColor: PrimaryColor ,
+      elevation: 20,
     );
   }
 
@@ -185,7 +187,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
                 gradient: LinearGradient(
                     begin: Alignment.topRight,
                     colors: [
-                      Color.fromRGBO(11,90,70,60),
+                      PrimaryColor,
                       Colors.white,
                     ]),
               ),
@@ -284,7 +286,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
-        backgroundColor: Color.fromRGBO(11,90,70,60),
+        backgroundColor:PrimaryColor,
         title: new Text(widget.place.brand + ' - ' + widget.place.address),
       ),
       body: GestureDetector(
