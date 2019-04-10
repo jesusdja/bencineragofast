@@ -184,7 +184,7 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
         onPressed: (){animate(); name_gas_button = text;refresh(zoom);initMarkers(dis);},
         tooltip: 'Add',
         heroTag: tagg,
-        backgroundColor: mate.Colors.red[900] ,
+        backgroundColor: mate.Colors.green[700],
         child: Text(
           text,
           style: TextStyle(
@@ -201,7 +201,7 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
 
     return Container(
       child: FloatingActionButton(
-        backgroundColor: mate.Colors.red[900],
+        backgroundColor: mate.Colors.green[700],
         onPressed: animate,
         heroTag: 4,
         tooltip: 'Toggle',
