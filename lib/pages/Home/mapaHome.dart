@@ -156,7 +156,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     placed = Place(id: 3,address: 'Dirección 3', latLng: latlo ,brand: 'Gaslonera 3',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'COPEC',  favorito: true);
     initMarker(placed);
     //2 KM
-    latlo = LatLng(8.2965626,-62.7356024);
+    latlo = LatLng(8.2950868,-62.7361771);
     precios = new List<String>();precios.add('100');
     tipogas = new List<String>();tipogas.add('95');
     Servicios = new List<String>(); Servicios.add('SERVICIO 4');Servicios.add('SERVICIO 2');
