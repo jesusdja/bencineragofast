@@ -4,7 +4,6 @@ import 'package:bencineragofast/pages/sqlflite/favoritos.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
-import 'package:bencineragofast/pages/Home/mapaHome.dart';
 import 'package:bencineragofast/pages/Home/place.dart';
 import 'package:url_launcher/url_launcher.dart';
 
