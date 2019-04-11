@@ -1,3 +1,4 @@
+import 'package:bencineragofast/api/protos/fuel_type.pbenum.dart';
 import 'package:bencineragofast/api/services.dart';
 import 'package:bencineragofast/pages/Home/intro_screen.dart';
 import 'package:flutter/material.dart';
@@ -67,8 +68,8 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   void PeticionHttpTotal() async{
    Sevicios.ConnectionTest();
-   Sevicios.GetTipos();
-
+   String recibe =  Sevicios.GetTipos(FuelType.valueOf(12)); //pasar valor
+  print(recibe);
   }
 
   Future<http.Response> fetchPost() {
