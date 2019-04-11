@@ -41,14 +41,14 @@ class services{
 
   Future<List<Place>> CloseTest() async{ await channel.shutdown();  }
 
-  Future<Null> TrarBencineras (double lat, double lg, double radio) async{
+  Future<List<Place>> TrarBencineras (double lat, double lg, double radio) async{
 
     List<Place> lista_places = new List<Place>();
 
     var request = new ListFSReq()
-      ..coordinates.add(-30)
-      ..coordinates.add(-70)
-      ..radius = 100.0;
+      ..coordinates.add(lat)
+      ..coordinates.add(lg)
+      ..radius = radio;
 
     try {
       var response = await FuelStationStub.listFS(request);
@@ -58,9 +58,17 @@ class services{
         //TRAER PRECIOS
         List<String> list_string_prices = new List<String>();
         Map<int, String> list_preces = value.prices;
-        List<int> list_list_preces = list_preces.keys.toList();
+        List<String> list_list_preces = list_preces.values.toList();
         for(var v in list_list_preces){
-          list_string_prices.add(v.toString());
+          list_string_prices.add(v);
+        }
+
+        //TRAER PRECIOS
+        List<String> list_string_tipo = new List<String>();
+        Map<int, String> list_tipos = value.prices;
+        List<int> list_list_tipos = list_tipos.keys.toList();
+        for(var v in list_list_tipos){
+          list_string_tipo.add(GetTipos(int.parse(v.toString())));
         }
 
         //TRAER SERVICIOS
@@ -68,7 +76,7 @@ class services{
         List<FuelStation_Service> l = value.services;
         for(var vl in l){
           if(value.services.length != 0){
-            list_string_servicio.add(vl.name.toString());
+            list_string_servicio.add(GetServicios(vl.name.toString()));
           }
         }
         //CREAR BENCINERA
@@ -76,12 +84,12 @@ class services{
             id: int.parse(value.fuelStationId),
             address: value.address,
             latLng: LatLng(value.coord[0],value.coord[1]),
-            brand: value.brand.toString(),
+            brand: GetBrand(value.brand.toString()),
             prices: list_string_prices,
-            tiposgas: list_string_prices,
+            tiposgas: list_string_tipo,
             last_price_update: value.lastPriceUpdated.toString(),
             services: list_string_servicio,
-            marca: value.brand.toString(),
+            marca: GetBrand(value.brand.toString()),
             favorito: false);
         lista_places.add(place);
       }
@@ -95,7 +103,8 @@ class services{
 }
 
 String GetTipos(getTipo){ // Recibe de tipo FuelType
-  String tipo = getTipo.toString().replaceRange(0, 10, '');
+  String tipo = FuelType.valueOf(getTipo).toString();
+  tipo = tipo.replaceRange(0, 10, '');
   tipo =  tipo.toLowerCase();
   return tipo;
 }
@@ -107,4 +116,11 @@ String GetServicios(getServicio){ // Recibe de tipo FuelType
   return servicioFS;
 
   //Obtiene solo la cadena no traduce el substring
+}
+
+String GetBrand(getBran){ // Recibe de tipo FuelType
+  String brand = getBran;
+  brand = brand.replaceRange(0, 6, '');
+  brand =  brand.toLowerCase();
+  return brand;
 }

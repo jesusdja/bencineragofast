@@ -43,7 +43,7 @@ class _MyHomePageState extends State<mapaHomePage> {
   Place placed;
   var db ;
   String _deviceid = 'Unknown';
-  String KmActual;
+  String KmActual = '20';
   String TipoGasActual;
   String NameVehiculo = '';
   Vehiculo Nombrecarro;
@@ -65,9 +65,6 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   void PeticionGrpc() async{
     Servicios.ConnectionTest('192.168.1.7',3001);
-
-    Servicios.TrarBencineras(-30, -70, 100);
-
     //Servicios.CloseTest();
   }
 
@@ -117,12 +114,8 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     }
     if(await db.queryRowCountFavoritos != 0) {
-
       print('Tabla de favoritos con registros');
-
     }
-
-
     if(await db.queryRowCount() != 0){
       print("ya esta registrado el Usuario");
       User userUp = new User(1,_deviceid,"20","All");
@@ -141,12 +134,16 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   //AGREGAR MARCADORES
-  void initMarkers() {
+  Future initMarkers() async {
 
     markerMap.clear();
 
+    LatLng Mela = await  getUserLocation();
+    List<Place> Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude, double.parse(KmActual));
 
-
+    for(Place p in Lista_places_ok){
+      initMarker(p);
+    }
 
     /*//10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
@@ -200,7 +197,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
         )
         );
-        //markerMap[marker.id] = place;
+        markerMap[marker.id] = place;
       });
     }
 
@@ -449,6 +446,8 @@ class _MyHomePageState extends State<mapaHomePage> {
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: center == null ? LatLng(0, 0) : center, zoom: 11.0)));
+
+
   }
 
   Future<LatLng> getUserLocation() async {
