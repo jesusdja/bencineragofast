@@ -51,5 +51,14 @@ class services {
     return tipo;
   }
 
+
+  String GetServicios(getServicio){ // Recibe de tipo FuelType
+    String servicioFS = getServicio.toString().replaceRange(0, 21, '');
+    servicioFS =  servicioFS.toLowerCase();
+    return servicioFS;
+
+    //Obtiene solo la cadena no traduce el substring
+  }
+
 }
 

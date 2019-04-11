@@ -1,3 +1,4 @@
+import 'package:bencineragofast/api/protos/fuel_station.pbenum.dart';
 import 'package:bencineragofast/api/protos/fuel_type.pbenum.dart';
 import 'package:bencineragofast/api/services.dart';
 import 'package:bencineragofast/pages/Home/intro_screen.dart';
@@ -70,6 +71,8 @@ class _MyHomePageState extends State<mapaHomePage> {
    Sevicios.ConnectionTest();
    String recibe =  Sevicios.GetTipos(FuelType.valueOf(12)); //pasar valor
   print(recibe);
+    String  recibe2 = Sevicios.GetServicios(FuelStation_Service.valueOf(7));
+    print(recibe2);
   }
 
   Future<http.Response> fetchPost() {
