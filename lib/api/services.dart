@@ -71,7 +71,6 @@ class services{
             list_string_servicio.add(vl.name.toString());
           }
         }
-
         //CREAR BENCINERA
         Place place = Place(
             id: int.parse(value.fuelStationId),
