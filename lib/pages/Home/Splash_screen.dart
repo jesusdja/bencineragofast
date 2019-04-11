@@ -1,3 +1,4 @@
+import 'package:bencineragofast/main.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -41,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
         fit: StackFit.expand,
         children: <Widget>[
           Container(
-            decoration: BoxDecoration(color: Color( 0xff1f520a)),
+            decoration: BoxDecoration(color: PrimaryColor),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,

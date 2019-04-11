@@ -1,4 +1,5 @@
 
+import 'package:bencineragofast/main.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Home/walkthrough.dart';
 
@@ -29,7 +30,7 @@ class intro_screenState extends State<intro_screen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xff1f520a),
+      color: PrimaryColor,
       padding: EdgeInsets.all(10.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
