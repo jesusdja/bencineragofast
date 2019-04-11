@@ -23,6 +23,7 @@ import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
 import 'package:http/http.dart' as http;
+
 import 'dart:convert' as convert;
 
 
@@ -69,7 +70,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   void PeticionHttpTotal() async{
    Sevicios.ConnectionTest();
-   String recibe =  Sevicios.GetTipos(FuelType.valueOf(12)); //pasar valor
+   String recibe =  Sevicios.GetTipos(13); //pasar valor
   print(recibe);
     String  recibe2 = Sevicios.GetServicios(FuelStation_Service.valueOf(7));
     print(recibe2);

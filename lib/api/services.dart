@@ -46,7 +46,8 @@ class services {
   }
 
    String GetTipos(getTipo){ // Recibe de tipo FuelType
-     String tipo = getTipo.toString().replaceRange(0, 10, '');
+     String tipo = FuelType.valueOf(getTipo).toString();
+     tipo = tipo.replaceRange(0, 10, '');
      tipo =  tipo.toLowerCase();
     return tipo;
   }
@@ -58,6 +59,12 @@ class services {
     return servicioFS;
 
     //Obtiene solo la cadena no traduce el substring
+  }
+  String GetBrand(getBran){ // Recibe de tipo FuelType
+    String brand = FuelType.valueOf(getBran).toString();
+    brand = brand.replaceRange(0, 6, '');
+    brand =  brand.toLowerCase();
+    return brand;
   }
 
 }
