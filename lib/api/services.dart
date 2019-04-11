@@ -15,27 +15,41 @@ import 'package:bencineragofast/api/protos/vehicles.pb.dart';
 import 'package:bencineragofast/api/protos/vehicles.pbgrpc.dart';
 import 'package:bencineragofast/api/protos/vehicles.pbenum.dart';
 import 'package:bencineragofast/api/protos/vehicles.pbjson.dart';
-
-
 import 'package:grpc/grpc.dart';
 
-Future<Null> ConnectionTest() async {
-  final channel = new ClientChannel('192.168.1.7',
-      port: 3001,
-      options: const ChannelOptions(
-          credentials: const ChannelCredentials.insecure()));
-  final FuelStationStub = new FuelStationServiceClient(channel);
 
-  var request = new ListFSReq()
-  ..coordinates.add(-30)
-  ..coordinates.add(-70)
-  ..radius = 100.0;
+class services {
 
-  try {
-    var response = await FuelStationStub.listFS(request);
-    print('Greeter client received: $response');
-  } catch (e) {
-    print('Caught error: $e');
+
+  Future<Null> ConnectionTest() async {
+    final channel = new ClientChannel('192.168.1.7',
+        port: 3001,
+        options: const ChannelOptions(
+            credentials: const ChannelCredentials.insecure()));
+    final FuelStationStub = new FuelStationServiceClient(channel);
+
+    var request = new ListFSReq()
+      ..coordinates.add(-30)
+      ..coordinates.add(-70)
+      ..radius = 100.0;
+
+    try {
+      var response = await FuelStationStub.listFS(request);
+      print('Greeter client received: $response');
+    } catch (e) {
+      print('Caught error: $e');
+    }
+    await channel.shutdown();
+
+
+
   }
-  await channel.shutdown();
+
+   String GetTipos(getTipo){ // Recibe de tipo FuelType
+     String tipo = getTipo.toString().replaceRange(0, 10, '');
+     tipo =  tipo.toLowerCase();
+    return tipo;
+  }
+
 }
+

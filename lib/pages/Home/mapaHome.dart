@@ -1,3 +1,4 @@
+import 'package:bencineragofast/api/services.dart';
 import 'package:bencineragofast/pages/Home/intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -48,12 +49,13 @@ class _MyHomePageState extends State<mapaHomePage> {
   String NameVehiculo = '';
   Vehiculo Nombrecarro;
   bool estadoNombre =true;
-
   String parte1;
   String parte2;
   String parte3;
 
   var fuel_stations_list;
+
+  services Sevicios = new services();
 
   @override
   void initState() {
@@ -64,22 +66,9 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   void PeticionHttpTotal() async{
-    var response = await fetchPost();
+   Sevicios.ConnectionTest();
+   Sevicios.GetTipos();
 
-    fuel_stations_list = convert.jsonDecode(response.body);
-    for (var value in fuel_stations_list['fuel_stations_list']) {
-
-
-      print('*****************');
-      print(value['fuel_station_id']);
-
-      var prices = value['coord'];
-      print(prices[0]);
-      print(prices[1]);
-
-
-
-    }
   }
 
   Future<http.Response> fetchPost() {
@@ -203,14 +192,14 @@ class _MyHomePageState extends State<mapaHomePage> {
       //mapController.onMarkerTapped.add(_onInfoWindowTapped);
       mapController2.clearMarkers().then((val) async {
         final Marker marker = await mapController2.addMarker(
-          MarkerOptions(
-          visible: true,
-          draggable: true,
-          flat: false,
-          position: place.latLng,
-          infoWindowText: InfoWindowText(place.brand, place.address),
-          icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
-        )
+            MarkerOptions(
+              visible: true,
+              draggable: true,
+              flat: false,
+              position: place.latLng,
+              infoWindowText: InfoWindowText(place.brand, place.address),
+              icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+            )
         );
         markerMap[marker.id] = place;
       });
@@ -325,45 +314,45 @@ class _MyHomePageState extends State<mapaHomePage> {
       appBar: new AppBar(
         title: new Text("GoFast Bencineras",style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.047),),
         backgroundColor: PrimaryColor ,
-          actions: <Widget>[
-           Container(
-             margin: EdgeInsets.only(right: 20),
+        actions: <Widget>[
+          Container(
+            margin: EdgeInsets.only(right: 20),
             child:  IconButton(
-               iconSize: 30,
-               icon: Icon(Icons.refresh),
-               tooltip: 'Actualizar',
-               onPressed: (){
-                 //mapController.clearMarkers();
-                 //Navigator.pushReplacementNamed(context, "/App");
-                 BotonActualizar();
-               },
-             ),
-           ),
-
-            IconButton(
-              iconSize: 40,
-              icon: Icon(Icons.map),
-              tooltip: 'Lista de Gasolineras',
+              iconSize: 30,
+              icon: Icon(Icons.refresh),
+              tooltip: 'Actualizar',
               onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,MelatLng: MelatLng,)),
-                );
+                //mapController.clearMarkers();
+                //Navigator.pushReplacementNamed(context, "/App");
+                BotonActualizar();
               },
             ),
-          ],
+          ),
+
+          IconButton(
+            iconSize: 40,
+            icon: Icon(Icons.map),
+            tooltip: 'Lista de Gasolineras',
+            onPressed: (){
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,MelatLng: MelatLng,)),
+              );
+            },
+          ),
+        ],
       ),
       drawer: new Drawer(
         child: new ListView(
           children: <Widget>[
             new UserAccountsDrawerHeader(
-                decoration: new BoxDecoration(color: PrimaryColor,
-                 ),
-                accountName: new Text('Vehiculo:',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+              decoration: new BoxDecoration(color: PrimaryColor,
+              ),
+              accountName: new Text('Vehiculo:',
+                style: TextStyle(
+                  fontSize: 18,
                 ),
-                accountEmail : Text( NameVehiculo,
+              ),
+              accountEmail : Text( NameVehiculo,
                 style: TextStyle(
                   fontSize: 17,
                 ),),),
@@ -378,7 +367,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                         builder: (BuildContext context) => new  Registrarse(Marcasdecarros: Marcasdecarros,)));
               },
             ),
-           new ListTile(
+            new ListTile(
               title: new Text("Opciones"),
               trailing: new Icon(Icons.build),
               onTap: () {
@@ -387,7 +376,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                     new MaterialPageRoute(builder: (context) => new opciones(mapController: mapController,place: placed,)));//Modificacion
               },
             ),
-           /* new ListTile(
+            /* new ListTile(
               title: new Text("Favoritos"),
               trailing: new Icon(Icons.star),
               onTap: () {
@@ -427,15 +416,15 @@ class _MyHomePageState extends State<mapaHomePage> {
           GoogleMap(
             onMapCreated: onMapCreated,
             options: GoogleMapOptions(
-                cameraPosition: CameraPosition(
-                    target: LatLng(0,0),
-                    zoom: 0.1),
-                myLocationEnabled: true,
-                mapType: MapType.normal,
-                compassEnabled: true,
-                trackCameraPosition: true,
-                rotateGesturesEnabled: true, //Activar gestos de rotación
-                scrollGesturesEnabled: true, //Puede o no mover el mapa
+              cameraPosition: CameraPosition(
+                  target: LatLng(0,0),
+                  zoom: 0.1),
+              myLocationEnabled: true,
+              mapType: MapType.normal,
+              compassEnabled: true,
+              trackCameraPosition: true,
+              rotateGesturesEnabled: true, //Activar gestos de rotación
+              scrollGesturesEnabled: true, //Puede o no mover el mapa
 
             ),
           ),
@@ -445,10 +434,10 @@ class _MyHomePageState extends State<mapaHomePage> {
             width: MediaQuery.of(context).size.width,
             child: Menu_tgas(mapController: mapController,markerMap: markerMap,),
           ),
-         Positioned(
+          Positioned(
             right: 10.0,
             bottom: 90.0,
-           width: MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width,
             child: Menu_bdis(mapController: mapController,markerMap: markerMap,),
           ),
         ],
