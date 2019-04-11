@@ -22,9 +22,7 @@ import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
-import 'package:http/http.dart' as http;
-
-import 'dart:convert' as convert;
+import 'package:bencineragofast/api/services.dart';
 
 
 class mapaHomePage extends StatefulWidget {
@@ -40,14 +38,12 @@ class _MyHomePageState extends State<mapaHomePage> {
   GoogleMapController mapController;
   LatLng MelatLng;
   Map<String,Place> markerMap = Map();
-
   List<Marca2> Marcasdecarros = new List<Marca2>();
   Marca2 var_marca;
-
   Place placed;
   var db ;
   String _deviceid = 'Unknown';
-  String KmActual;
+  String KmActual = '20';
   String TipoGasActual;
   String NameVehiculo = '';
   Vehiculo Nombrecarro;
@@ -55,29 +51,21 @@ class _MyHomePageState extends State<mapaHomePage> {
   String parte1;
   String parte2;
   String parte3;
+  services Servicios = new services();
 
   var fuel_stations_list;
-
-  services Sevicios = new services();
 
   @override
   void initState() {
     db = new DatabaseHelper();
     initDeviceId();
-    PeticionHttpTotal();
+    PeticionGrpc();
     super.initState();
   }
 
-  void PeticionHttpTotal() async{
-   Sevicios.ConnectionTest();
-   String recibe =  Sevicios.GetTipos(13); //pasar valor
-  print(recibe);
-    String  recibe2 = Sevicios.GetServicios(FuelStation_Service.valueOf(7));
-    print(recibe2);
-  }
-
-  Future<http.Response> fetchPost() {
-    return http.get('http://192.168.1.7:3000/fuel_stations?coordinates=-33.4515714&coordinates=-70.6784017&radius=10');
+  void PeticionGrpc() async{
+    Servicios.ConnectionTest('192.168.1.7',3001);
+    //Servicios.CloseTest();
   }
 
   //Inicializar variable de Id del telefono
@@ -126,12 +114,8 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     }
     if(await db.queryRowCountFavoritos != 0) {
-
       print('Tabla de favoritos con registros');
-
     }
-
-
     if(await db.queryRowCount() != 0){
       print("ya esta registrado el Usuario");
       User userUp = new User(1,_deviceid,"20","All");
@@ -150,11 +134,18 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   //AGREGAR MARCADORES
-  void initMarkers() {
+  Future initMarkers() async {
 
     markerMap.clear();
 
-    //10 KM
+    LatLng Mela = await  getUserLocation();
+    List<Place> Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude, double.parse(KmActual));
+
+    for(Place p in Lista_places_ok){
+      initMarker(p);
+    }
+
+    /*//10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
     List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');
     List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');tipogas.add('98');tipogas.add('80');tipogas.add('86');tipogas.add('87');tipogas.add('88');tipogas.add('89');
@@ -181,7 +172,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     tipogas = new List<String>();tipogas.add('95');
     Servicios = new List<String>(); Servicios.add('SERVICIO 4');Servicios.add('SERVICIO 2');
     placed = Place(id: 4,address: 'Dirección 4', latLng: latlo ,brand: 'Gaslonera 4',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'SHELL',  favorito: false);
-    initMarker(placed);
+    initMarker(placed);*/
 
     var_marca = Marca2(id: '1', name: 'Ford');Marcasdecarros.add(var_marca);
     var_marca = Marca2(id: '2', name: 'Toyota');Marcasdecarros.add(var_marca);
@@ -197,14 +188,14 @@ class _MyHomePageState extends State<mapaHomePage> {
       //mapController.onMarkerTapped.add(_onInfoWindowTapped);
       mapController2.clearMarkers().then((val) async {
         final Marker marker = await mapController2.addMarker(
-            MarkerOptions(
-              visible: true,
-              draggable: true,
-              flat: false,
-              position: place.latLng,
-              infoWindowText: InfoWindowText(place.brand, place.address),
-              icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
-            )
+          MarkerOptions(
+          visible: true,
+          draggable: true,
+          flat: false,
+          position: place.latLng,
+          infoWindowText: InfoWindowText(place.brand, place.address),
+          icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+        )
         );
         markerMap[marker.id] = place;
       });
@@ -319,45 +310,45 @@ class _MyHomePageState extends State<mapaHomePage> {
       appBar: new AppBar(
         title: new Text("GoFast Bencineras",style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.047),),
         backgroundColor: PrimaryColor ,
-        actions: <Widget>[
-          Container(
-            margin: EdgeInsets.only(right: 20),
+          actions: <Widget>[
+           Container(
+             margin: EdgeInsets.only(right: 20),
             child:  IconButton(
-              iconSize: 30,
-              icon: Icon(Icons.refresh),
-              tooltip: 'Actualizar',
+               iconSize: 30,
+               icon: Icon(Icons.refresh),
+               tooltip: 'Actualizar',
+               onPressed: (){
+                 //mapController.clearMarkers();
+                 //Navigator.pushReplacementNamed(context, "/App");
+                 BotonActualizar();
+               },
+             ),
+           ),
+
+            IconButton(
+              iconSize: 40,
+              icon: Icon(Icons.map),
+              tooltip: 'Lista de Gasolineras',
               onPressed: (){
-                //mapController.clearMarkers();
-                //Navigator.pushReplacementNamed(context, "/App");
-                BotonActualizar();
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,MelatLng: MelatLng,)),
+                );
               },
             ),
-          ),
-
-          IconButton(
-            iconSize: 40,
-            icon: Icon(Icons.map),
-            tooltip: 'Lista de Gasolineras',
-            onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => ListadoGasolineras(mapController: mapController, markerMap: markerMap,MelatLng: MelatLng,)),
-              );
-            },
-          ),
-        ],
+          ],
       ),
       drawer: new Drawer(
         child: new ListView(
           children: <Widget>[
             new UserAccountsDrawerHeader(
-              decoration: new BoxDecoration(color: PrimaryColor,
-              ),
-              accountName: new Text('Vehiculo:',
-                style: TextStyle(
-                  fontSize: 18,
+                decoration: new BoxDecoration(color: PrimaryColor,
+                 ),
+                accountName: new Text('Vehiculo:',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
                 ),
-              ),
-              accountEmail : Text( NameVehiculo,
+                accountEmail : Text( NameVehiculo,
                 style: TextStyle(
                   fontSize: 17,
                 ),),),
@@ -372,7 +363,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                         builder: (BuildContext context) => new  Registrarse(Marcasdecarros: Marcasdecarros,)));
               },
             ),
-            new ListTile(
+           new ListTile(
               title: new Text("Opciones"),
               trailing: new Icon(Icons.build),
               onTap: () {
@@ -381,7 +372,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                     new MaterialPageRoute(builder: (context) => new opciones(mapController: mapController,place: placed,)));//Modificacion
               },
             ),
-            /* new ListTile(
+           /* new ListTile(
               title: new Text("Favoritos"),
               trailing: new Icon(Icons.star),
               onTap: () {
@@ -421,15 +412,15 @@ class _MyHomePageState extends State<mapaHomePage> {
           GoogleMap(
             onMapCreated: onMapCreated,
             options: GoogleMapOptions(
-              cameraPosition: CameraPosition(
-                  target: LatLng(0,0),
-                  zoom: 0.1),
-              myLocationEnabled: true,
-              mapType: MapType.normal,
-              compassEnabled: true,
-              trackCameraPosition: true,
-              rotateGesturesEnabled: true, //Activar gestos de rotación
-              scrollGesturesEnabled: true, //Puede o no mover el mapa
+                cameraPosition: CameraPosition(
+                    target: LatLng(0,0),
+                    zoom: 0.1),
+                myLocationEnabled: true,
+                mapType: MapType.normal,
+                compassEnabled: true,
+                trackCameraPosition: true,
+                rotateGesturesEnabled: true, //Activar gestos de rotación
+                scrollGesturesEnabled: true, //Puede o no mover el mapa
 
             ),
           ),
@@ -439,10 +430,10 @@ class _MyHomePageState extends State<mapaHomePage> {
             width: MediaQuery.of(context).size.width,
             child: Menu_tgas(mapController: mapController,markerMap: markerMap,),
           ),
-          Positioned(
+         Positioned(
             right: 10.0,
             bottom: 90.0,
-            width: MediaQuery.of(context).size.width,
+           width: MediaQuery.of(context).size.width,
             child: Menu_bdis(mapController: mapController,markerMap: markerMap,),
           ),
         ],
@@ -455,6 +446,8 @@ class _MyHomePageState extends State<mapaHomePage> {
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: center == null ? LatLng(0, 0) : center, zoom: 11.0)));
+
+
   }
 
   Future<LatLng> getUserLocation() async {
