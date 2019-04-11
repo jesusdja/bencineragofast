@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package api.gen;
+
+option go_package = "genpb";
+option java_multiple_files = true;
+option java_outer_classname = "VehiclesProto";
+option java_package = "com.api.gen";
+
+import "api/protos/fuel_type.proto";
+import "api/protos/maker.proto";
+import "google/api/annotations.proto";
+
+enum DriveType {
+  DRIVE_TYPE_INVALID = 0;
+  DRIVE_TYPE_FWD = 1; // Front-Wheel Drive
+  DRIVE_TYPE_TWD = 2; // Two-Wheel Drive (Motorcycles)
+  DRIVE_TYPE_AWD = 3; // All-Wheel Drive (4WD Fixed)
+  DRIVE_TYPE_4WD = 4; // 4-Wheel Drive (Can be changed to "2WD")
+  DRIVE_TYPE_RWD = 5; // Rear-Wheel Drive
+  DRIVE_TYPE_UNKNOWN = 6; // Rear-Wheel Drive
+}
+
+enum Transmission {
+  TRANSMISSION_INVALID = 0;
+  TRANSMISSION_AUTOMATIC = 1;
+  TRANSMISSION_MANUAL = 2;
+  TRANSMISSION_HYBRID = 3;
+  TRANSMISSION_ANY = 4;
+}
+
+// Based on US EPA.
+// See: https://en.wikipedia.org/wiki/Vehicle_size_class
+enum VehicleClass {
+  VEHICLE_CLASS_INVALID = 0;
+  VEHICLE_CLASS_MINICOMPACT_CARS = 1;
+  VEHICLE_CLASS_SUBCOMPACT_CARS = 2;
+  VEHICLE_CLASS_COMPACT_CARS = 3;
+  VEHICLE_CLASS_MIDSIZE_CARS = 4;
+  VEHICLE_CLASS_LARGE_CARS = 5;
+  VEHICLE_CLASS_TWO_SEATERS = 6;
+  VEHICLE_CLASS_MINIVAN = 7;
+  VEHICLE_CLASS_VANS_GENERAL = 8;
+  VEHICLE_CLASS_VANS_PASSENGER = 9;
+  VEHICLE_CLASS_VANS_CARGO = 10;
+  VEHICLE_CLASS_SMALL_STATION_WAGONS = 11;
+  VEHICLE_CLASS_MIDSIZE_STATION_WAGONS = 12;
+  VEHICLE_CLASS_MIDSIZE_LARGE_STATION_WAGONS = 13;
+  VEHICLE_CLASS_SMALL_SPORT_UTILITY_VEHICLE = 14;
+  VEHICLE_CLASS_STANDARD_SPORT_UTILITY_VEHICLE = 15;
+  VEHICLE_CLASS_SMALL_PICKUP_TRUCKS = 16;
+  VEHICLE_CLASS_STANDARD_PICKUP_TRUCKS = 17;
+  VEHICLE_CLASS_SPECIAL_PURPOSE_VEHICLES = 18;
+}
+
+message Vehicle {
+  int64 id = 1;
+  Maker maker = 2;
+  string model = 3;
+  int32 year = 4;
+  float engine_lts = 5;
+  // lts / kms
+  string version = 6;
+  float city_mpg = 7;
+  float highway_mpg = 8;
+  repeated FuelType fuel_types = 9;
+  DriveType drive = 10;
+  VehicleClass vehicle_type = 11;
+  Transmission transmission = 12;
+}
+
+message EngineSizes {
+  repeated float available_engine_sizes = 1;
+}
+
+message VehicleFields {
+  int64 id = 1;
+  FuelType fuel_type = 2;
+  Transmission transmission = 3;
+  int64 miles_per_gallon = 4;
+  float engine_size = 5;
+}
+
+service VehicleService {
+  rpc GetModels(GetModelsReq) returns (GetModelsRes) {
+    option (google.api.http) = {
+      get: "/vehicles/from_maker/{maker}"
+    };
+  }
+  rpc GetVehicles(GetVehiclesReq) returns (GetVehiclesRes) {
+    option (google.api.http) = {
+      get: "/vehicles/from_model"
+    };
+  }
+}
+
+message GetModelsReq {
+  Maker maker = 1;
+}
+
+message GetModelsRes {
+  repeated string models = 1;
+}
+
+message GetVehiclesReq {
+  Maker maker = 1;
+  string model = 2;
+}
+
+message VehicleArray {
+  repeated Vehicle vehicles = 1;
+}
+
+message GetVehiclesRes {
+  map<int64, VehicleArray> vehicles = 1;
+}

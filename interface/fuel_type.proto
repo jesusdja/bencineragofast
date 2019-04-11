@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package api.gen;
+
+option go_package = "genpb";
+option java_multiple_files = true;
+option java_outer_classname = "FuelTypeProto";
+option java_package = "com.api.gen";
+
+import "google/api/annotations.proto";
+
+enum FuelType {
+  FUEL_TYPE_INVALID = 0;
+  // Regular Gasoline
+  FUEL_TYPE_85 = 1;
+  FUEL_TYPE_86 = 2;
+  FUEL_TYPE_87 = 3;
+  FUEL_TYPE_88 = 4;
+  // Mid grade Gasoline
+  FUEL_TYPE_89 = 5;
+  FUEL_TYPE_90 = 6;
+  FUEL_TYPE_91 = 7;
+  // Premium Gasoline
+  FUEL_TYPE_92 = 8;
+  FUEL_TYPE_93 = 9;
+  FUEL_TYPE_94 = 10;
+  FUEL_TYPE_95 = 11;
+  FUEL_TYPE_96 = 12;
+  FUEL_TYPE_97 = 13;
+  FUEL_TYPE_98 = 14;
+  // Natural gas
+  FUEL_TYPE_GNC = 15;
+  FUEL_TYPE_GNL = 16;
+  FUEL_TYPE_VOLTEX = 17;
+  FUEL_TYPE_N5 = 18;
+  FUEL_TYPE_N6 = 19;
+  FUEL_TYPE_DIESEL = 20;
+  FUEL_TYPE_KEROSENE = 21;
+  FUEL_TYPE_GLP = 22;
+  FUEL_TYPE_BLUE = 23;
+  FUEL_TYPE_ELECTRICITY = 24; // Tesla <3
+  FUEL_TYPE_ETHANOL = 25;
+}
+
+enum SimplifiedFuelType {
+  SIMPLIFIED_FUEL_TYPE_INVALID = 0;
+  SIMPLIFIED_FUEL_TYPE_GASOLINE = 1;
+  SIMPLIFIED_FUEL_TYPE_DIESEL = 2;
+  SIMPLIFIED_FUEL_TYPE_GAS = 3;
+  SIMPLIFIED_FUEL_TYPE_ELECTRICAL = 4;
+}

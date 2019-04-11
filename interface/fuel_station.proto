@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package api.gen;
+
+option go_package = "genpb";
+option java_multiple_files = true;
+option java_outer_classname = "FuelStationProto";
+option java_package = "com.api.gen";
+
+import "api/protos/brand.proto";
+import "api/protos/fuel_type.proto";
+import "google/api/annotations.proto";
+
+message Company {
+  Brand id = 1;
+  repeated Highlight highlights = 2;
+}
+
+enum Highlight {
+  HIGHLIGHT_INVALID = 0;
+  HIGHLIGHT_LIST = 1;
+  HIGHLIGHT_MAP = 2;
+  HIGHLIGHT_PREMIUM = 3;
+}
+
+message FuelConsumption {
+  float distance = 2;
+  float cost = 1;
+}
+
+service FuelStationService {
+  rpc ListFS(ListFSReq) returns (ListFSRes) {
+    option (google.api.http) = {
+      get: "/fuel_stations"
+    };
+  }
+  rpc GetBestFS(GetBestFSReq) returns (GetBestFSRes) {
+    option (google.api.http) = {
+      get: "/fuel_stations/best"
+    };
+  }
+}
+
+message GetBestFSReq {
+  repeated float coordinates = 1;
+  float radius = 2;
+  int64 vehicle_id = 3;
+  FuelType fuel_type = 4;
+  bytes uuid = 5;
+}
+
+message GetBestFSRes {
+  repeated FuelStation fuel_stations_list = 1;
+  repeated FuelConsumption fuel_consumptions_list = 2;
+}
+
+message FuelStation {
+  enum Service {
+    FUEL_STATION_SERVICE_INVALID = 0;
+    FUEL_STATION_SERVICE_CARWASH = 1;
+    FUEL_STATION_SERVICE_FOOD_PLACE = 2;
+    FUEL_STATION_SERVICE_AIR = 3;
+    FUEL_STATION_SERVICE_BATHROOMS = 4;
+    FUEL_STATION_SERVICE_PHARMACY = 5;
+    FUEL_STATION_SERVICE_MAINTENANCE = 6;
+    FUEL_STATION_SERVICE_KIOSK = 7;
+  }
+  enum PaymentMode {
+    FUEL_STATION_PAYMENT_MODE_INVALID = 0;
+    FUEL_STATION_PAYMENT_MODE_CARD = 1;
+    FUEL_STATION_PAYMENT_MODE_CHECK = 2;
+    FUEL_STATION_PAYMENT_MODE_CASH = 3;
+    FUEL_STATION_PAYMENT_MODE_RETAIL = 4;
+  }
+  enum State {
+    FUEL_STATION_STATE_INVALID = 0;
+    FUEL_STATION_STATE_OPEN = 1;
+    FUEL_STATION_STATE_CLOSED = 2;
+    FUEL_STATION_STATE_TEMPORAL_CLOSED = 3;
+  }
+  string fuel_station_id = 1;
+  string sec_id = 2;
+  string address = 3;
+  repeated float coord = 4;
+  Brand brand = 5;
+  map<int32, string> prices = 6;
+  string openning_hours = 7;
+  int64 last_price_updated = 8;
+  string source = 9;
+  repeated FuelType available_fuel_types = 10;
+  State state = 11;
+  repeated Service services = 12;
+}
+
+message ListFSReq {
+  repeated float coordinates = 1;
+  float radius = 2;
+}
+
+message ListFSRes {
+  repeated FuelStation fuel_stations_list = 1;
+}

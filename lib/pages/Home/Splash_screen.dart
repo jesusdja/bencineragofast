@@ -23,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
   VerificarBsadeDato() async {
 
     //ACCESS_COARSE_LOCATION
-
     if(await db.queryRowCount() != 0){
       print("ya esta registrado el Usuario");
       Timer(Duration(seconds: 2), () => Navigator.pushReplacementNamed(context, "/App"));

@@ -11,8 +11,6 @@ import 'package:vector_math/vector_math_64.dart' as math64;
 import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 import 'dart:core';
 import 'package:bencineragofast/pages/Menu/AboutPage.dart';
-import 'package:bencineragofast/pages/Menu/FavoritesPage.dart';
-import 'package:bencineragofast/pages/Menu/HelpPage.dart';
 import 'package:bencineragofast/pages/Menu/Marca2.dart';
 import 'package:bencineragofast/pages/Menu/OptionsPage.dart';
 import 'package:bencineragofast/pages/Menu/RegisterPage.dart';
@@ -21,6 +19,8 @@ import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 
 class mapaHomePage extends StatefulWidget {
@@ -53,11 +53,37 @@ class _MyHomePageState extends State<mapaHomePage> {
   String parte2;
   String parte3;
 
+  var fuel_stations_list;
+
   @override
   void initState() {
     db = new DatabaseHelper();
     initDeviceId();
+    PeticionHttpTotal();
     super.initState();
+  }
+
+  void PeticionHttpTotal() async{
+    var response = await fetchPost();
+
+    fuel_stations_list = convert.jsonDecode(response.body);
+    for (var value in fuel_stations_list['fuel_stations_list']) {
+
+
+      print('*****************');
+      print(value['fuel_station_id']);
+
+      var prices = value['coord'];
+      print(prices[0]);
+      print(prices[1]);
+
+
+
+    }
+  }
+
+  Future<http.Response> fetchPost() {
+    return http.get('http://192.168.1.7:3000/fuel_stations?coordinates=-33.4515714&coordinates=-70.6784017&radius=10');
   }
 
   //Inicializar variable de Id del telefono
