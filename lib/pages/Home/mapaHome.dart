@@ -19,6 +19,7 @@ import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
+import 'package:toast/toast.dart';
 
 
 class mapaHomePage extends StatefulWidget {
@@ -134,12 +135,14 @@ class _MyHomePageState extends State<mapaHomePage> {
   Future initMarkers() async {
 
     markerMap.clear();
-
     LatLng Mela = await  getUserLocation();
     List<Place> Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude, double.parse(KmActual));
-
-    for(Place p in Lista_places_ok){
-      initMarker(p);
+    if(Lista_places_ok.length != 0){
+      for(Place p in Lista_places_ok){
+        initMarker(p);
+      }
+    }else{
+      //Toast.show("Toast plugin app", duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
 
     /*//10 KM
@@ -201,13 +204,20 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   void _onInfoWindowTapped(Marker marker) {
-    final marcador_seleccionado = markerMap[marker.id];
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) {
-        return DetailsMarkers(mapController: mapController, place: marcador_seleccionado);
-      }),
-    );
+    try{
+      var marcador_seleccionado;
+      setState(() {
+        marcador_seleccionado = markerMap[marker.id];
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return DetailsMarkers(mapController: mapController, place: marcador_seleccionado);
+        }),
+      );
+    }catch(e){
+      print('ERROR onInfoWindowTapped : $e');
+    }
   }
 
   Future<bool> calcularDistancia(double lat2, double lg2, String distancia) async {
@@ -234,7 +244,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     return rango;
   }
 
-  BotonActualizar() async {
+  /*BotonActualizar() async {
 
     User u = await db.getUser();
     String StipoGas = u.botonTipoGas;
@@ -299,7 +309,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     d = radio * c;
     if(d <= double.parse('$distancia')){rango = true;}
     return rango;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -317,7 +327,8 @@ class _MyHomePageState extends State<mapaHomePage> {
                onPressed: (){
                  //mapController.clearMarkers();
                  //Navigator.pushReplacementNamed(context, "/App");
-                 BotonActualizar();
+                 //BotonActualizar();
+                 initMarkers();
                },
              ),
            ),

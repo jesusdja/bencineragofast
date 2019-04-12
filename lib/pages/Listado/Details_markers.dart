@@ -143,7 +143,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
   DetallesConIcono(String nombre, String Descripcion, IconData ico){
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.only(left: 20.0, top: 0.0, right: 20.0, bottom: 0.0),
+        padding: const EdgeInsets.only(left: 15.0, top: 0.0, right: 15.0, bottom: 0.0),
         child: Column(
           children: <Widget>[
             Container(
@@ -175,6 +175,19 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
   }
 
   Widget _detailsBody() {
+
+    String tiposYprecio = '';
+    for(int i=0;i<widget.place.tiposgas.length;i++){
+      tiposYprecio = tiposYprecio + ' - ' + widget.place.tiposgas[i] + ' : ' + widget.place.prices[i] + ' plc \n';
+    }
+
+    String ServiciosPlace = '';
+    for(int i=0;i<widget.place.services.length;i++){
+      ServiciosPlace = ServiciosPlace + ' - ' + widget.place.services[i] + '\n';
+    }
+    if(ServiciosPlace == ''){ServiciosPlace = 'Ninguno';}
+
+
     return ListView(
       //padding: const EdgeInsets.only(left: 28.0, top: 12.0, right: 28.0, bottom: 0.0),
       children: <Widget>[
@@ -220,14 +233,14 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
                     Container(
                       padding: const EdgeInsets.only(bottom: 8),
                       child: Text(
-                        'NOMBRE DE LA BENCINERA',
+                        'Dirección: ' + widget.place.address,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     Text(
-                      'Descripción de la bencinera.',
+                      widget.place.OpenHr,
                       style: TextStyle(
                         color: Colors.grey[500],
                       ),
@@ -248,8 +261,8 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
           margin: EdgeInsets.only(left: 28.0, top: 10.0, right: 28.0, bottom: 20.0),
           child: Row(
             children: <Widget>[
-              DetallesConIcono("Detalle Bencinera 1","Información Destalle 1",Icons.local_gas_station),
-              DetallesConIcono("Detalle Bencinera  2","Información Destalle 2",Icons.place),
+              DetallesConIcono("Tipos de Gas y precio",tiposYprecio,Icons.local_gas_station),
+              DetallesConIcono("Servicios",ServiciosPlace,Icons.thumb_up),
             ],
           ),
         ),
@@ -257,7 +270,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
           margin: EdgeInsets.only(left: 28.0, top: 10.0, right: 28.0, bottom: 20.0),
           child: Row(
             children: <Widget>[
-              DetallesConIcono("Detalle Bencinera 3","Información Destalle 3",Icons.thumb_up),
+              DetallesConIcono("Horario de Servicio",widget.place.OpenHr,Icons.access_time),
               DetallesConIcono("Detalle Bencinera 4","Información Destalle 4",Icons.accessibility),
             ],
           ),
@@ -266,7 +279,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
           margin: EdgeInsets.only(left: 28.0, top: 10.0, right: 28.0, bottom: 20.0),
           child: Row(
             children: <Widget>[
-              DetallesConIcono("Detalle Bencinera 5","Información Destalle 5",Icons.access_time),
+              DetallesConIcono("Detalle Bencinera 3","Información Destalle 3",Icons.thumb_up),
               DetallesConIcono("Detalle Bencinera 6","Información Destalle 6",Icons.branding_watermark),
             ],
           ),
@@ -286,7 +299,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         backgroundColor:PrimaryColor,
-        title: new Text(widget.place.brand + ' - ' + widget.place.address),
+        title: new Text('Bencinera - ' + widget.place.brand),
       ),
       body: GestureDetector(
         onTap: () {
