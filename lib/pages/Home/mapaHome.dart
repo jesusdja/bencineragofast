@@ -38,6 +38,7 @@ class _MyHomePageState extends State<mapaHomePage> {
   GoogleMapController mapController;
   LatLng MelatLng;
   Map<String,Place> markerMap = Map();
+
   List<Marca2> Marcasdecarros = new List<Marca2>();
   Marca2 var_marca;
   Place placed;
@@ -64,8 +65,9 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   void PeticionGrpc() async{
-    Servicios.ConnectionTest('192.168.1.7',3001);
+    Servicios.ConnectionTest('192.168.1.13',3001);
     //Servicios.CloseTest();
+
   }
 
   //Inicializar variable de Id del telefono
@@ -145,6 +147,7 @@ class _MyHomePageState extends State<mapaHomePage> {
       initMarker(p);
     }
 
+    Marcasdecarros = await Servicios.TraerMarcaVehiculos();
     /*//10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
     List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');
@@ -174,11 +177,11 @@ class _MyHomePageState extends State<mapaHomePage> {
     placed = Place(id: 4,address: 'Dirección 4', latLng: latlo ,brand: 'Gaslonera 4',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'SHELL',  favorito: false);
     initMarker(placed);*/
 
-    var_marca = Marca2(id: '1', name: 'Ford');Marcasdecarros.add(var_marca);
+   /* var_marca = Marca2(id: '1', name: 'Ford');Marcasdecarros.add(var_marca);
     var_marca = Marca2(id: '2', name: 'Toyota');Marcasdecarros.add(var_marca);
     var_marca = Marca2(id: '3', name: 'Ferrari');Marcasdecarros.add(var_marca);
 
-
+*/
   }
 
   initMarker(Place place) async {
