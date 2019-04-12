@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:bencineragofast/api/services.dart';
+import 'package:bencineragofast/main.dart';
 import 'package:bencineragofast/pages/Home/place.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
@@ -33,6 +35,7 @@ class _displayState extends State<marcador_marca> {
   String kmActual;
   String TipoGasActual;
   LatLng MelatLng;
+  services Servicios = new services();
 
   @override
   void initState() {
@@ -98,22 +101,25 @@ class _displayState extends State<marcador_marca> {
     List<Place> places_total = places;
     List<Place> places_ordenado = new List<Place>();
     List<String> lista_tipo_marcas = new List<String>();
-    lista_tipo_marcas.add('SHELL');
+    lista_tipo_marcas = Servicios.extraerNombresMarcas();
+    /*lista_tipo_marcas.add('SHELL');
     lista_tipo_marcas.add('PETROBRAS');
-    lista_tipo_marcas.add('COPEC');
+    lista_tipo_marcas.add('COPEC');*/
     places_total = places;
     for(int i = 0; i < lista_tipo_marcas.length; i++){
-      if(places_total.length != 0){
-        LatLng latlo = LatLng(8.270346,-62.7579366);
-        List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');
-        List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');
-        List<String> Servicios = new List<String>(); Servicios.add('SERVICIO 1');Servicios.add('SERVICIO 2');
-        Place placed = Place(id: 1,address: 'Dirección 1', latLng: latlo ,brand: lista_tipo_marcas[i],prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: '0202',favorito: false);
-        places_ordenado.add(placed);
-      }
-
+      int niubnijni = 0;
       for(int j = 0; j < places_total.length; j++){
         if(lista_tipo_marcas[i] == places_total[j].marca){
+          if(niubnijni == 0){
+            LatLng latlo = LatLng(8.270346,-62.7579366);
+            List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');
+            List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');
+            List<String> Servicios = new List<String>(); Servicios.add('SERVICIO 1');Servicios.add('SERVICIO 2');
+            Place placed = Place(id: 1,address: 'Dirección 1', latLng: latlo ,brand: lista_tipo_marcas[i],prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: '0202',favorito: false,OpenHr: '0.0');
+            places_ordenado.add(placed);
+
+            niubnijni++;
+          }
           places_ordenado.add(places_total[j]);
         }
       }
@@ -145,8 +151,8 @@ class _displayState extends State<marcador_marca> {
 
           if(places[index].marca != '0202'){
             return ListTile(
-              title: Text(places[index].brand),
-              subtitle: Text(places[index].marca),//MODIFICAR
+              title: Text(places[index].marca + ' - ' + places[index].OpenHr),
+              subtitle: Text(places[index].address),//MODIFICAR
               leading: Image.asset('assets/images/icono_gas.png',height: 50),
               onTap: () {
                 Navigator.push(
@@ -160,8 +166,8 @@ class _displayState extends State<marcador_marca> {
             );
           }else{
             return Container(
-              color: Colors.grey[300],
-              child: Text(places[index].brand,textAlign: TextAlign.center,),
+              color: PrimaryColor,
+              child: Text(places[index].brand,textAlign: TextAlign.center,style: TextStyle(height: 1.5,fontSize: 20,color: Colors.white),),
               //subtitle: Text(places[index].marca),//MODIFICAR
             );
           }

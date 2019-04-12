@@ -13,6 +13,7 @@ class Place {
     @required this.services,
     @required this.marca,
     @required this.favorito,
+    @required this.OpenHr,
   })  : assert(id != null),
         assert(address != null),
         assert(latLng != null),
@@ -22,7 +23,8 @@ class Place {
         assert(last_price_update != null),
         assert(services != null),
         assert(marca != null),
-        assert(favorito != null);
+        assert(favorito != null),
+        assert(OpenHr != null);
 
   final int id;
   final String address;
@@ -34,6 +36,7 @@ class Place {
   final List<String> services;
   final String marca;
   final bool favorito;
+  final String OpenHr;
 
   double get latitude => latLng.latitude;
   double get longitude => latLng.longitude;
@@ -49,6 +52,7 @@ class Place {
     List<String> services,
     String marca,
     bool favorito,
+    String OpenHr,
   }) {
     return Place(
       id: id ?? this.id,
@@ -61,6 +65,7 @@ class Place {
       services: services ?? this.services,
       marca: marca ?? this.marca,
       favorito: favorito ?? this.favorito,
+      OpenHr: marca ?? this.marca,
     );
   }
 }

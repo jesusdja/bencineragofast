@@ -90,7 +90,8 @@ class services{
             last_price_update: value.lastPriceUpdated.toString(),
             services: list_string_servicio,
             marca: GetBrand(value.brand.toString()),
-            favorito: false);
+            favorito: false,
+            OpenHr: value.openningHours);
         lista_places.add(place);
       }
     } catch (e) {
@@ -110,7 +111,19 @@ class services{
         list_res.add(GetTiposNombre(v.toString()));
       }
     }
+    return list_res;
+  }
 
+  List<String> extraerNombresMarcas(){
+    List<String> list_res = new List<String>();
+
+    List<Brand> lista_tipos_gas = Brand.values;
+
+    for(var v in lista_tipos_gas){
+      if(GetBrand(v.toString()) != 'invalid'){
+        list_res.add(GetBrand(v.toString()));
+      }
+    }
     return list_res;
   }
 
