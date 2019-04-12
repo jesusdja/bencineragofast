@@ -147,8 +147,8 @@ class _displayState extends State<marcador_distancia> {
         itemCount: places.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(places[index].brand),
-            subtitle: Text(calcularDistancia(places[index].latitude,places[index].longitude).toStringAsFixed(2) + ' Km' /*+ (((calcularDistancia(places[index].latitude,places[index].longitude)/ 20)*60).toStringAsFixed(2) + ' min' )*/), //MODIFICAR
+            title: Text(places[index].brand + ' - ' + calcularDistancia(places[index].latitude,places[index].longitude).toStringAsFixed(2) + ' Km'),
+            subtitle: Text(places[index].address), //MODIFICAR
             leading: Image.asset('assets/images/icono_gas.png',height: 50),
             onTap: () {
 

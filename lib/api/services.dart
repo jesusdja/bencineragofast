@@ -106,7 +106,9 @@ class services{
     List<FuelType> lista_tipos_gas = FuelType.values;
     list_res.add('Todas');
     for(var v in lista_tipos_gas){
-      list_res.add(GetTiposNombre(v.toString()));
+      if(GetTiposNombre(v.toString()) != 'invalid'){
+        list_res.add(GetTiposNombre(v.toString()));
+      }
     }
 
     return list_res;
