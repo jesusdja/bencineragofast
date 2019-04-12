@@ -101,50 +101,8 @@ class _displayState extends State<marcador_precio> {
     }
 
 
-/*    places_originales = places;
-
-    List<Place> places_individuales = places;
-    Place placed;
-
-    for(int ipl = 0; ipl<places.length;ipl++){
-      List<String> indi = places[ipl].prices;
-     for(int pri = 0; pri < indi.length; pri++){
-
-       print(indi[pri]);
-
-        places_individuales.add(placed);
-      }
-      print(places[ipl].address);
-    }
 
 
-    List<Place> places_total = places_individuales;
-    List<Place> places_ordenado = new List<Place>();
-
-    places_total = places;
-    int  pos = 0;
-    double aux = 100000000000.0,dis = 0;
-    bool Entrar = true;
-
-    while(Entrar) {
-      if(places_total.length == 0){
-        Entrar = false;
-      }
-      aux = 100000000000.0;
-      for(int i = 0; i < places_total.length; i++){
-        dis = double.parse(places_total[i].last_price_update);
-        if(dis < aux){
-          aux = dis;
-          pos = i;
-        }
-      }
-      if(aux != 100000000000.0){
-        places_ordenado.add(places_total[pos]);
-        places_total.removeAt(pos);
-      }
-
-    }
-    places = places_ordenado;    MODIFICAR*/
   }
 
   verificar() {
@@ -172,10 +130,10 @@ class _displayState extends State<marcador_precio> {
           String te = '';
           for(int i=0; i < places_individuales[index].prices.length;i++){
             if(tgActual == places_individuales[index].tiposgas[i]){
-              te =  te + places_individuales[index].tiposgas[i] + '= ' + places_individuales[index].prices[i] + ' CLP';
+              te =  te + '- '+places_individuales[index].tiposgas[i] + '= ' + places_individuales[index].prices[i] + ' CLP ';
             }
             if(tgActual == 'All'){
-              te =  te + places_individuales[index].tiposgas[i] + '= ' + places_individuales[index].prices[i] + ' CLP' + ' - ';
+              te =  te + '- '+ places_individuales[index].tiposgas[i] + '= ' + places_individuales[index].prices[i] + ' CLP \n';
             }
           }
           if(te != ''){
