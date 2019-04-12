@@ -55,7 +55,7 @@ class services{
 
       for(var value in response.fuelStationsList){
 
-        //TRAER PRECIOS
+        //TRAER PRECIOS - NUMERO
         List<String> list_string_prices = new List<String>();
         Map<int, String> list_preces = value.prices;
         List<String> list_list_preces = list_preces.values.toList();
@@ -63,7 +63,7 @@ class services{
           list_string_prices.add(v);
         }
 
-        //TRAER PRECIOS
+        //TRAER PRECIOS - NOMBRE
         List<String> list_string_tipo = new List<String>();
         Map<int, String> list_tipos = value.prices;
         List<int> list_list_tipos = list_tipos.keys.toList();
@@ -100,10 +100,29 @@ class services{
     return lista_places;
   }
 
+  List<String> extraerNombresTiposGas(){
+    List<String> list_res = new List<String>();
+
+    List<FuelType> lista_tipos_gas = FuelType.values;
+    list_res.add('Todas');
+    for(var v in lista_tipos_gas){
+      list_res.add(GetTiposNombre(v.toString()));
+    }
+
+    return list_res;
+  }
+
 }
 
 String GetTipos(getTipo){ // Recibe de tipo FuelType
   String tipo = FuelType.valueOf(getTipo).toString();
+  tipo = tipo.replaceRange(0, 10, '');
+  tipo =  tipo.toLowerCase();
+  return tipo;
+}
+
+String GetTiposNombre(getTipo){ // Recibe de tipo FuelType
+  String tipo = getTipo;
   tipo = tipo.replaceRange(0, 10, '');
   tipo =  tipo.toLowerCase();
   return tipo;

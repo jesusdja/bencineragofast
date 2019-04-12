@@ -1,7 +1,4 @@
-import 'package:bencineragofast/api/protos/fuel_station.pbenum.dart';
-import 'package:bencineragofast/api/protos/fuel_type.pbenum.dart';
 import 'package:bencineragofast/api/services.dart';
-import 'package:bencineragofast/pages/Home/intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
@@ -22,7 +19,6 @@ import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
-import 'package:bencineragofast/api/services.dart';
 
 
 class mapaHomePage extends StatefulWidget {
@@ -64,7 +60,8 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   void PeticionGrpc() async{
-    Servicios.ConnectionTest('192.168.1.7',3001);
+
+    Servicios.ConnectionTest('192.168.1.13',3001);
     //Servicios.CloseTest();
   }
 
