@@ -194,8 +194,8 @@ class _RegistrarseState extends State<Registrarse> {
                 _isButtonDisabledcombustible = false;
                 _activatebutton3 = false;
                 _valueCombustible ='Desconocido';
-                _isButtonDisabledSave = true;
-                _activatesave = true ;
+                _isButtonDisabledSave = false;
+                _activatesave = false ;
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
               Navigator.pop(context);
@@ -253,7 +253,6 @@ class _RegistrarseState extends State<Registrarse> {
       ),
     );
   }
-
   Combustibles() {
     var y = Combustibledecarros.length;
     return new Container(
@@ -265,7 +264,6 @@ class _RegistrarseState extends State<Registrarse> {
       ),
     );
   }
-
   CargarCombustible(){
     var_Combustible = Combustible(id: '1',name: '1000'); Combustibledecarros.add(var_Combustible);
     var_Combustible = Combustible(id: '2',name: '200'); Combustibledecarros.add(var_Combustible);
@@ -275,6 +273,7 @@ class _RegistrarseState extends State<Registrarse> {
     var_Combustible = Combustible(id: '6',name: '10000000'); Combustibledecarros.add(var_Combustible);
 
   }
+
   void initvalues() async {
 
     carropull = await db.getCarro();
@@ -299,7 +298,6 @@ class _RegistrarseState extends State<Registrarse> {
       _valueIdCombustible = carropull.idCombustible;
     });
   }
-
   @override
   void initState() {
     super.initState();
@@ -369,7 +367,7 @@ class _RegistrarseState extends State<Registrarse> {
                   .size
                   .height,
               width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.only(left: 20, right: 50, top: 10),
+              margin: EdgeInsets.only(left: 20, right: 50, top: 20),
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
@@ -381,7 +379,7 @@ class _RegistrarseState extends State<Registrarse> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Container(
-                                  margin: EdgeInsets.only(bottom: 10),
+                                  margin: EdgeInsets.only(bottom: 30),
                                   width: MediaQuery
                                       .of(context)
                                       .size
@@ -421,10 +419,7 @@ class _RegistrarseState extends State<Registrarse> {
                             ),
 
                           ),
-                          Image.asset(
-                            'assets/images/toyota.png', width: 100,
-                            height: 100,
-                          ),
+
                         ],
                       ),
                     ),
@@ -434,7 +429,7 @@ class _RegistrarseState extends State<Registrarse> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
-                            margin: EdgeInsets.only(bottom: 10, top: 10),
+                            margin: EdgeInsets.only(bottom: 30, top: 20),
                             width: MediaQuery.of(context).size.width,
                             child: Text(
                               'Seleccione Modelo',
@@ -477,7 +472,7 @@ class _RegistrarseState extends State<Registrarse> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
-                            margin: EdgeInsets.only(bottom: 20, top: 10),
+                            margin: EdgeInsets.only(bottom: 30, top: 20),
                             width: MediaQuery
                                 .of(context)
                                 .size
@@ -518,7 +513,7 @@ class _RegistrarseState extends State<Registrarse> {
                       ),
                     ),
 
-                    Container(
+                   /* Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -529,7 +524,7 @@ class _RegistrarseState extends State<Registrarse> {
                                 .size
                                 .width,
                             child: Text(
-                              'Litros De combustible',
+                              'Tipo de Combustible',
                               textAlign: TextAlign.justify,
                               //overflow: TextOverflow.ellipsis, ...
                               style: TextStyle(
@@ -564,10 +559,11 @@ class _RegistrarseState extends State<Registrarse> {
                       ),
 
                       // Image.asset('assets/images/icono_gas.png',width: 80,height: 110,),
-                    ),
+                    ),*/
+
                     Container(
                         margin: EdgeInsets.only(
-                            left: 30.0, top: 50.0, right: 0.0),
+                            left: 30.0, top: 70.0),
                         child:AbsorbPointer(
                           absorbing:_isButtonDisabledSave,
                           child:  SizedBox(
