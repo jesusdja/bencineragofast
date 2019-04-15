@@ -581,10 +581,13 @@ class _RegistrarseState extends State<Registrarse> {
                                   Vehiculo vehiculoUp = null;
                                   vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible);
                                   db.updateCarro(vehiculoUp);
-                                  Navigator.push(
+                                  Navigator.pop(context);
+                                  /*Navigator.push(
                                       context,
                                       new MaterialPageRoute(
-                                          builder: (BuildContext context) => new  mapaHomePage()));
+                                          builder: (BuildContext context) => new  mapaHomePage()));*/
+
+
                                 } else {
                                 }
                               },
