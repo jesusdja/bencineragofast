@@ -586,7 +586,9 @@ class _RegistrarseState extends State<Registrarse> {
                                   Navigator.push(
                                       context,
                                       new MaterialPageRoute(
-                                          builder: (BuildContext context) => new  mapaHomePage()));
+                                          builder: (BuildContext context) => new  mapaHomePage()));*/
+
+
                                 } else {
                                 }
                               },
