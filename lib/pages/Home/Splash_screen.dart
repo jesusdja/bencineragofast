@@ -16,7 +16,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
 
     db = new DatabaseHelper();
-    // TODO: implement initState
     super.initState();
     VerificarBsadeDato();
   }
