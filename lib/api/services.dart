@@ -1,3 +1,4 @@
+
 import 'package:bencineragofast/api/protos/brand.pb.dart';
 import 'package:bencineragofast/api/protos/brand.pbenum.dart';
 import 'package:bencineragofast/api/protos/brand.pbjson.dart';
@@ -17,13 +18,19 @@ import 'package:bencineragofast/api/protos/vehicles.pbenum.dart';
 import 'package:bencineragofast/api/protos/vehicles.pbjson.dart';
 
 import 'package:bencineragofast/pages/Home/place.dart';
+import 'package:bencineragofast/pages/Menu/Marca2.dart';
+import 'package:bencineragofast/pages/Menu/Modelo.dart';
+import 'package:bencineragofast/pages/Menu/Years.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:grpc/grpc.dart';
+import 'package:protobuf/protobuf.dart';
 
 //'192.168.1.7'
 //3001
 
 var FuelStationStub;
+var VehiclesStub;
 var channel;
 Map<String,Place> markerMap;
 
@@ -127,7 +134,93 @@ class services{
     return list_res;
   }
 
+  Future<List<Marca2>> TraerMarcaVehiculos() async{
+
+//request son para peticiones y response para respuestas
+    Marca2 var_marca;
+    List<Marca2> ListaMarcasNombres = List<Marca2>();
+    try{
+      List<Maker> listaMarcas = Maker.values;
+      for(var value in listaMarcas){
+        String MarcasNombre = value.name;
+        MarcasNombre = MarcasNombre.replaceRange(0, 6, '');
+        var_marca = Marca2(id: '1', name: MarcasNombre);
+        ListaMarcasNombres.add(var_marca);
+      }
+    }catch (e) {
+      print('Caught ERROR vehiculos===: $e');
+    }
+    return ListaMarcasNombres;
+  }
+
+  Future<List<Modelo>> TraerModelos(String m) async{
+
+    List<Maker> lista_marcadores = Maker.values;
+    Maker k;
+    String cad = '';
+    for(var v in lista_marcadores){
+      cad = v.toString().replaceRange(0, 6, '');
+      if(cad == m){
+        print(cad);
+        k = v;
+      }
+    }
+    Modelo model;
+    List<Modelo> ListaModelos = List<Modelo>();
+    var request = new GetModelsReq()
+      ..maker = k;
+    try {
+      var response = await VehiclesStub.getModels(request);
+      for(var value in response.models){
+        model = Modelo(id: '1', name: value.toString() );
+        ListaModelos.add(model);
+      }
+    } catch(e) {
+      print('Caught ERROR vehiculos $e');
+    }
+    return ListaModelos;
+  }
+
+
+
+  Future<List<Year>> GetVehiculosYears(String m, String model) async{
+
+    List<Maker> lista_marcadores = Maker.values;
+    Maker k;
+    String cad = '';
+    for(var v in lista_marcadores){
+      cad = v.toString().replaceRange(0, 6, '');
+      if(cad == m){
+        k = v;
+      }
+    }
+
+    var request = new GetVehiclesReq()
+      ..maker = k
+      ..model = model;
+
+    Year var_year;
+    List<Year> YearsList =new  List<Year>();
+
+
+    try{
+      var response = await VehiclesStub.getVehicles(request);
+      PbMap<Int64, VehicleArray> h = response.vehicles;
+      Future iterateMapEntry(key, value) {
+        var_year = Year(id: '1', name: key.toString());
+        YearsList.add(var_year);
+      }
+      h.forEach(iterateMapEntry);
+
+    }catch(e){
+      print('Caught ERROR vehiculos $e');
+    }
+    return YearsList;
+  }
+
 }
+
+
 
 String GetTipos(getTipo){ // Recibe de tipo FuelType
   String tipo = FuelType.valueOf(getTipo).toString();
