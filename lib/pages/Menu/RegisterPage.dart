@@ -1,5 +1,6 @@
 import 'package:bencineragofast/api/protos/maker.pbenum.dart';
 import 'package:bencineragofast/api/services.dart';
+import 'package:bencineragofast/pages/Home/mapaHome.dart';
 import 'package:bencineragofast/pages/Menu/Combustible.dart';
 import 'package:bencineragofast/pages/Menu/Marca2.dart';
 import 'package:bencineragofast/pages/Menu/Modelo.dart';
@@ -580,7 +581,10 @@ class _RegistrarseState extends State<Registrarse> {
                                   Vehiculo vehiculoUp = null;
                                   vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible);
                                   db.updateCarro(vehiculoUp);
-                                  Navigator.pushReplacementNamed(context, "/App");
+                                  Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (BuildContext context) => new  mapaHomePage()));
                                 } else {
                                 }
                               },
