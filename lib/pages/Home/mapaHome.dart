@@ -49,6 +49,7 @@ class _MyHomePageState extends State<mapaHomePage> {
   String parte2;
   String parte3;
   services Servicios = new services();
+  int cantidad_elementos = 1;
 
   var fuel_stations_list;
 
@@ -132,21 +133,27 @@ class _MyHomePageState extends State<mapaHomePage> {
     }
   }
 
+
+  List<Place> Lista_places_ok = new List<Place>();
   //AGREGAR MARCADORES
   Future initMarkers() async {
 
-    markerMap.clear();
     LatLng Mela = await  getUserLocation();
-    List<Place> Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude, double.parse(KmActual));
-    if(Lista_places_ok.length != 0){
-      for(Place p in Lista_places_ok){
-        initMarker(p);
+    Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude,double.parse(KmActual));
+
+    if(cantidad_elementos != Lista_places_ok.length){
+
+      markerMap.clear();
+      if(Lista_places_ok.length != 0){
+        for(Place p in Lista_places_ok){
+          initMarker(p,Mela);
+        }
       }
-    }else{
-      //Toast.show("Toast plugin app", duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+      Marcasdecarros = await Servicios.TraerMarcaVehiculos();
+      cantidad_elementos = Lista_places_ok.length;
     }
 
-    Marcasdecarros = await Servicios.TraerMarcaVehiculos();
+
 
     /*//10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
@@ -183,10 +190,9 @@ class _MyHomePageState extends State<mapaHomePage> {
 
 
   }
+  initMarker(Place place,LatLng Mela) async {
 
-  initMarker(Place place) async {
-
-    if(await calcularDistancia(place.latLng.latitude,place.latLng.longitude,'20')){
+    if(calcularDistancia(place.latLng.latitude,place.latLng.longitude,KmActual,Mela.latitude,Mela.longitude )){
       GoogleMapController mapController2 = mapController;
       //mapController.onMarkerTapped.add(_onInfoWindowTapped);
       mapController2.clearMarkers().then((val) async {
@@ -223,13 +229,9 @@ class _MyHomePageState extends State<mapaHomePage> {
     }
   }
 
-  Future<bool> calcularDistancia(double lat2, double lg2, String distancia) async {
-
-    var currentLocation = <String, double>{};
-    final location = LocationManager.Location();
-    currentLocation = await location.getLocation();
-    final lat = currentLocation["latitude"];
-    final lng = currentLocation["longitude"];
+    bool calcularDistancia(double lat2, double lg2, String distancia, double latO, double lgO){
+    final lat = latO;
+    final lng = lgO;
     double lat1 = lat;
     double lg1 = lng;
     bool rango = false;
@@ -316,6 +318,9 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    //initMarkers();
+
     return Scaffold(
       appBar: new AppBar(
         title: new Text("GoFast Bencineras",style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.047),),
