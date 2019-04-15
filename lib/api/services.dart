@@ -208,18 +208,6 @@ class services{
       Future iterateMapEntry(key, value) {
         var_year = Year(id: '1', name: key.toString());
         YearsList.add(var_year);
-        for(var v in value.vehicles)
-        {
-          v = value.vehicles[0].fuelTypes;
-          for(var i  in v )
-            {
-              print(v[i]);
-            }
-
-          //  var_combustible = Combustible(id: '1', name: v);
-          print(v);
-        }
-
       }
       h.forEach(iterateMapEntry);
 
