@@ -62,7 +62,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   void PeticionGrpc() async{
 
-    Servicios.ConnectionTest('192.168.1.13',3001);
+    Servicios.ConnectionTest('192.168.1.14',3001);
     //Servicios.CloseTest();
   }
 
@@ -95,6 +95,7 @@ class _MyHomePageState extends State<mapaHomePage> {
       final allRows = await db.queryAllRowsCarro();
       print('query all rows:');
       allRows.forEach((row) => print(row));
+
 
     }else{
       String _marcaVehiculo = 'Desconocido';
@@ -145,6 +146,8 @@ class _MyHomePageState extends State<mapaHomePage> {
       //Toast.show("Toast plugin app", duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
 
+    Marcasdecarros = await Servicios.TraerMarcaVehiculos();
+
     /*//10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
     List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');
@@ -172,11 +175,11 @@ class _MyHomePageState extends State<mapaHomePage> {
     tipogas = new List<String>();tipogas.add('95');
     Servicios = new List<String>(); Servicios.add('SERVICIO 4');Servicios.add('SERVICIO 2');
     placed = Place(id: 4,address: 'Dirección 4', latLng: latlo ,brand: 'Gaslonera 4',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'SHELL',  favorito: false);
-    initMarker(placed);*/
+    initMarker(placed);
 
     var_marca = Marca2(id: '1', name: 'Ford');Marcasdecarros.add(var_marca);
     var_marca = Marca2(id: '2', name: 'Toyota');Marcasdecarros.add(var_marca);
-    var_marca = Marca2(id: '3', name: 'Ferrari');Marcasdecarros.add(var_marca);
+    var_marca = Marca2(id: '3', name: 'Ferrari');Marcasdecarros.add(var_marca);*/
 
 
   }
