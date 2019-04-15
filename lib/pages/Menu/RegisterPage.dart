@@ -156,7 +156,6 @@ class _RegistrarseState extends State<Registrarse> {
     var_modelo= Modelo(id: '3',name: 'Fox');Modelosdecarro.add(var_modelo);
     var_modelo= Modelo(id: '4',name: 'chevette');Modelosdecarro.add(var_modelo);
   }
-
   _ElementosYears({List<Year> years}) {
     return Container(
       child: ListView.builder(
