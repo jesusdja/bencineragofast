@@ -43,6 +43,7 @@ class services{
         options: const ChannelOptions(
             credentials: const ChannelCredentials.insecure()));
     FuelStationStub = new FuelStationServiceClient(channel);
+    VehiclesStub = new VehicleServiceClient(channel);
     print('Conexión exitosa con el servidor');
   }
 
@@ -165,6 +166,7 @@ class services{
         k = v;
       }
     }
+
     Modelo model;
     List<Modelo> ListaModelos = List<Modelo>();
     var request = new GetModelsReq()
