@@ -163,7 +163,7 @@ class services{
     for(var v in lista_marcadores){
       cad = v.toString().replaceRange(0, 6, '');
       if(cad == m){
-        print(cad);
+
         k = v;
       }
     }

@@ -95,7 +95,6 @@ class _RegistrarseState extends State<Registrarse> {
                 _isButtonDisabledSave = true;
                 _activatesave = true ;
                 initModel();
-
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
               Navigator.pop(context);
@@ -298,12 +297,13 @@ class _RegistrarseState extends State<Registrarse> {
       _valueIdYears = carropull.idYears;
       _valueIdCombustible = carropull.idCombustible;
     });
+    initModel();
+    initYears();
   }
   @override
   void initState() {
-    super.initState();
     initvalues();
-
+    super.initState();
   }
   Future MarksDeVheiculo() async {
     await showDialog(
@@ -582,12 +582,7 @@ class _RegistrarseState extends State<Registrarse> {
                                   vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible);
                                   db.updateCarro(vehiculoUp);
                                   Navigator.pop(context);
-                                  Navigator.pop(context);
-                                  Navigator.push(
-                                      context,
-                                      new MaterialPageRoute(
-                                          builder: (BuildContext context) => new  mapaHomePage()));*/
-
+                                  Navigator.pushReplacementNamed(context, "/App");
 
                                 } else {
                                 }
