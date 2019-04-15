@@ -18,6 +18,7 @@ import 'package:bencineragofast/api/protos/vehicles.pbenum.dart';
 import 'package:bencineragofast/api/protos/vehicles.pbjson.dart';
 
 import 'package:bencineragofast/pages/Home/place.dart';
+import 'package:bencineragofast/pages/Menu/Combustible.dart';
 import 'package:bencineragofast/pages/Menu/Marca2.dart';
 import 'package:bencineragofast/pages/Menu/Modelo.dart';
 import 'package:bencineragofast/pages/Menu/Years.dart';
@@ -196,21 +197,29 @@ class services{
         k = v;
       }
     }
-
     var request = new GetVehiclesReq()
       ..maker = k
       ..model = model;
-
     Year var_year;
     List<Year> YearsList =new  List<Year>();
-
-
     try{
       var response = await VehiclesStub.getVehicles(request);
       PbMap<Int64, VehicleArray> h = response.vehicles;
       Future iterateMapEntry(key, value) {
         var_year = Year(id: '1', name: key.toString());
         YearsList.add(var_year);
+        for(var v in value.vehicles)
+        {
+          v = value.vehicles[0].fuelTypes;
+          for(var i  in v )
+            {
+              print(v[i]);
+            }
+
+          //  var_combustible = Combustible(id: '1', name: v);
+          print(v);
+        }
+
       }
       h.forEach(iterateMapEntry);
 
@@ -219,9 +228,7 @@ class services{
     }
     return YearsList;
   }
-
 }
-
 
 
 String GetTipos(getTipo){ // Recibe de tipo FuelType
