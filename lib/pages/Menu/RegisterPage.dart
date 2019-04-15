@@ -1,5 +1,3 @@
-import 'package:bencineragofast/api/protos/maker.pbenum.dart';
-import 'package:bencineragofast/api/services.dart';
 import 'package:bencineragofast/pages/Menu/Combustible.dart';
 import 'package:bencineragofast/pages/Menu/Marca2.dart';
 import 'package:bencineragofast/pages/Menu/Modelo.dart';
@@ -33,7 +31,6 @@ class _RegistrarseState extends State<Registrarse> {
   var combustible = new List<String>();
 
   List<Modelo> Modelosdecarro = new List<Modelo>();
-
   Modelo var_modelo;
 
   List<Year> Yearsdecarros = new List<Year>();
@@ -64,10 +61,6 @@ class _RegistrarseState extends State<Registrarse> {
   bool _activatebutton2 = true;
   bool _activatebutton3 = true;
   bool _activatesave = true;
-  services Servicios = new services();
-
-  Maker maker ;
-
 
 
   _ElementosMarca({List<Marca2> marca}) {
@@ -93,7 +86,6 @@ class _RegistrarseState extends State<Registrarse> {
                 _activatebutton3 =true;
                 _isButtonDisabledSave = true;
                 _activatesave = true ;
-                initModel();
 
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
@@ -137,7 +129,6 @@ class _RegistrarseState extends State<Registrarse> {
                 _valueCombustible ='Desconocido';
                 _isButtonDisabledSave = true;
                 _activatesave = true ;
-                initYears();
                 //DEVOLVER ID Y NOMBRE DE LA MARCA SELECCIONADA
               });
               Navigator.pop(context);
@@ -158,26 +149,12 @@ class _RegistrarseState extends State<Registrarse> {
     );
   }
 
-  initModel()async {
-
-      Modelosdecarro = await Servicios.TraerModelos(_valueMarca);
-
-  }
-
-  cargarmodelos() async
+  cargarmodelos()
   {
-    initModel();
-
-    /*
     var_modelo= Modelo(id: '1',name: 'fiesta');Modelosdecarro.add(var_modelo);
     var_modelo= Modelo(id: '2',name: 'malibu');Modelosdecarro.add(var_modelo);
     var_modelo= Modelo(id: '3',name: 'Fox');Modelosdecarro.add(var_modelo);
-    var_modelo= Modelo(id: '4',name: 'chevette');Modelosdecarro.add(var_modelo);*/
-
-  }
-  initYears()async {
-
-    Yearsdecarros = await Servicios.GetVehiculosYears(_valueMarca, _valueModel);
+    var_modelo= Modelo(id: '4',name: 'chevette');Modelosdecarro.add(var_modelo);
   }
   _ElementosYears({List<Year> years}) {
     return Container(
@@ -219,14 +196,12 @@ class _RegistrarseState extends State<Registrarse> {
 
   cargaryears(){
 
-    initYears();
-
-    /*var_year =Year(id: '1', name: '2019');Yearsdecarros.add(var_year);
+    var_year =Year(id: '1', name: '2019');Yearsdecarros.add(var_year);
     var_year =Year(id: '1', name: '2018');Yearsdecarros.add(var_year);
     var_year =Year(id: '1', name: '2017');Yearsdecarros.add(var_year);
     var_year =Year(id: '1', name: '2015');Yearsdecarros.add(var_year);
     var_year =Year(id: '1', name: '2014');Yearsdecarros.add(var_year);
-*/
+
   }
 
   _ElementosCombustible({List<Combustible> combustible}) {
@@ -278,8 +253,11 @@ class _RegistrarseState extends State<Registrarse> {
   void initvalues() async {
 
     carropull = await db.getCarro();
+
     setState(() {
+
       if(carropull.idMarca != 'Desconocido'){
+
          _activatebutton1 = false;
          _activatebutton2 = false;
          _activatebutton3 = false;
@@ -288,6 +266,8 @@ class _RegistrarseState extends State<Registrarse> {
           _isButtonDisabledyear = false;
           _isButtonDisabledcombustible = false;
           _isButtonDisabledSave = false;
+
+
       }
       _valueMarca = carropull.marcaVehiculo;
       _valueModel = carropull.modeloVehiculo;
@@ -302,9 +282,11 @@ class _RegistrarseState extends State<Registrarse> {
 
   @override
   void initState() {
+
+
+
     super.initState();
     initvalues();
-
   }
     Future MarksDeVheiculo() async {
       await showDialog(
@@ -318,6 +300,7 @@ class _RegistrarseState extends State<Registrarse> {
           )
       );
     }
+
     Future ModelDeVheiculo() async {
       await showDialog(
           context: context,

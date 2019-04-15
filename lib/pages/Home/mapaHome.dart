@@ -1,7 +1,4 @@
-import 'package:bencineragofast/api/protos/fuel_station.pbenum.dart';
-import 'package:bencineragofast/api/protos/fuel_type.pbenum.dart';
 import 'package:bencineragofast/api/services.dart';
-import 'package:bencineragofast/pages/Home/intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
@@ -22,7 +19,7 @@ import 'package:bencineragofast/pages/sqlflite/User.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
-import 'package:bencineragofast/api/services.dart';
+import 'package:toast/toast.dart';
 
 
 class mapaHomePage extends StatefulWidget {
@@ -38,7 +35,6 @@ class _MyHomePageState extends State<mapaHomePage> {
   GoogleMapController mapController;
   LatLng MelatLng;
   Map<String,Place> markerMap = Map();
-
   List<Marca2> Marcasdecarros = new List<Marca2>();
   Marca2 var_marca;
   Place placed;
@@ -65,9 +61,9 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   void PeticionGrpc() async{
+
     Servicios.ConnectionTest('192.168.1.13',3001);
     //Servicios.CloseTest();
-
   }
 
   //Inicializar variable de Id del telefono
@@ -139,15 +135,16 @@ class _MyHomePageState extends State<mapaHomePage> {
   Future initMarkers() async {
 
     markerMap.clear();
-
     LatLng Mela = await  getUserLocation();
     List<Place> Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude, double.parse(KmActual));
-
-    for(Place p in Lista_places_ok){
-      initMarker(p);
+    if(Lista_places_ok.length != 0){
+      for(Place p in Lista_places_ok){
+        initMarker(p);
+      }
+    }else{
+      //Toast.show("Toast plugin app", duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
     }
 
-    Marcasdecarros = await Servicios.TraerMarcaVehiculos();
     /*//10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
     List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');
@@ -177,11 +174,11 @@ class _MyHomePageState extends State<mapaHomePage> {
     placed = Place(id: 4,address: 'Dirección 4', latLng: latlo ,brand: 'Gaslonera 4',prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: 'SHELL',  favorito: false);
     initMarker(placed);*/
 
-   /* var_marca = Marca2(id: '1', name: 'Ford');Marcasdecarros.add(var_marca);
+    var_marca = Marca2(id: '1', name: 'Ford');Marcasdecarros.add(var_marca);
     var_marca = Marca2(id: '2', name: 'Toyota');Marcasdecarros.add(var_marca);
     var_marca = Marca2(id: '3', name: 'Ferrari');Marcasdecarros.add(var_marca);
 
-*/
+
   }
 
   initMarker(Place place) async {
@@ -207,13 +204,20 @@ class _MyHomePageState extends State<mapaHomePage> {
   }
 
   void _onInfoWindowTapped(Marker marker) {
-    final marcador_seleccionado = markerMap[marker.id];
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) {
-        return DetailsMarkers(mapController: mapController, place: marcador_seleccionado);
-      }),
-    );
+    try{
+      var marcador_seleccionado;
+      setState(() {
+        marcador_seleccionado = markerMap[marker.id];
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return DetailsMarkers(mapController: mapController, place: marcador_seleccionado);
+        }),
+      );
+    }catch(e){
+      print('ERROR onInfoWindowTapped : $e');
+    }
   }
 
   Future<bool> calcularDistancia(double lat2, double lg2, String distancia) async {
@@ -240,7 +244,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     return rango;
   }
 
-  BotonActualizar() async {
+  /*BotonActualizar() async {
 
     User u = await db.getUser();
     String StipoGas = u.botonTipoGas;
@@ -305,7 +309,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     d = radio * c;
     if(d <= double.parse('$distancia')){rango = true;}
     return rango;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -323,7 +327,8 @@ class _MyHomePageState extends State<mapaHomePage> {
                onPressed: (){
                  //mapController.clearMarkers();
                  //Navigator.pushReplacementNamed(context, "/App");
-                 BotonActualizar();
+                 //BotonActualizar();
+                 initMarkers();
                },
              ),
            ),

@@ -169,7 +169,7 @@ class DatabaseHelper {
     var dbClient = await database;
 
     int res =   await dbClient.update("Usersx", user.toMap(),
-        where: "idTable = ?", whereArgs: <int>[user.idTable]);
+      where: "idTable = ?", whereArgs: <int>[user.idTable]);
       print(res);
     return res > 0 ? true : false;
   }

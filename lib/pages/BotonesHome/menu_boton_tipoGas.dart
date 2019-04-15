@@ -1,3 +1,4 @@
+import 'package:bencineragofast/api/services.dart';
 import 'package:bencineragofast/pages/Home/place.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'package:bencineragofast/pages/sqlflite/User.dart';
@@ -36,6 +37,7 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
   double _fabHeight = 56.0;
   List<String> ListaConbustibles = new List<String>();
   String name_gas_button = 'All';
+  services Servicios = new services();
 
 
   @override
@@ -72,11 +74,13 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
         curve: _curve,
       ),
     ));
-    ListaConbustibles.add("Todas");ListaConbustibles.add("86");ListaConbustibles.add("87");ListaConbustibles.add("88");
+
+    ListaConbustibles = Servicios.extraerNombresTiposGas();
+    /*ListaConbustibles.add("Todas");ListaConbustibles.add("86");ListaConbustibles.add("87");ListaConbustibles.add("88");
     ListaConbustibles.add("89");ListaConbustibles.add("90");ListaConbustibles.add("91");ListaConbustibles.add("92");
     ListaConbustibles.add("93");ListaConbustibles.add("94");ListaConbustibles.add("95");ListaConbustibles.add("96");
     ListaConbustibles.add("97");ListaConbustibles.add("98");ListaConbustibles.add("15");ListaConbustibles.add("16");
-    ListaConbustibles.add("17");ListaConbustibles.add("18");ListaConbustibles.add("19");ListaConbustibles.add("20");
+    ListaConbustibles.add("17");ListaConbustibles.add("18");ListaConbustibles.add("19");ListaConbustibles.add("20");*/
     super.initState();
   }
 
