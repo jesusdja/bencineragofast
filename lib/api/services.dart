@@ -229,42 +229,6 @@ class services{
     return YearsList;
   }
 }
-Future<List<Combustible>> GetVehiculosCombustible(String m, String model) async{
-
-  List<Maker> lista_marcadores = Maker.values;
-  Maker k;
-  String cad = '';
-  for(var v in lista_marcadores){
-    cad = v.toString().replaceRange(0, 6, '');
-    if(cad == m){
-      k = v;
-    }
-  }
-  var request = new GetVehiclesReq()
-    ..maker = k
-    ..model = model;
-  Combustible var_combustible;
-  List<Combustible> listCombustible = new List<Combustible>();
-  try{
-    var response = await VehiclesStub.getVehicles(request);
-    PbMap<Int64, VehicleArray> h = response.vehicles;
-    Future iterateMapEntry(key, value) {
-      for(var v in value.vehicles)
-      {
-        v = value.vehicles[0].fuelTypes;
-      //  var_combustible = Combustible(id: '1', name: v);
-        print(v);
-      }
-
-    }
-    h.forEach(iterateMapEntry);
-
-  }catch(e){
-    print('Caught ERROR vehiculos $e');
-  }
-  return listCombustible;
-}
-
 
 
 String GetTipos(getTipo){ // Recibe de tipo FuelType

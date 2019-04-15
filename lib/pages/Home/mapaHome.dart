@@ -59,6 +59,11 @@ class _MyHomePageState extends State<mapaHomePage> {
     PeticionGrpc();
     super.initState();
   }
+  @override
+  void dispose() {
+    Servicios.CloseTest();
+    super.dispose();
+  }
 
   void PeticionGrpc() async{
 
