@@ -161,8 +161,6 @@ class _MyHomePageState extends State<mapaHomePage> {
       Marcasdecarros = await Servicios.TraerMarcaVehiculos();
       cantidad_elementos = Lista_places_ok.length;
     }
-
-
     /*//10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
     List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');precios.add('800');precios.add('600');precios.add('900');
