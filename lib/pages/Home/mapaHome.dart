@@ -40,7 +40,7 @@ class _MyHomePageState extends State<mapaHomePage> {
   Place placed;
   var db ;
   String _deviceid = 'Unknown';
-  String KmActual = '20';
+  String KmActual = '2';
   String TipoGasActual;
   String NameVehiculo = '';
   Vehiculo Nombrecarro;
@@ -123,7 +123,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     }
     if(await db.queryRowCount() != 0){
       print("ya esta registrado el Usuario");
-      User userUp = new User(1,_deviceid,"20","All");
+      User userUp = new User(1,_deviceid,"2","All");
       db.updatebtngas(userUp);
       db.updateBtnDis(userUp);
       final allRows = await db.queryAllRows();
@@ -131,7 +131,7 @@ class _MyHomePageState extends State<mapaHomePage> {
       allRows.forEach((row) => print(row));
     }else{
       TipoGasActual = "All";
-      KmActual = "20";
+      KmActual = "2";
       var user = new User(1,_deviceid,KmActual,TipoGasActual);
       db.saveUser(user);
       print("registro Exitoso de Usuario");
@@ -143,11 +143,15 @@ class _MyHomePageState extends State<mapaHomePage> {
   //AGREGAR MARCADORES
   Future initMarkers() async {
 
-    LatLng Mela = await  getUserLocation();
-    Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude,double.parse(KmActual));
+    LatLng Mela;
+    try{
+      Mela = await  getUserLocation();
+      Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude,double.parse(KmActual));
+    }catch(e){
+
+    }
 
     if(cantidad_elementos != Lista_places_ok.length){
-
       markerMap.clear();
       if(Lista_places_ok.length != 0){
         for(Place p in Lista_places_ok){
@@ -157,7 +161,6 @@ class _MyHomePageState extends State<mapaHomePage> {
       Marcasdecarros = await Servicios.TraerMarcaVehiculos();
       cantidad_elementos = Lista_places_ok.length;
     }
-
 
 
     /*//10 KM
@@ -442,7 +445,6 @@ class _MyHomePageState extends State<mapaHomePage> {
                 trackCameraPosition: true,
                 rotateGesturesEnabled: true, //Activar gestos de rotación
                 scrollGesturesEnabled: true, //Puede o no mover el mapa
-
             ),
           ),
           Positioned(
@@ -466,9 +468,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     mapController.onInfoWindowTapped.add(_onInfoWindowTapped);
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: center == null ? LatLng(0, 0) : center, zoom: 11.0)));
-
-
+        target: center == null ? LatLng(0, 0) : center, zoom: 15.0)));
   }
 
   Future<LatLng> getUserLocation() async {
@@ -476,12 +476,9 @@ class _MyHomePageState extends State<mapaHomePage> {
     final location = LocationManager.Location();
     try {
       currentLocation = await location.getLocation();
-      final lat = currentLocation["latitude"];
       final lng = currentLocation["longitude"];
-
+      final lat = currentLocation["latitude"];
       MelatLng = LatLng(lat,lng);
-
-      //final dist =
       final center = LatLng(lat, lng);
       return center;
     } on Exception {

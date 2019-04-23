@@ -34,7 +34,7 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
 
-  String name_gas_button = '20Km';
+  String name_gas_button = '2Km';
 
   @override
   initState() {
