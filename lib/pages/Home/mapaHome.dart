@@ -124,7 +124,7 @@ class _MyHomePageState extends State<mapaHomePage> {
     }
     if(await db.queryRowCount() != 0){
       print("ya esta registrado el Usuario");
-      User userUp = new User(1,_deviceid,"2","All");
+      User userUp = new User(1,_deviceid,"20","All");
       db.updatebtngas(userUp);
       db.updateBtnDis(userUp);
       final allRows = await db.queryAllRows();
@@ -132,7 +132,7 @@ class _MyHomePageState extends State<mapaHomePage> {
       allRows.forEach((row) => print(row));
     }else{
       TipoGasActual = "All";
-      KmActual = "2";
+      KmActual = "20";
       var user = new User(1,_deviceid,KmActual,TipoGasActual);
       db.saveUser(user);
       print("registro Exitoso de Usuario");

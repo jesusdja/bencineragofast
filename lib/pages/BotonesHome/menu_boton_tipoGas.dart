@@ -187,8 +187,15 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
     if(name_gas_button == 'All'){
       return Icon(Icons.local_gas_station);
     }else{
+      String nombre = name_gas_button;
+      if(name_gas_button == 'kerosene'){nombre = 'K';}
+      if(name_gas_button == 'electricity'){nombre = 'E';}
+      if(name_gas_button == 'ethanol'){nombre = 'E';}
+      if(name_gas_button == 'diesel'){nombre = 'D';}
+      if(name_gas_button == 'voltex'){nombre = 'V';}
+
       return Text(
-        name_gas_button,
+        nombre,
         style: TextStyle(
             color: Colors.white,
             fontSize: 18.0
