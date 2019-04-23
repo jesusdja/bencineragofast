@@ -209,8 +209,7 @@ class _opcionesState extends State<opciones> {
     {
         _valueMapaOption = MapType.terrain;
     }
-    print(_valueMapaOption);
-    print(_valueMapa);
+
     return
 
       Card(
@@ -266,107 +265,58 @@ class _opcionesState extends State<opciones> {
     }
     super.setState(fn);
   }
+
+  @override
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
 
     return new Scaffold(
-      //key: _formKey,
-      resizeToAvoidBottomPadding: false,// bloquear bugs de tama#o de Pantalla
+      resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         backgroundColor: PrimaryColor,
         title: new Text('Opciones '),
-
-
       ),
-
       body: ListView.builder(
         itemCount: 1,
         itemBuilder: (context, index) {
           return new Container(
-            padding: new EdgeInsets.all(32.0), //altura del boton
-            child: new Column( //centrar all content
-              children: <Widget>[ //trabajar y permitir multiples widgets
+            padding: new EdgeInsets.all(32.0),
+            child: new Column(
+              children: <Widget>[
                 Container(
                   margin: EdgeInsets.only(left: 0.0,top: 10.0,right: 0.0,bottom: 10.0),
                   child: Text(
                     'Tipo de Mapa',
                     textAlign: TextAlign.justify,
-                    //overflow: TextOverflow.ellipsis, ...
                     style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
-
                   ),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 0.0,top: 10.0,right: 0.0,bottom: 10.0),
                   child: SizedBox(
-
-
                     width: double.infinity,
                     // height: double.infinity,
                     child: new FlatButton(
-
                       child: Text(_valueMapa),
-
                       splashColor: Colors.black,
                       padding: const EdgeInsets.all(15.0),
                      textColor: Colors.white,
-                    //  elevation: 15.0,
                       color:PrimaryColor,
                       onPressed: _seleccionarMapa,
-
-                      //  child: new Text(_valueMapa),
-
-
-                    ),
+                                          ),
                   ),
                 ),
-               /* Text(
-                  'Marca Favorita',
-                  textAlign: TextAlign.justify,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
-
-                ),
-
-                new SizedBox(
-                  width: double.infinity,
-                  // height: double.infinity,
-                  child: new FlatButton(
-
-                  //  elevation: 15.0,
-                    splashColor: Colors.black,
-                    padding: const EdgeInsets.all(15.0),
-                    textColor: Colors.white,
-                    color: PrimaryColor,
-                    onPressed: _seleccionarMarca,
-                    child: new Text(_valueMarca),
-
-                  ),
-                ),
-
-                Container(
-                  margin: EdgeInsets.only(left: 0.0,top: 20.0,right: 0.0,bottom: 10.0),
-                  child: Text(
-                    'Precio ',
-                    textAlign: TextAlign.justify,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
-
-                  ),
-                ),
-
-                */
-
-
                 Container(
                   margin: EdgeInsets.only(left: 0.0,top: 100.0,right: 0.0,bottom: 40.0),
-
                   child: SizedBox(
                     width: double.infinity,
                     child: RaisedButton(
                       padding: const EdgeInsets.all(20.0),
                       color: PrimaryColor,
-
                       elevation: 5.0,
                       textColor: Colors.white,
                       splashColor: Colors.black,
@@ -380,13 +330,11 @@ class _opcionesState extends State<opciones> {
                           {
                               CambiarmapaSatelital();
                               refresh(15);
-
                           }
                           if(_valueMapa =='Otro')
                           {
                             CambiarmapaOtro();
                             refresh(15);
-
                           }
                         Navigator.pop(context);
                       },
@@ -396,18 +344,11 @@ class _opcionesState extends State<opciones> {
                 ),
 
               ],
-
-
-
             ),
 
           );
-
-
         },
       ),
-
-
     );
 
 
@@ -415,66 +356,39 @@ class _opcionesState extends State<opciones> {
   Future CambiarmapaOtro()  async {
 
     GoogleMapController mapController2 = widget.mapController;
-    print(mapController2);
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: center == null ? LatLng(0, 0) : center, zoom: 11.0)));
-
          mapController2.updateMapOptions(
-
         GoogleMapOptions(
           mapType: MapType.terrain,
-
         )
     );
-
-
-
-
   }
   void CambiarmapaNormal()  {
-
     GoogleMapController mapController2 = widget.mapController;
-    print(mapController2);
-
     mapController2.updateMapOptions(
-
         GoogleMapOptions(
-
           cameraPosition: CameraPosition(
             target: LatLng(8.29609, -62.7355),
           ),
-
           mapType: MapType.normal,
-
         )
     );
-
-
-
-
   }
   void CambiarmapaSatelital()  {
-
       GoogleMapController mapController2 = widget.mapController;
-      print(mapController2);
-
         mapController2.updateMapOptions(
-
         GoogleMapOptions(
-
           cameraPosition: CameraPosition(
             target: LatLng(8.29609, -62.7355),
           ),
-
           mapType: MapType.satellite,
-
         )
       );
 
 }
   void refresh(double zoomcam) async {
-
     GoogleMapController mapController2 = widget.mapController;
     final center = await getUserLocation();
     mapController2.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(

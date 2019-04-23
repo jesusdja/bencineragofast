@@ -38,8 +38,8 @@ class WalkthroughState extends State<Walkthrough>
 
   @override
   void dispose() {
-    super.dispose();
     animationController.dispose();
+    super.dispose();
   }
 
   @override

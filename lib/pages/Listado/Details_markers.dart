@@ -25,16 +25,11 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
 
   GoogleMapController mapController;
   bool _isFavorited = false;
-  bool _estadodeboton = false;
 
   DatabaseHelper db = new DatabaseHelper();
   Favoritos favoritos;
   int _idGadolinerasave;
 
-  /*
-        _idGadolinerasave = widget.place.id;
-        favoritos.idGasolinera = _idGadolinerasave;
-        db.saveFav(favoritos);*/
   void _toggleFavorite() {
     setState(() {
       if (_isFavorited) {
@@ -76,6 +71,11 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
   void initState() {
     initFavoritos();
     super.initState();
+  }
+  @override
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
   }
   @override
 
