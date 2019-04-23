@@ -97,12 +97,6 @@ class _MyHomePageState extends State<mapaHomePage> {
           estadoNombre = false;
         });
       }
-      print("ya esta registrado el carro");
-
-      final allRows = await db.queryAllRowsCarro();
-      print('query all rows:');
-      allRows.forEach((row) => print(row));
-
 
     }else{
       String _marcaVehiculo = 'Desconocido';
@@ -116,26 +110,19 @@ class _MyHomePageState extends State<mapaHomePage> {
 
       var carro = new Vehiculo(1, _marcaVehiculo, _modeloVehiculo, _years_vehiculo, _combustible,_idMarca,_idModelo,_idYears,_idCombustible);
       db.saveCarro(carro);
-      print("Registro de carro Existoso" );
 
     }
     if(await db.queryRowCountFavoritos != 0) {
-      print('Tabla de favoritos con registros');
     }
     if(await db.queryRowCount() != 0){
-      print("ya esta registrado el Usuario");
       User userUp = new User(1,_deviceid,"2","All");
       db.updatebtngas(userUp);
       db.updateBtnDis(userUp);
-      final allRows = await db.queryAllRows();
-      print('query all rows:');
-      allRows.forEach((row) => print(row));
     }else{
       TipoGasActual = "All";
       KmActual = "2";
       var user = new User(1,_deviceid,KmActual,TipoGasActual);
       db.saveUser(user);
-      print("registro Exitoso de Usuario");
     }
   }
 
