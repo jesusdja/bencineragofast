@@ -68,7 +68,8 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   void PeticionGrpc() async{
 
-    Servicios.ConnectionTest('172.31.29.2',3001);
+    Servicios.ConnectionTest('3.17.189.248',3001);
+    //Servicios.ConnectionTest('192.168.1.14',3001);
     //Servicios.CloseTest();
   }
 
@@ -138,18 +139,28 @@ class _MyHomePageState extends State<mapaHomePage> {
     }
   }
 
+  Future<User>  retornarUser() async{
+    return await db.getUser();
+  }
+
 
   List<Place> Lista_places_ok = new List<Place>();
   //AGREGAR MARCADORES
   Future initMarkers() async {
 
+    try{
+      User u = await retornarUser();
+      KmActual = u.botonDisGas;
+      setState(() {
+        KmActual;
+      });
+    }catch(e){}
+
     LatLng Mela;
     try{
       Mela = await  getUserLocation();
-      Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude,double.parse(KmActual));
-    }catch(e){
-
-    }
+      Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude,double.parse('20'));
+    }catch(e){ }
 
     if(cantidad_elementos != Lista_places_ok.length){
       markerMap.clear();
