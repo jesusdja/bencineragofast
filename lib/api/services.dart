@@ -53,7 +53,7 @@ class services{
   Future<List<Place>> TrarBencineras (double lat, double lg, double radio) async{
 
     List<Place> lista_places = new List<Place>();
-
+    print('************');
     var request = new ListFSReq()
       ..coordinates.add(lat)
       ..coordinates.add(lg)
@@ -61,7 +61,7 @@ class services{
 
     try {
       var response = await FuelStationStub.listFS(request);
-
+      print(response);
       for(var value in response.fuelStationsList){
 
         //TRAER PRECIOS - NUMERO
