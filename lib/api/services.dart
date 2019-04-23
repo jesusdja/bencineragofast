@@ -141,6 +141,7 @@ class services{
     List<Marca2> ListaMarcasNombres = List<Marca2>();
     try{
       List<Maker> listaMarcas = Maker.values;
+
       for(var value in listaMarcas){
         String MarcasNombre = value.name;
         MarcasNombre = MarcasNombre.replaceRange(0, 6, '');
@@ -149,6 +150,10 @@ class services{
       }
     }catch (e) {
     }
+
+    ListaMarcasNombres.removeAt(0);
+    ListaMarcasNombres.removeAt(0);
+    ListaMarcasNombres.removeAt(0);
     return ListaMarcasNombres;
   }
 
