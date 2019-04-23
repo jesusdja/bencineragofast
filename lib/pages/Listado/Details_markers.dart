@@ -37,15 +37,11 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
         _idGadolinerasave = widget.place.id;
         favoritos = Favoritos(_idGadolinerasave);
         db.deleteFavoritos(favoritos);
-
-        imprimir();
-
       } else {
         _isFavorited = true;
         _idGadolinerasave = widget.place.id;
         favoritos = Favoritos(_idGadolinerasave);
         db.saveFav(favoritos);
-        imprimir();
       }
     });
   }
