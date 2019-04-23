@@ -40,7 +40,6 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
       tipoGasActual = u.botonTipoGas;
     });
   }
-
   @override
   Future initState() {
     _controller = TabController(length: 4, vsync: this );
