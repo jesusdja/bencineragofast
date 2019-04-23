@@ -115,12 +115,13 @@ class _MyHomePageState extends State<mapaHomePage> {
     if(await db.queryRowCountFavoritos != 0) {
     }
     if(await db.queryRowCount() != 0){
-      User userUp = new User(1,_deviceid,"2","All");
+      print("ya esta registrado el Usuario");
+      User userUp = new User(1,_deviceid,"20","All");
       db.updatebtngas(userUp);
       db.updateBtnDis(userUp);
     }else{
       TipoGasActual = "All";
-      KmActual = "2";
+      KmActual = "20";
       var user = new User(1,_deviceid,KmActual,TipoGasActual);
       db.saveUser(user);
     }

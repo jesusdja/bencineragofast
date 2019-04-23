@@ -124,7 +124,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      throw '*********************Could not launch $url';
+      throw 'Could not launch $url';
     }
   }
 
@@ -157,14 +157,17 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
             ),
             Row(
               children: <Widget>[
-                Icon(ico),
-                Expanded(child: Text(
-                    Descripcion,
-                    style: TextStyle(
-                      color: Colors.grey[500],
+                Icon(ico,size: 35,),
+                Expanded(child: Padding(
+                  padding: const EdgeInsets.only(left: 25),
+                  child: Text(
+                      Descripcion,
+                      style: TextStyle(
+                        color: Colors.grey[500],
+                      ),
+                      textAlign: TextAlign.left,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
+                ),
                 ),
               ],
             ),
@@ -262,7 +265,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
           child: Row(
             children: <Widget>[
               DetallesConIcono("Tipos de Gas y precio",tiposYprecio,Icons.local_gas_station),
-              DetallesConIcono("Servicios",ServiciosPlace,Icons.thumb_up),
+              //DetallesConIcono("Servicios",ServiciosPlace,Icons.thumb_up),
             ],
           ),
         ),
@@ -271,7 +274,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
           child: Row(
             children: <Widget>[
               DetallesConIcono("Horario de Servicio",widget.place.OpenHr,Icons.access_time),
-              DetallesConIcono("Detalle Bencinera 4","Información Destalle 4",Icons.accessibility),
+              DetallesConIcono("Servicios",ServiciosPlace,Icons.home),
             ],
           ),
         ),
@@ -279,8 +282,8 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
           margin: EdgeInsets.only(left: 28.0, top: 10.0, right: 28.0, bottom: 20.0),
           child: Row(
             children: <Widget>[
-              DetallesConIcono("Detalle Bencinera 3","Información Destalle 3",Icons.thumb_up),
-              DetallesConIcono("Detalle Bencinera 6","Información Destalle 6",Icons.branding_watermark),
+              //DetallesConIcono("Detalle Bencinera 3","Información Destalle 3",Icons.thumb_up),
+              //DetallesConIcono("Detalle Bencinera 6","Información Destalle 6",Icons.branding_watermark),
             ],
           ),
         ),
