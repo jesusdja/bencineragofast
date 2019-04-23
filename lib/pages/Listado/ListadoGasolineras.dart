@@ -50,6 +50,7 @@ class _ListadoGasolinerasState extends State<ListadoGasolineras> with SingleTick
   }
   void dispose(){
     _controller.dispose();
+    TraerUsuario();
     super.dispose();
   }
 

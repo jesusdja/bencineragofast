@@ -1,6 +1,5 @@
 import 'package:bencineragofast/api/protos/maker.pbenum.dart';
 import 'package:bencineragofast/api/services.dart';
-import 'package:bencineragofast/pages/Home/mapaHome.dart';
 import 'package:bencineragofast/pages/Menu/Combustible.dart';
 import 'package:bencineragofast/pages/Menu/Marca2.dart';
 import 'package:bencineragofast/pages/Menu/Modelo.dart';
@@ -10,16 +9,13 @@ import 'package:bencineragofast/main.dart';
 import 'dart:core';
 import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
-import 'package:flutter/scheduler.dart';
-import 'dart:io' as Io;
-import 'package:image/image.dart' as copy;
 
 
 class Registrarse extends StatefulWidget {
 
-  Registrarse({this.Marcasdecarros});
+  Registrarse({this.carmarks});
 
-  final List<Marca2> Marcasdecarros;
+  final List<Marca2> carmarks;
 
   @override
   _RegistrarseState createState() => new _RegistrarseState();
@@ -28,20 +24,20 @@ class _RegistrarseState extends State<Registrarse> {
 
   DatabaseHelper db = new DatabaseHelper();
 
-  Marca2 marca ;
-  var modelo = new List<String>();
+  Marca2 mark ;
+  var model = new List<String>();
   var years = new List<String>();
   var combustible = new List<String>();
 
-  List<Modelo> Modelosdecarro = new List<Modelo>();
+  List<Modelo> carmarks = new List<Modelo>();
 
-  Modelo var_modelo;
+  Modelo varModel;
 
-  List<Year> Yearsdecarros = new List<Year>();
-  Year var_year;
+  List<Year> yearscars = new List<Year>();
+  Year varYear;
 
-  List<Combustible> Combustibledecarros = new List<Combustible>();
-  Combustible var_Combustible;
+  List<Combustible> fuelcars = new List<Combustible>();
+  Combustible varFuel;
 
   Vehiculo carropull;
 
@@ -58,20 +54,16 @@ class _RegistrarseState extends State<Registrarse> {
   bool _isButtonDisabledmarca = false;
   bool _isButtonDisabledmodel = true;
   bool _isButtonDisabledyear = true;
-  bool _isButtonDisabledcombustible = true;
   bool _isButtonDisabledSave = true;
 
   bool _activatebutton1 = true;
   bool _activatebutton2 = true;
-  bool _activatebutton3 = true;
   bool _activatesave = true;
-  services Servicios = new services();
+  services Services = new services();
 
   Maker maker ;
 
-
-
-  _ElementosMarca({List<Marca2> marca}) {
+  MarkElement({List<Marca2> marca}) {
     return Container(
       child: ListView.builder(
         itemCount: marca.length,
@@ -79,7 +71,6 @@ class _RegistrarseState extends State<Registrarse> {
           return ListTile(
             title: Text(marca[index].name),
             leading: Image.asset('assets/images/icono_gas.png', height: 50),
-
             onTap: () {
               setState(() {
                 _valueMarca= marca[index].name;
@@ -88,10 +79,8 @@ class _RegistrarseState extends State<Registrarse> {
                 _valueYear= 'Desconocido';
                 _valueCombustible='Desconocido';
                 _isButtonDisabledmodel = false;
-                _isButtonDisabledcombustible =true;
                 _activatebutton1 =false;
                 _activatebutton2 =true;
-                _activatebutton3 =true;
                 _isButtonDisabledSave = true;
                 _activatesave = true ;
                 initModel();
@@ -106,11 +95,11 @@ class _RegistrarseState extends State<Registrarse> {
     );
   }
   Marca() {
-    var y = widget.Marcasdecarros.length;
+    var y = widget.carmarks.length;
     return new Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.7,
-      child: _ElementosMarca(marca: List.generate(y, (i) => widget.Marcasdecarros[i],
+      child: MarkElement(marca: List.generate(y, (i) => widget.carmarks[i],
       ),),
 
     );
@@ -130,9 +119,7 @@ class _RegistrarseState extends State<Registrarse> {
                 _valueModel = modelo[index].name;
                 _valueIdModelo = modelo[index].id;
                 _activatebutton2 =false;
-                _activatebutton3 =true;
                 _isButtonDisabledyear = false;
-                _isButtonDisabledcombustible =true;
                 _valueYear ='Desconocido';
                 _valueCombustible ='Desconocido';
                 _isButtonDisabledSave = true;
@@ -148,37 +135,22 @@ class _RegistrarseState extends State<Registrarse> {
     );
   }
   Model() {
-    var y = Modelosdecarro.length;
+    var y = carmarks.length;
     return new Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.7,
-      child: _ElementosModel(modelo: List.generate(y, (i) => Modelosdecarro[i],
+      child: _ElementosModel(modelo: List.generate(y, (i) => carmarks[i],
       ),),
 
     );
   }
 
-  initModel()async {
+  initModel()async {carmarks = await Services.TraerModelos(_valueMarca);}
 
-    Modelosdecarro = await Servicios.TraerModelos(_valueMarca);
+  cargarmodelos() async{initModel();}
 
-  }
+  initYears()async {yearscars = await Services.GetVehiculosYears(_valueMarca, _valueModel);}
 
-  cargarmodelos() async
-  {
-    initModel();
-
-    /*
-    var_modelo= Modelo(id: '1',name: 'fiesta');Modelosdecarro.add(var_modelo);
-    var_modelo= Modelo(id: '2',name: 'malibu');Modelosdecarro.add(var_modelo);
-    var_modelo= Modelo(id: '3',name: 'Fox');Modelosdecarro.add(var_modelo);
-    var_modelo= Modelo(id: '4',name: 'chevette');Modelosdecarro.add(var_modelo);*/
-
-  }
-  initYears()async {
-
-    Yearsdecarros = await Servicios.GetVehiculosYears(_valueMarca, _valueModel);
-  }
   _ElementosYears({List<Year> years}) {
     return Container(
       child: ListView.builder(
@@ -191,8 +163,6 @@ class _RegistrarseState extends State<Registrarse> {
               setState(() {
                 _valueYear = years[index].name;
                 _valueIdYears = years[index].id;
-                _isButtonDisabledcombustible = false;
-                _activatebutton3 = false;
                 _valueCombustible ='Desconocido';
                 _isButtonDisabledSave = false;
                 _activatesave = false ;
@@ -206,28 +176,18 @@ class _RegistrarseState extends State<Registrarse> {
     );
   }
   Years() {
-    var y = Yearsdecarros.length;
+    var y = yearscars.length;
     return new Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.7,
       child: _ElementosYears(
-        years: List.generate(y, (i) =>Yearsdecarros[i],
+        years: List.generate(y, (i) =>yearscars[i],
         ),
       ),
     );
   }
 
-  cargaryears(){
-
-    initYears();
-
-    /*var_year =Year(id: '1', name: '2019');Yearsdecarros.add(var_year);
-    var_year =Year(id: '1', name: '2018');Yearsdecarros.add(var_year);
-    var_year =Year(id: '1', name: '2017');Yearsdecarros.add(var_year);
-    var_year =Year(id: '1', name: '2015');Yearsdecarros.add(var_year);
-    var_year =Year(id: '1', name: '2014');Yearsdecarros.add(var_year);
-*/
-  }
+  cargaryears(){initYears();}
 
   _ElementosCombustible({List<Combustible> combustible}) {
     return Container(
@@ -253,52 +213,29 @@ class _RegistrarseState extends State<Registrarse> {
       ),
     );
   }
-  Combustibles() {
-    var y = Combustibledecarros.length;
-    return new Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.7,
-      child: _ElementosCombustible(
-        combustible: List.generate(y, (i) => Combustibledecarros[i],
-        ),
-      ),
-    );
-  }
-  CargarCombustible(){
-    var_Combustible = Combustible(id: '1',name: '1000'); Combustibledecarros.add(var_Combustible);
-    var_Combustible = Combustible(id: '2',name: '200'); Combustibledecarros.add(var_Combustible);
-    var_Combustible = Combustible(id: '3',name: '40'); Combustibledecarros.add(var_Combustible);
-    var_Combustible = Combustible(id: '4',name: '30'); Combustibledecarros.add(var_Combustible);
-    var_Combustible = Combustible(id: '5',name: '70'); Combustibledecarros.add(var_Combustible);
-    var_Combustible = Combustible(id: '6',name: '10000000'); Combustibledecarros.add(var_Combustible);
-
-  }
 
   void initvalues() async {
-
-    carropull = await db.getCarro();
-    setState(() {
-      if(carropull.idMarca != 'Desconocido'){
-        _activatebutton1 = false;
-        _activatebutton2 = false;
-        _activatebutton3 = false;
-        _activatesave = false;
-        _isButtonDisabledmodel = false;
-        _isButtonDisabledyear = false;
-        _isButtonDisabledcombustible = false;
-        _isButtonDisabledSave = false;
-      }
-      _valueMarca = carropull.marcaVehiculo;
-      _valueModel = carropull.modeloVehiculo;
-      _valueYear = carropull.yearsVehiculo;
-      _valueCombustible = carropull.combustible;
-      _valueIdMarca = carropull.idMarca;
-      _valueIdModelo = carropull.idModelo;
-      _valueIdYears = carropull.idYears;
-      _valueIdCombustible = carropull.idCombustible;
-    });
-    initModel();
-    initYears();
+    try{
+  carropull = await db.getCarro();
+  setState(() {
+    if(carropull.idMarca != 'Desconocido'){
+      _activatebutton1 = false;
+      _activatebutton2 = false;
+      _activatesave = false;
+      _isButtonDisabledmodel = false;
+      _isButtonDisabledyear = false;
+      _isButtonDisabledSave = false;
+    }
+    _valueMarca = carropull.marcaVehiculo;
+    _valueModel = carropull.modeloVehiculo;
+    _valueYear = carropull.yearsVehiculo;
+    _valueCombustible = carropull.combustible;
+    _valueIdMarca = carropull.idMarca;
+    _valueIdModelo = carropull.idModelo;
+    _valueIdYears = carropull.idYears;
+    _valueIdCombustible = carropull.idCombustible;
+  });
+    }catch(e){}
   }
   @override
   void initState() {
@@ -339,17 +276,6 @@ class _RegistrarseState extends State<Registrarse> {
         )
     );
   }
-  Future ConbustibleVheiculo() async {
-    await showDialog(
-        context: context,
-        child: SimpleDialog(
-            title: Text('Combustible del Vehiculo'),
-            children: <Widget>[
-              Combustibles(),
-            ]
-        )
-    );
-  }
   @override
   Widget build(BuildContext context) {
 
@@ -359,14 +285,8 @@ class _RegistrarseState extends State<Registrarse> {
         backgroundColor: PrimaryColor,
         title: new Text('Registrar Vehiculo'),
       ),
-      body: ListView.builder(
-          itemCount: 1,
-          itemBuilder: (context, index) {
-            return Container(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height,
+      body: Container(
+              height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.only(left: 20, right: 50, top: 20),
               child: SingleChildScrollView(
@@ -443,7 +363,6 @@ class _RegistrarseState extends State<Registrarse> {
                           ),
                           AbsorbPointer(
                             absorbing: _isButtonDisabledmodel,
-
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width * .5,
                               child: FlatButton(
@@ -458,7 +377,7 @@ class _RegistrarseState extends State<Registrarse> {
                                   onPressed: () {
                                     cargarmodelos();
                                     ModelDeVheiculo();
-                                    Modelosdecarro.clear();
+                                    carmarks.clear();
                                   }
                               ),
                             ),
@@ -505,7 +424,7 @@ class _RegistrarseState extends State<Registrarse> {
                                   onPressed: () {
                                     cargaryears();
                                     YearsVehiculo();
-                                    Yearsdecarros.clear();
+                                    yearscars.clear();
                                   }
                               ),
                             ),
@@ -513,54 +432,6 @@ class _RegistrarseState extends State<Registrarse> {
                         ],
                       ),
                     ),
-
-                   /* Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(bottom: 20, top: 10),
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width,
-                            child: Text(
-                              'Tipo de Combustible',
-                              textAlign: TextAlign.justify,
-                              //overflow: TextOverflow.ellipsis, ...
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0),
-                            ),
-                          ),
-                          AbsorbPointer(
-                            absorbing: _isButtonDisabledcombustible,
-                            child: SizedBox(
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * .5,
-                              child: FlatButton(
-                                  child: Text(_valueCombustible),
-                                  splashColor: Colors.black,
-                                  padding: const EdgeInsets.all(25.0),
-                                  textColor: Colors.white,
-                                  color: _activatebutton3
-                                      ? Colors.grey
-                                      : PrimaryColor,
-                                  onPressed: () {
-                                    CargarCombustible();
-                                    ConbustibleVheiculo();
-                                    Combustibledecarros.clear();
-                                  }
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      // Image.asset('assets/images/icono_gas.png',width: 80,height: 110,),
-                    ),*/
 
                     Container(
                         margin: EdgeInsets.only(
@@ -600,9 +471,8 @@ class _RegistrarseState extends State<Registrarse> {
                 ),
               ),
 
-            );
-          }
-      ),
+            ),
+
     );
   }
 }

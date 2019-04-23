@@ -104,8 +104,6 @@ class DatabaseHelper {
   Future<User> getUser() async {
     var dbClient = await database;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM Usersx');
-    List<User> employees = new List();
-
     var user =
     new User(list[0][
       "idTable"],
@@ -135,7 +133,6 @@ class DatabaseHelper {
   Future<Vehiculo> getCarro() async {
     var dbClient = await database;
     List<Map> list = await dbClient.rawQuery('SELECT * FROM Carro');
-    List<Vehiculo> employees = new List();
     var vehiculo =
     new Vehiculo(list[0]["idTable"],
         list[0]["marcaVehiculo"],
@@ -149,13 +146,8 @@ class DatabaseHelper {
     );
     return vehiculo;
   }
-
-
-
-
   Future<int> deleteFavoritos(Favoritos favoritos) async {
     var dbClient = await database;
-
     int res =
     await dbClient.rawDelete('DELETE FROM Favoritos WHERE idGasolinera = ?', [favoritos.idGasolinera]);
     return res;
@@ -177,26 +169,17 @@ class DatabaseHelper {
 
   Future<int> updatebtngas(User user) async {
     var dbClient = await  database;
-    //   return await dbClient.update(tableNote, note.toMap(), where: "$columnId = ?", whereArgs: [note.id]);
-    /*return await dbClient.rawUpdate(
-        'UPDATE $table SET $colbtngas = \'${user.botonDisGas}\' WHERE $colId = ${user.idTable}');*/
     return await dbClient.rawUpdate(
         'UPDATE $table SET $colbtngas = \'${user.botonTipoGas}\' WHERE $colId = ${user.idTable}');
   }
 
   Future<int> updateBtnDis(User user) async {
     var dbClient = await  database;
-    //   return await dbClient.update(tableNote, note.toMap(), where: "$columnId = ?", whereArgs: [note.id]);
-    /*return await dbClient.rawUpdate(
-        'UPDATE $table SET $colbtngas = \'${user.botonDisGas}\' WHERE $colId = ${user.idTable}');*/
     return await dbClient.rawUpdate(
         'UPDATE $table SET $colBtnDis = \'${user.botonDisGas}\' WHERE $colId = ${user.idTable}');
   }
   Future<int> updateCarro(Vehiculo vehiculo) async {
     var dbClient = await  database;
-    //   return await dbClient.update(tableNote, note.toMap(), where: "$columnId = ?", whereArgs: [note.id]);
-    /*return await dbClient.rawUpdate(
-        'UPDATE $table SET $colbtngas = \'${user.botonDisGas}\' WHERE $colId = ${user.idTable}');*/
     return await dbClient.rawUpdate(
         'UPDATE $tablecarro SET marcaVehiculo = \'${vehiculo.marcaVehiculo}\',modeloVehiculo = \'${vehiculo.modeloVehiculo}\',yearsVehiculo = \'${vehiculo.yearsVehiculo}\',combustible = \'${vehiculo.combustible}\',idMarca = \'${vehiculo.idMarca}\',idModelo = \'${vehiculo.idModelo}\',idYears = \'${vehiculo.idYears}\',idCombustible = \'${vehiculo.idCombustible}\' WHERE $colId = ${vehiculo.idTable}');
   }
@@ -207,8 +190,6 @@ class DatabaseHelper {
         columns: [colIdDevice,colbtngas,colBtnDis],
         where: '$colId = ?',
         whereArgs: [id]);
-    var result2 = await dbClient.rawQuery('SELECT * FROM $table WHERE $colId = $id');
-
     if (result.length > 0) {
       return new User.fromMap(result.first);
     }
@@ -218,30 +199,21 @@ class DatabaseHelper {
 
   Future<User> getIdDevice(int id) async {
     var dbClient = await database;
-
     var result = await dbClient.rawQuery('SELECT * FROM $table WHERE $colId = $id');
-
-
     if (result.length > 0) {
       return new User.fromMap(result.first);
     }
-
     return null;
   }
 
   Future<int> verificarIdFavoritos(int id) async {
     var dbClient = await database;
-
     var result = await dbClient.rawQuery('SELECT * FROM $tablefavoritos WHERE $idGasolinera = $id');
     return result.length;
   }
-
   Future<Vehiculo> getmarca(int id) async {
     var dbClient = await database;
-
     var result = await dbClient.rawQuery('SELECT * FROM $tablecarro WHERE idTable = $id');
-
-
     if (result.length > 0) {
       return new Vehiculo.fromMap(result.first);
     }

@@ -59,7 +59,10 @@ class _AppModelState<T> extends State<AppModel<T>> {
       });
     }
   }
-
+@override
+  void dispose() {
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return _AppModelScope<T>(
