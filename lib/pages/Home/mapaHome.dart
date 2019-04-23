@@ -329,7 +329,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("GoFast Bencineras",style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.047),),
+        title: new Text("Smart Fuel",style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.047),),
         backgroundColor: PrimaryColor ,
           actions: <Widget>[
            Container(

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
-      title: 'Bencinera GoFast',
+      title: 'Smart Fuel',
       home: SplashScreen(),
       routes: routes,
     );

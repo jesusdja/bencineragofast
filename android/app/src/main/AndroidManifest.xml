@@ -17,7 +17,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Bencinera GoFast"
+        android:label="Smart Fuel"
         android:icon="@mipmap/logoinstalar">
 
         <meta-data android:name="com.google.android.geo.API_KEY"

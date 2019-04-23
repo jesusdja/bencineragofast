@@ -63,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         padding: EdgeInsets.only(top: 10.0),
                       ),
                       Text(
-                        'Bencinera GoFast',
+                        'Smart Fuel',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
