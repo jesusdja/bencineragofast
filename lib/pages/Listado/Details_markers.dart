@@ -37,7 +37,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
         _idGadolinerasave = widget.place.id;
         favoritos = Favoritos(_idGadolinerasave);
         db.deleteFavoritos(favoritos);
-        print("ELIMINADO DE FAVORITOS");
 
         imprimir();
 
@@ -46,7 +45,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
         _idGadolinerasave = widget.place.id;
         favoritos = Favoritos(_idGadolinerasave);
         db.saveFav(favoritos);
-        print("AGREGADO DE FAVORITOS");
         imprimir();
       }
     });
@@ -63,7 +61,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
         _isFavorited = false;
       });
     }
-   print(await db.verificarIdFavoritos(widget.place.id));
 
   }
 
@@ -291,11 +288,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
     );
   }
 
-  imprimir() async {
-    final allRows = await db.queryAllRowsFavoritos();
-    print('query all rows:');
-    allRows.forEach((row) => print(row));
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

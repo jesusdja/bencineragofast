@@ -45,7 +45,6 @@ class services{
             credentials: const ChannelCredentials.insecure()));
     FuelStationStub = new FuelStationServiceClient(channel);
     VehiclesStub = new VehicleServiceClient(channel);
-    print('Conexión exitosa con el servidor');
   }
 
   Future<List<Place>> CloseTest() async{ await channel.shutdown();  }
@@ -104,7 +103,6 @@ class services{
         lista_places.add(place);
       }
     } catch (e) {
-      print('Caught ERROR: $e');
     }
 
     return lista_places;
@@ -150,7 +148,6 @@ class services{
         ListaMarcasNombres.add(var_marca);
       }
     }catch (e) {
-      print('Caught ERROR vehiculos===: $e');
     }
     return ListaMarcasNombres;
   }
@@ -179,7 +176,6 @@ class services{
         ListaModelos.add(model);
       }
     } catch(e) {
-      print('Caught ERROR vehiculos $e');
     }
     return ListaModelos;
   }
@@ -212,7 +208,6 @@ class services{
       h.forEach(iterateMapEntry);
 
     }catch(e){
-      print('Caught ERROR vehiculos $e');
     }
     return YearsList;
   }

@@ -115,7 +115,6 @@ class _MyHomePageState extends State<mapaHomePage> {
     if(await db.queryRowCountFavoritos != 0) {
     }
     if(await db.queryRowCount() != 0){
-      print("ya esta registrado el Usuario");
       User userUp = new User(1,_deviceid,"20","All");
       db.updatebtngas(userUp);
       db.updateBtnDis(userUp);
@@ -231,7 +230,6 @@ class _MyHomePageState extends State<mapaHomePage> {
         }),
       );
     }catch(e){
-      print('ERROR onInfoWindowTapped : $e');
     }
   }
 
