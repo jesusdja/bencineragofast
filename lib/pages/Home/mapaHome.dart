@@ -68,7 +68,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   void PeticionGrpc() async{
 
-    Servicios.ConnectionTest('192.168.1.14',3001);
+    Servicios.ConnectionTest('172.31.29.2',3001);
     //Servicios.CloseTest();
   }
 

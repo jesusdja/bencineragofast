@@ -38,6 +38,7 @@ Map<String,Place> markerMap;
 class services{
 
   Future<Null> ConnectionTest(String ip, int port) {
+  try{
 
     channel = new ClientChannel(ip,
         port: port,
@@ -46,6 +47,12 @@ class services{
     FuelStationStub = new FuelStationServiceClient(channel);
     VehiclesStub = new VehicleServiceClient(channel);
     print('Conexión exitosa con el servidor');
+  }catch(e)
+    {
+      print('================');
+      print(e);
+    }
+
   }
 
   Future<List<Place>> CloseTest() async{ await channel.shutdown();  }
@@ -58,10 +65,9 @@ class services{
       ..coordinates.add(lat)
       ..coordinates.add(lg)
       ..radius = radio;
-
     try {
-      var response = await FuelStationStub.listFS(request);
 
+      var response = await FuelStationStub.listFS(request);
       for(var value in response.fuelStationsList){
 
         //TRAER PRECIOS - NUMERO

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Combustible {
-  const Combustible({
-    @required this.id,
+  const Combustible({    @required this.id,
     @required this.name,
   })  : assert(id != null),
         assert(name != null);
