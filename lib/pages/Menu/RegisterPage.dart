@@ -118,9 +118,9 @@ class _RegistrarseState extends State<Registrarse> {
     Marca2 modf;
     if(cadena.length > 3)
       {
-        modf = Marca2(id: '1', name: rc.titleCase.toString());
+        modf = Marca2(id: '1', name: rc.titleCase.toString(),logo: '');
       }else{
-        modf = Marca2(id: '1', name: rc.constantCase.toString());
+        modf = Marca2(id: '1', name: rc.constantCase.toString(),logo:'');
           }
 
     return modf.name.toString();
