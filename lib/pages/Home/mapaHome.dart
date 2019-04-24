@@ -50,7 +50,7 @@ class _MyHomePageState extends State<mapaHomePage> {
   String parte2;
   String parte3;
   services Servicios = new services();
-  int cantidad_elementos = 1;
+  int cantidad_elementos = 0;
 
   var fuel_stations_list;
 
@@ -157,10 +157,10 @@ class _MyHomePageState extends State<mapaHomePage> {
           initMarker(p,Mela);
         }
       }
-      Marcasdecarros = await Servicios.TraerMarcaVehiculos();
-
       cantidad_elementos = Lista_places_ok.length;
     }
+
+    Marcasdecarros = await Servicios.TraerMarcaVehiculos();
 
     /*//10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
@@ -264,73 +264,6 @@ class _MyHomePageState extends State<mapaHomePage> {
     return rango;
   }
 
-  /*BotonActualizar() async {
-
-    User u = await db.getUser();
-    String StipoGas = u.botonTipoGas;
-    String Sdis = u.botonDisGas;
-    var currentLocation = <String, double>{};
-    final location = LocationManager.Location();
-    currentLocation = await location.getLocation();
-    final lat = currentLocation["latitude"];
-    final lng = currentLocation["longitude"];
-
-    double zoom = 11.0;
-    if(Sdis == '10'){zoom = 13.0;}if(Sdis == '2'){zoom = 15.0;}
-
-    final center = await getUserLocation();
-    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: center == null ? LatLng(0, 0) : center, zoom: zoom)));
-
-    void iterateMapEntry(key, value) {
-      Place p = value;
-      bool siencontrotipo=false;
-      for(int i=0;i<p.tiposgas.length;i++){
-        String tipo = p.tiposgas[i];
-        if(StipoGas == tipo){siencontrotipo = true; i = p.prices.length;}
-      }
-      //MODIFICAR
-      if(((siencontrotipo)||("All" == StipoGas))&(calcularDistancia22(lat,lng,p.latitude,p.longitude,Sdis))){
-        initMarker22(p);
-      }
-    }
-    if(markerMap != null){
-      markerMap.forEach(iterateMapEntry);
-    }
-
-  }
-
-  initMarker22(Place place) {
-    GoogleMapController mapController2 = mapController;
-    mapController2.clearMarkers().then((val) async {
-      final Marker marker = await mapController2.addMarker(MarkerOptions(
-        visible: true,
-        draggable: true,
-        flat: false,
-        position: LatLng(place.latitude,place.longitude),
-        infoWindowText: InfoWindowText(place.brand, place.address),
-        icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
-      )
-      );
-    });
-  }
-
-  bool calcularDistancia22(double lat1, double lg1, double lat2, double lg2, String distancia){
-    bool rango = false;
-    double d = 0.0;
-    double radio = 6378;
-    double SumLat = math64.radians(lat2 - lat1);
-    double Sumlg = math64.radians(lg2 - lg1);
-    double a =  math.pow((math.sin(SumLat / 2)),2) +
-        math.cos(math64.radians(lat1)) *
-            math.cos(math64.radians(lat2)) *
-            math.pow((math.sin(Sumlg / 2)),2) ;
-    double c = 2 * (math.atan2(math.sqrt(a),math.sqrt(1 - a)));
-    d = radio * c;
-    if(d <= double.parse('$distancia')){rango = true;}
-    return rango;
-  }*/
-
   @override
   Widget build(BuildContext context) {
 
@@ -341,22 +274,6 @@ class _MyHomePageState extends State<mapaHomePage> {
         title: new Text("Smart Fuel",style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.047),),
         backgroundColor: PrimaryColor ,
           actions: <Widget>[
-           /*Container(
-             margin: EdgeInsets.only(right: 20),
-            child:
-            IconButton(
-               iconSize: 30,
-               icon: Icon(Icons.refresh),
-               tooltip: 'Actualizar',
-               onPressed: (){
-                 //mapController.clearMarkers();
-                 //Navigator.pushReplacementNamed(context, "/App");
-                 //BotonActualizar();
-                 initMarkers();
-               },
-             ),
-           ),*/
-
             IconButton(
               iconSize: 40,
               icon: Icon(Icons.map),
@@ -404,17 +321,6 @@ class _MyHomePageState extends State<mapaHomePage> {
                     new MaterialPageRoute(builder: (context) => new opciones(mapController: mapController,place: placed,)));//Modificacion
               },
             ),
-           /* new ListTile(
-              title: new Text("Favoritos"),
-              trailing: new Icon(Icons.star),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => favoritos(),
-                ),
-                );
-              },
-            ),*/
             Divider(
               height: 30.0,
             ),
@@ -457,13 +363,13 @@ class _MyHomePageState extends State<mapaHomePage> {
           ),
           Positioned(
             right: 10.0,
-            bottom: 20.0,
+            bottom: 10.0,
             width: MediaQuery.of(context).size.width,
             child: Menu_tgas(mapController: mapController,markerMap: markerMap,),
           ),
          Positioned(
             right: 10.0,
-            bottom: 90.0,
+            bottom: 70.0,
            width: MediaQuery.of(context).size.width,
             child: Menu_bdis(mapController: mapController,markerMap: markerMap,),
           ),

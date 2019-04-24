@@ -201,34 +201,34 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
   }
 
   Widget texttoggle(){
+
+    String nombre = name_gas_button;
+
     if(name_gas_button == 'All'){
-      return Icon(Icons.local_gas_station);
-    }else{
-      String nombre = name_gas_button;
+      nombre = 'Todas';
+    }/*else{
       if(name_gas_button == 'kerosene'){nombre = 'K';}
       if(name_gas_button == 'electricity'){nombre = 'E';}
       if(name_gas_button == 'ethanol'){nombre = 'E';}
       if(name_gas_button == 'diesel'){nombre = 'D';}
       if(name_gas_button == 'voltex'){nombre = 'V';}
-
-      return Text(
-        nombre,
-        style: TextStyle(
-            color: Colors.white,
-            fontSize: 18.0
-        ),
-      );
-    }
+    }*/
+    return Text(
+      nombre,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 18.0
+      ),
+    );
   }
 
   Widget toggle() {
-    return Container(
-      child: FloatingActionButton(
-        backgroundColor: Colors.green[700],
-        onPressed: MarksDetiposGas,
-        tooltip: 'Toggle',
-        child: texttoggle(),
-      ),
+    return FloatingActionButton.extended(
+      onPressed: MarksDetiposGas,
+      backgroundColor: Colors.green[800],
+      icon: Icon(Icons.local_gas_station),
+      label: texttoggle(),
+      elevation: 5.0,
     );
   }
 
