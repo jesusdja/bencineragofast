@@ -130,16 +130,16 @@ class _displayState extends State<marcador_precio> {
           String te = '';
           for(int i=0; i < places_individuales[index].prices.length;i++){
             if(tgActual == places_individuales[index].tiposgas[i]){
-              te =  te + '- '+places_individuales[index].tiposgas[i] + '= ' + places_individuales[index].prices[i] + ' CLP ';
+              te =  te + '- '+places_individuales[index].tiposgas[i] + ': ' + places_individuales[index].prices[i] + ' CLP ';
             }
             if(tgActual == 'All'){
-              te =  te + '- '+ places_individuales[index].tiposgas[i] + '= ' + places_individuales[index].prices[i] + ' CLP \n';
+              te =  te + '- '+ places_individuales[index].tiposgas[i] + ': ' + places_individuales[index].prices[i] + ' CLP \n';
             }
           }
           if(te != ''){
             return ListTile(
               title: Text(places_individuales[index].brand),
-              subtitle: Text(te + ' Por Litros'), //MODIFICAR
+              subtitle: Text(te), //MODIFICAR
               leading: Image.asset('assets/images/icono_gas.png',height: 50),
               onTap: () {
                 Navigator.push(

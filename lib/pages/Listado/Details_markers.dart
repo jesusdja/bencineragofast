@@ -174,7 +174,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
 
     String tiposYprecio = '';
     for(int i=0;i<widget.place.tiposgas.length;i++){
-      tiposYprecio = tiposYprecio + ' - ' + widget.place.tiposgas[i] + ' : ' + widget.place.prices[i] + ' plc \n';
+      tiposYprecio = tiposYprecio + ' - ' + widget.place.tiposgas[i] + ' : ' + widget.place.prices[i] + ' CLP \n';
     }
 
     String ServiciosPlace = '';
@@ -233,12 +233,6 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
-                      ),
-                    ),
-                    Text(
-                      widget.place.OpenHr,
-                      style: TextStyle(
-                        color: Colors.grey[500],
                       ),
                     ),
                   ],

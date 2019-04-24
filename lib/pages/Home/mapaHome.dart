@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:device_id/device_id.dart';
+import 'package:recase/recase.dart';
 import 'dart:math' as math;
 import 'place.dart';
 import 'package:bencineragofast/main.dart';
@@ -157,6 +158,7 @@ class _MyHomePageState extends State<mapaHomePage> {
         }
       }
       Marcasdecarros = await Servicios.TraerMarcaVehiculos();
+
       cantidad_elementos = Lista_places_ok.length;
     }
 
@@ -194,6 +196,12 @@ class _MyHomePageState extends State<mapaHomePage> {
     var_marca = Marca2(id: '3', name: 'Ferrari');Marcasdecarros.add(var_marca);*/
 
 
+  }
+
+  ModificarCamel(String cadena){
+    ReCase rc = ReCase(cadena);
+    print(rc.titleCase);
+    return rc;
   }
   initMarker(Place place,LatLng Mela) async {
 

@@ -9,6 +9,7 @@ import 'package:bencineragofast/main.dart';
 import 'dart:core';
 import 'package:bencineragofast/pages/sqlflite/vehiculo.dart';
 import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
+import 'package:recase/recase.dart';
 
 
 class Registrarse extends StatefulWidget {
@@ -29,9 +30,9 @@ class _RegistrarseState extends State<Registrarse> {
   var years = new List<String>();
   var combustible = new List<String>();
 
-  List<Modelo> carmarks = new List<Modelo>();
-
+  List<Modelo> carmodels = new List<Modelo>();
   Modelo varModel;
+  Marca2 rc;
 
   List<Year> yearscars = new List<Year>();
   Year varYear;
@@ -94,15 +95,24 @@ class _RegistrarseState extends State<Registrarse> {
       ),
     );
   }
+
+
   Marca() {
     var y = widget.carmarks.length;
     return new Container(
+
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.7,
-      child: MarkElement(marca: List.generate(y, (i) => widget.carmarks[i],
+      child: MarkElement(marca: List.generate(y, (i) => ModificarCamel(widget.carmarks[i].name),
+
       ),),
 
     );
+  }
+  ModificarCamel(String cadena) {
+    ReCase rc = ReCase(cadena);
+    Marca2 modf = Marca2(id: '1', name: rc.titleCase.toString());
+    return modf;
   }
 
   _ElementosModel({List<Modelo> modelo}) {
@@ -135,17 +145,17 @@ class _RegistrarseState extends State<Registrarse> {
     );
   }
   Model() {
-    var y = carmarks.length;
+    var y = carmodels.length;
     return new Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.7,
-      child: _ElementosModel(modelo: List.generate(y, (i) => carmarks[i],
+      child: _ElementosModel(modelo: List.generate(y, (i) => carmodels[i],
       ),),
 
     );
   }
 
-  initModel()async {carmarks = await Services.TraerModelos(_valueMarca);}
+  initModel()async {carmodels = await Services.TraerModelos(_valueMarca);}
 
   cargarmodelos() async{initModel();}
 
@@ -199,7 +209,6 @@ class _RegistrarseState extends State<Registrarse> {
             leading: Image.asset('assets/images/icono_gas.png', height: 50),
             onTap: () {
               setState(() {
-
                 _valueCombustible= combustible[index].name;
                 _valueIdCombustible = combustible[index].id;
                 _isButtonDisabledSave = false;
@@ -213,6 +222,7 @@ class _RegistrarseState extends State<Registrarse> {
       ),
     );
   }
+
 
   void initvalues() async {
     try{
@@ -377,7 +387,7 @@ class _RegistrarseState extends State<Registrarse> {
                                   onPressed: () {
                                     cargarmodelos();
                                     ModelDeVheiculo();
-                                    carmarks.clear();
+                                    carmodels.clear();
                                   }
                               ),
                             ),
