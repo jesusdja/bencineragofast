@@ -115,7 +115,14 @@ class _RegistrarseState extends State<Registrarse> {
   }
   ModificarCamel(String cadena) {
     ReCase rc = ReCase(cadena);
-    Marca2 modf = Marca2(id: '1', name: rc.titleCase.toString());
+    Marca2 modf;
+    if(cadena.length > 3)
+      {
+        modf = Marca2(id: '1', name: rc.titleCase.toString());
+      }else{
+        modf = Marca2(id: '1', name: rc.constantCase.toString());
+          }
+
     return modf.name.toString();
   }
 
@@ -250,6 +257,7 @@ class _RegistrarseState extends State<Registrarse> {
     _valueIdYears = carropull.idYears;
     _valueIdCombustible = carropull.idCombustible;
   });
+
     }catch(e){}
   }
   @override
