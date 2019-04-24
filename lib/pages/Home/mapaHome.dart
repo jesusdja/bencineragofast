@@ -212,6 +212,14 @@ class _MyHomePageState extends State<mapaHomePage> {
       for(int i=0; i < place.prices.length;i++){
         te =  te + ' / ' + place.tiposgas[i];
       }
+      String url = '';
+      String cod = place.image;
+      if(place.image == '1'){
+        url = "assets/images/$cod.png";
+      }else{
+        url = "assets/images/icono_gas.png";
+      }
+
       mapController2.clearMarkers().then((val) async {
         final Marker marker = await mapController2.addMarker(
           MarkerOptions(
@@ -220,7 +228,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           flat: false,
           position: place.latLng,
           infoWindowText: InfoWindowText(place.brand, te),
-          icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+          icon: BitmapDescriptor.fromAsset(url),
         )
         );
         markerMap[marker.id] = place;

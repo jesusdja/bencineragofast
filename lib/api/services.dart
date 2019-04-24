@@ -62,6 +62,15 @@ class services{
       var response = await FuelStationStub.listFS(request);
 
       for(var value in response.fuelStationsList){
+        List<Brand> listaMarcas = Brand.values;
+        int ValorIdBenci = 1;
+        for(var valu in listaMarcas){
+          String uno = valu.name;
+          int dos = valu.value;
+          if(valu.name.toString() == value.brand.toString()){
+            ValorIdBenci = valu.value;
+          }
+        }
 
         //TRAER PRECIOS - NUMERO
         List<String> list_string_prices = new List<String>();
@@ -99,7 +108,8 @@ class services{
             services: list_string_servicio,
             marca: GetBrand(value.brand.toString()),
             favorito: false,
-            OpenHr: value.openningHours);
+            OpenHr: value.openningHours,
+            image: ValorIdBenci.toString());
         lista_places.add(place);
       }
     } catch (e) {

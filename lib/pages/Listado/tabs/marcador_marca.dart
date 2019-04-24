@@ -115,7 +115,7 @@ class _displayState extends State<marcador_marca> {
             List<String> precios = new List<String>();precios.add('800');precios.add('600');precios.add('900');
             List<String> tipogas = new List<String>();tipogas.add('91');tipogas.add('95');tipogas.add('93');
             List<String> Servicios = new List<String>(); Servicios.add('SERVICIO 1');Servicios.add('SERVICIO 2');
-            Place placed = Place(id: 1,address: 'Dirección 1', latLng: latlo ,brand: lista_tipo_marcas[i],prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: '0202',favorito: false,OpenHr: '0.0');
+            Place placed = Place(id: 1,address: 'Dirección 1', latLng: latlo ,brand: lista_tipo_marcas[i],prices: precios,tiposgas: tipogas,last_price_update: '50000000',services: Servicios,  marca: '0202',favorito: false,OpenHr: '0.0',image: " ");
             places_ordenado.add(placed);
 
             niubnijni++;
