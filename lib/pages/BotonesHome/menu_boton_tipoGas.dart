@@ -121,7 +121,7 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
       //MODIFICAR
       if(((siencontrotipo)||("All" == tipoDegas))&((calcularDistancia(lat,lng,p.latitude,p.longitude,ValorKm))||("All" == ValorKm))){
         keyys.add(key);
-        initMarker(p);
+        initMarker(p,tipoDegas);
       }
     }
     if(markerMap != null){
@@ -135,20 +135,37 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
     }
 
   }
-  initMarker(Place place) {
+  borrarMarcadores(){
+    widget.mapController.clearMarkers().then((val){});
+  }
+
+  initMarker(Place place,String tipoDegas) async{
+
+    String te = '';
+    if(tipoDegas == 'All'){
+      for(int i=0; i < place.prices.length;i++){
+        te =  te + ' / ' + place.tiposgas[i];
+      }
+    }else{
+      for(int i=0; i < place.prices.length;i++){
+        if(place.tiposgas[i] == tipoDegas){
+          te =' - ' + place.tiposgas[i] + ' = ' + place.prices[i] + ' CLP';
+        }
+      }
+    }
+
+    borrarMarcadores();
     GoogleMapController mapController2 = widget.mapController;
-    mapController2.clearMarkers().then((val) async {
-      final Marker marker = await mapController2.addMarker(MarkerOptions(
-        visible: true,
-        draggable: true,
-        flat: false,
-        position: LatLng(place.latitude,place.longitude),
-        infoWindowText: InfoWindowText(place.brand, place.address),
-        icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
-      )
-      );
-      widget.markerMap[marker.id] = place;
-    });
+    final Marker marker = await mapController2.addMarker(MarkerOptions(
+      visible: true,
+      draggable: true,
+      flat: false,
+      position: LatLng(place.latitude,place.longitude),
+      infoWindowText: InfoWindowText(place.brand, te),
+      icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+    )
+    );
+    widget.markerMap[marker.id] = place;
   }
 
   bool calcularDistancia(double lat1, double lg1, double lat2, double lg2, String distancia){
