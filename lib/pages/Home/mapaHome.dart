@@ -363,13 +363,13 @@ class _MyHomePageState extends State<mapaHomePage> {
           ),
           Positioned(
             right: 10.0,
-            bottom: 20.0,
+            bottom: 10.0,
             width: MediaQuery.of(context).size.width,
             child: Menu_tgas(mapController: mapController,markerMap: markerMap,),
           ),
          Positioned(
             right: 10.0,
-            bottom: 90.0,
+            bottom: 70.0,
            width: MediaQuery.of(context).size.width,
             child: Menu_bdis(mapController: mapController,markerMap: markerMap,),
           ),

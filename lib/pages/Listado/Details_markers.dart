@@ -123,12 +123,11 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
 
   // ignore: non_constant_identifier_names
   Widget ButtonGo() {
-    return FloatingActionButton(
+    return FloatingActionButton.extended(
       onPressed: _launchURL,
-      //child: Image.asset("assets/images/translade.png"),
-      child: Icon(Icons.place),
+      icon: Icon(Icons.place),
+      label: Text("Ruta"),
       backgroundColor: PrimaryColor ,
-      elevation: 20,
     );
   }
 
@@ -209,7 +208,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
                   child: _MapPlace(),
                 ),
                 Positioned(
-                  right: 40.0,
+                  right: 35.0,
                   bottom: 10.0,
                   child: ButtonGo(),
                 ),
