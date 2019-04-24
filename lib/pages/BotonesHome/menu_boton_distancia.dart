@@ -128,7 +128,7 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
       //MODIFICAR
       if(((siencontrotipo)||("All" == ValorTipoGas))&(calcularDistancia(lat,lng,p.latitude,p.longitude,distancia))){
         keyys.add(key);
-        initMarker(p);
+        initMarker(p,ValorTipoGas);
 
       }
     }
@@ -144,8 +144,41 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
   }
 
 
+  borrarMarcadores(){
+    widget.mapController.clearMarkers().then((val){});
+  }
 
-  initMarker(Place place) {
+
+  initMarker(Place place,String tipoDegas) async{
+
+    String te = '';
+    if(tipoDegas == 'All'){
+      for(int i=0; i < place.prices.length;i++){
+        te =  te + ' - ' + place.tiposgas[i];
+      }
+    }else{
+      for(int i=0; i < place.prices.length;i++){
+        if(place.tiposgas[i] == tipoDegas){
+          te =' - ' + place.tiposgas[i] + ' = ' + place.prices[i] + ' CLP';
+        }
+      }
+    }
+
+    borrarMarcadores();
+    GoogleMapController mapController2 = widget.mapController;
+    final Marker marker = await mapController2.addMarker(MarkerOptions(
+      visible: true,
+      draggable: true,
+      flat: false,
+      position: LatLng(place.latitude,place.longitude),
+      infoWindowText: InfoWindowText(place.brand, te),
+      icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+    )
+    );
+    widget.markerMap[marker.id] = place;
+  }
+
+  /*initMarker(Place place) {
     GoogleMapController mapController2 = widget.mapController;
     mapController2.clearMarkers().then((val) async {
       final Marker marker = await mapController2.addMarker(MarkerOptions(
@@ -159,7 +192,7 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
       );
       widget.markerMap[marker.id] = place;
     });
-  }
+  }*/
 
   bool calcularDistancia(double lat1, double lg1, double lat2, double lg2, String distancia){
     bool rango = false;

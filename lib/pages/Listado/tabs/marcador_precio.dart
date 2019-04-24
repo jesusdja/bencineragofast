@@ -139,7 +139,7 @@ class _displayState extends State<marcador_precio> {
           if(te != ''){
             return ListTile(
               title: Text(places_individuales[index].brand),
-              subtitle: Text(te), //MODIFICAR
+              subtitle: Text(te + ' ' + places_individuales[index].address), //MODIFICAR
               leading: Image.asset('assets/images/icono_gas.png',height: 50),
               onTap: () {
                 Navigator.push(

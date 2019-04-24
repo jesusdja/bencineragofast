@@ -207,7 +207,11 @@ class _MyHomePageState extends State<mapaHomePage> {
 
     if(calcularDistancia(place.latLng.latitude,place.latLng.longitude,KmActual,Mela.latitude,Mela.longitude )){
       GoogleMapController mapController2 = mapController;
-      //mapController.onMarkerTapped.add(_onInfoWindowTapped);
+
+      String te = '';
+      for(int i=0; i < place.prices.length;i++){
+        te =  te + ' / ' + place.tiposgas[i];
+      }
       mapController2.clearMarkers().then((val) async {
         final Marker marker = await mapController2.addMarker(
           MarkerOptions(
@@ -215,7 +219,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           draggable: true,
           flat: false,
           position: place.latLng,
-          infoWindowText: InfoWindowText(place.brand, place.address),
+          infoWindowText: InfoWindowText(place.brand, te),
           icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
         )
         );
@@ -237,8 +241,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           return DetailsMarkers(mapController: mapController, place: marcador_seleccionado);
         }),
       );
-    }catch(e){
-    }
+    }catch(e){ }
   }
 
     bool calcularDistancia(double lat2, double lg2, String distancia, double latO, double lgO){
@@ -338,9 +341,10 @@ class _MyHomePageState extends State<mapaHomePage> {
         title: new Text("Smart Fuel",style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.047),),
         backgroundColor: PrimaryColor ,
           actions: <Widget>[
-           Container(
+           /*Container(
              margin: EdgeInsets.only(right: 20),
-            child:  IconButton(
+            child:
+            IconButton(
                iconSize: 30,
                icon: Icon(Icons.refresh),
                tooltip: 'Actualizar',
@@ -351,7 +355,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                  initMarkers();
                },
              ),
-           ),
+           ),*/
 
             IconButton(
               iconSize: 40,
