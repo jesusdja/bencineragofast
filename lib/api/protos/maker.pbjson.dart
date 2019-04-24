@@ -17,7 +17,7 @@ const Maker$json = const {
     const {'1': 'MAKER_BMW', '2': 7},
     const {'1': 'MAKER_BYD', '2': 8},
     const {'1': 'MAKER_BRILLIANCE', '2': 9},
-    const {'1': 'MAKER_CADILLA', '2': 10},
+    const {'1': 'MAKER_CADILLA', '2': 10},//NO EXISTE
     const {'1': 'MAKER_CHANGAN', '2': 11},
     const {'1': 'MAKER_CHERY', '2': 12},
     const {'1': 'MAKER_CHEVROLET', '2': 13},
@@ -72,7 +72,7 @@ const Maker$json = const {
     const {'1': 'MAKER_VOLVO', '2': 63},
     const {'1': 'MAKER_ZNA', '2': 64},
     const {'1': 'MAKER_ZOTYE', '2': 65},
-    const {'1': 'MAKER_YUGO', '2': 66},
+    const {'1': 'MAKER_YUGO', '2': 66},////-----------------------sin logos
     const {'1': 'MAKER_SHELBY', '2': 67},
     const {'1': 'MAKER_GENERAL_MOTORS', '2': 68},
     const {'1': 'MAKER_SATURN', '2': 69},
