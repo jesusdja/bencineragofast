@@ -21,6 +21,7 @@ import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import '../BotonesHome/menu_boton_tipoGas.dart';
 import '../BotonesHome/menu_boton_distancia.dart';
 import 'package:toast/toast.dart';
+import 'package:sentry/sentry.dart' as sentryr;
 
 
 class mapaHomePage extends StatefulWidget {
@@ -136,6 +137,17 @@ class _MyHomePageState extends State<mapaHomePage> {
   //AGREGAR MARCADORES
   Future initMarkers() async {
 
+    /*final sentryr.SentryClient sentry = new sentryr.SentryClient(dsn: 'https://3b62a478921e4919a71cdeebe4f8f2fc@sentry.io/1445102');
+    try {
+      double opjkpo = double.parse('omunzen-software');
+    } catch(error, stackTrace) {
+      print('************');
+      await sentry.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+    }*/
+
     try{
       User u = await retornarUser();
       KmActual = u.botonDisGas;
@@ -214,8 +226,8 @@ class _MyHomePageState extends State<mapaHomePage> {
       }
       String url = '';
       String cod = place.image;
-      if(place.image == '1'){
-        url = "assets/images/$cod.png";
+      if(place.image == 'BRAND_UNMARK'){
+        url = "assets/images/1.png";
       }else{
         url = "assets/images/icono_gas.png";
       }
