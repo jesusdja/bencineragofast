@@ -150,11 +150,10 @@ class services{
     List<Marca2> ListaMarcasNombres = List<Marca2>();
     try{
       List<Maker> listaMarcas = Maker.values;
-
       for(var value in listaMarcas){
         String MarcasNombre = value.name;
         MarcasNombre = MarcasNombre.replaceRange(0, 6, '');
-        var_marca = Marca2(id: '1', name: MarcasNombre);
+        var_marca = Marca2(id: '1', name: MarcasNombre,logo: '');
         ListaMarcasNombres.add(var_marca);
       }
     }catch (e) {

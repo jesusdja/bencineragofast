@@ -43,7 +43,9 @@ class _RegistrarseState extends State<Registrarse> {
   Vehiculo carropull;
 
   String _valueMarca = '';
+  String _valueMarcaSend = '';
   String _valueModel = '';
+  String _valueModelSend = '';
   String _valueYear = '';
   String _valueCombustible = '';
 
@@ -70,11 +72,13 @@ class _RegistrarseState extends State<Registrarse> {
         itemCount: marca.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(marca[index].name),
-            leading: Image.asset('assets/images/icono_gas.png', height: 50),
+
+            title: Text(ModificarCamel(widget.carmarks[index].name.toString())),
+            leading: Image.asset('assets/images/icons/MAKER_ASIA.jpg', height: 50),
             onTap: () {
               setState(() {
-                _valueMarca= marca[index].name;
+                _valueMarca= ModificarCamel(marca[index].name.toString());
+                _valueMarcaSend = marca[index].name;
                 _valueIdMarca = marca[index].id;
                 _valueModel ='Desconocido';
                 _valueYear= 'Desconocido';
@@ -103,7 +107,7 @@ class _RegistrarseState extends State<Registrarse> {
 
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.7,
-      child: MarkElement(marca: List.generate(y, (i) => ModificarCamel(widget.carmarks[i].name),
+      child: MarkElement(marca: List.generate(y, (i) => widget.carmarks[i],
 
       ),),
 
@@ -111,8 +115,15 @@ class _RegistrarseState extends State<Registrarse> {
   }
   ModificarCamel(String cadena) {
     ReCase rc = ReCase(cadena);
-    Marca2 modf = Marca2(id: '1', name: rc.titleCase.toString());
-    return modf;
+    Marca2 modf;
+    if(cadena.length > 3)
+      {
+        modf = Marca2(id: '1', name: rc.titleCase.toString(),logo: '');
+      }else{
+        modf = Marca2(id: '1', name: rc.constantCase.toString(),logo:'');
+          }
+
+    return modf.name.toString();
   }
 
   _ElementosModel({List<Modelo> modelo}) {
@@ -126,7 +137,8 @@ class _RegistrarseState extends State<Registrarse> {
 
             onTap: () {
               setState(() {
-                _valueModel = modelo[index].name;
+                _valueModel = ModificarCamel(modelo[index].name.toString());
+                _valueModelSend = modelo[index].name;
                 _valueIdModelo = modelo[index].id;
                 _activatebutton2 =false;
                 _isButtonDisabledyear = false;
@@ -155,11 +167,11 @@ class _RegistrarseState extends State<Registrarse> {
     );
   }
 
-  initModel()async {carmodels = await Services.TraerModelos(_valueMarca);}
+  initModel()async {carmodels = await Services.TraerModelos(_valueMarcaSend);}
 
   cargarmodelos() async{initModel();}
 
-  initYears()async {yearscars = await Services.GetVehiculosYears(_valueMarca, _valueModel);}
+  initYears()async {yearscars = await Services.GetVehiculosYears(_valueMarcaSend, _valueModelSend);}
 
   _ElementosYears({List<Year> years}) {
     return Container(
@@ -245,6 +257,7 @@ class _RegistrarseState extends State<Registrarse> {
     _valueIdYears = carropull.idYears;
     _valueIdCombustible = carropull.idCombustible;
   });
+
     }catch(e){}
   }
   @override

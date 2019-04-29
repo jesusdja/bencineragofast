@@ -283,7 +283,7 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
     return Row (
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        toggle(),
+      //  toggle(),
       ],
     );
   }
