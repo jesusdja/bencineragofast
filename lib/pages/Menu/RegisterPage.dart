@@ -74,7 +74,7 @@ class _RegistrarseState extends State<Registrarse> {
           return ListTile(
 
             title: Text(ModificarCamel(widget.carmarks[index].name.toString())),
-            leading: Image.asset('assets/images/icono_gas.png', height: 50),
+            leading: Image.asset('assets/images/icons/MAKER_ASIA.jpg', height: 50),
             onTap: () {
               setState(() {
                 _valueMarca= ModificarCamel(marca[index].name.toString());
