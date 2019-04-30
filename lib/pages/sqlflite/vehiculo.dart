@@ -9,11 +9,12 @@ class Vehiculo {
   String _idModelo;
   String _idYears;
   String _idCombustible;
+  String _logo;
 
 
 
 
-  Vehiculo(this.idTable,this._marcaVehiculo,this._modeloVehiculo, this._years_vehiculo,this._combustible, this._idMarca, this._idModelo,this._idYears,this._idCombustible);
+  Vehiculo(this.idTable,this._marcaVehiculo,this._modeloVehiculo, this._years_vehiculo,this._combustible, this._idMarca, this._idModelo,this._idYears,this._idCombustible,this._logo);
 
   Vehiculo.map(dynamic obj) {
     this.idTable = obj["IdTable"];
@@ -25,6 +26,7 @@ class Vehiculo {
     this._idModelo = obj["idModelo"];
     this._idYears = obj["idYears"];
     this._idCombustible = obj["idCombustible"];
+    this._logo = obj["logo"];
 
   }
   int get idtable => idTable;
@@ -36,6 +38,7 @@ class Vehiculo {
   String get idModelo => _idModelo;
   String get idYears => _idYears;
   String get idCombustible => _idCombustible;
+  String get logo => _logo;
 
 
   Map<String, dynamic> toMap() {
@@ -50,6 +53,7 @@ class Vehiculo {
     map["idModelo"] = _idModelo;
     map["idYears"] = _idYears;
     map["idCombustible"] = _idCombustible;
+    map["logo"] = _logo;
     return map;
   }
 
@@ -64,6 +68,7 @@ class Vehiculo {
     this._idModelo = map["idModelo"];
     this._idYears = map["idYears"];
     this._idCombustible = map["idCombustible"];
+    this._logo = map['logo'];
 
   }
 

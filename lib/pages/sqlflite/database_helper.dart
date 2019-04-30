@@ -48,7 +48,7 @@ class DatabaseHelper {
         "CREATE TABLE Usersx(idTable INT PRIMARY KEY, deviceId TEXT, botonDisGas TEXT , botonTipoGas TEXT)");
 
     await db.execute(
-        "CREATE TABLE Carro(idTable INT PRIMARY KEY, marcaVehiculo TEXT, modeloVehiculo TEXT , yearsVehiculo TEXT,combustible TEXT, idMarca TEXT,idModelo TEXT,idYears TEXT,idCombustible TEXT)");
+        "CREATE TABLE Carro(idTable INT PRIMARY KEY, marcaVehiculo TEXT, modeloVehiculo TEXT , yearsVehiculo TEXT,combustible TEXT, idMarca TEXT,idModelo TEXT,idYears TEXT,idCombustible TEXT, logo TEXT)");
 
     await db.execute(
         "CREATE TABLE Favoritos(idGasolinera INT)");
@@ -143,6 +143,7 @@ class DatabaseHelper {
         list[0]["idModelo"],
         list[0]["idYears"],
         list[0]["idCombustible"],
+        list[0]["logo"]
     );
     return vehiculo;
   }
@@ -180,7 +181,7 @@ class DatabaseHelper {
   Future<int> updateCarro(Vehiculo vehiculo) async {
     var dbClient = await  database;
     return await dbClient.rawUpdate(
-        'UPDATE $tablecarro SET marcaVehiculo = \'${vehiculo.marcaVehiculo}\',modeloVehiculo = \'${vehiculo.modeloVehiculo}\',yearsVehiculo = \'${vehiculo.yearsVehiculo}\',combustible = \'${vehiculo.combustible}\',idMarca = \'${vehiculo.idMarca}\',idModelo = \'${vehiculo.idModelo}\',idYears = \'${vehiculo.idYears}\',idCombustible = \'${vehiculo.idCombustible}\' WHERE $colId = ${vehiculo.idTable}');
+        'UPDATE $tablecarro SET marcaVehiculo = \'${vehiculo.marcaVehiculo}\',modeloVehiculo = \'${vehiculo.modeloVehiculo}\',yearsVehiculo = \'${vehiculo.yearsVehiculo}\',combustible = \'${vehiculo.combustible}\',idMarca = \'${vehiculo.idMarca}\',idModelo = \'${vehiculo.idModelo}\',idYears = \'${vehiculo.idYears}\',idCombustible = \'${vehiculo.idCombustible}\',logo = \'${vehiculo.logo}\' WHERE $colId = ${vehiculo.idTable}');
   }
 
   Future<User> getId(int id) async {

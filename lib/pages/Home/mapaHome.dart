@@ -112,7 +112,8 @@ class _MyHomePageState extends State<mapaHomePage> {
       String _idYears = 'Desconocido';
       String _idCombustible = 'Desconocido';
 
-      var carro = new Vehiculo(1, _marcaVehiculo, _modeloVehiculo, _years_vehiculo, _combustible,_idMarca,_idModelo,_idYears,_idCombustible);
+      String _logo = 'assets/images/icons/sinfondo.jpg';
+      var carro = new Vehiculo(1, _marcaVehiculo, _modeloVehiculo, _years_vehiculo, _combustible,_idMarca,_idModelo,_idYears,_idCombustible,_logo);
       db.saveCarro(carro);
 
     }
