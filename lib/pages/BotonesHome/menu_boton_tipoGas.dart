@@ -154,6 +154,19 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
       }
     }
 
+    String url = '';
+    String cod = place.image;
+
+    try{
+      if(place.image == '1'){
+        url = "assets/images/brand_icons/1.png";
+      }else{
+        url = "assets/images/brand_icons/$cod.png";
+      }
+    }catch(e){
+      print('******************* $e');
+    }
+
     borrarMarcadores();
     GoogleMapController mapController2 = widget.mapController;
     final Marker marker = await mapController2.addMarker(MarkerOptions(
@@ -162,7 +175,7 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
       flat: false,
       position: LatLng(place.latitude,place.longitude),
       infoWindowText: InfoWindowText(place.brand, te),
-      icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+      icon: BitmapDescriptor.fromAsset(url),
     )
     );
     widget.markerMap[marker.id] = place;

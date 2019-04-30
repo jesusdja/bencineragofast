@@ -234,7 +234,7 @@ class _MyHomePageState extends State<mapaHomePage> {
         if(place.image == '1'){
           url = "assets/images/brand_icons/1.png";
         }else{
-          url = "assets/images/brand_icons/$cod.jpg";
+          url = "assets/images/brand_icons/$cod.png";
         }
       }catch(e){
         print('******************* $e');
@@ -251,7 +251,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           flat: false,
           position: place.latLng,
           infoWindowText: InfoWindowText(place.brand, te),
-          icon: BitmapDescriptor.fromAsset(url),
+          icon: BitmapDescriptor.fromAsset(url),    //BitmapDescriptor.fromAsset(url),
         )
         );
         markerMap[marker.id] = place;
