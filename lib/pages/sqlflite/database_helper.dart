@@ -143,6 +143,7 @@ class DatabaseHelper {
         list[0]["idModelo"],
         list[0]["idYears"],
         list[0]["idCombustible"],
+        list[0]["logo"]
     );
     return vehiculo;
   }

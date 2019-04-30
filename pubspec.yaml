@@ -52,7 +52,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/icon.png"
+  image_path: "assets/icon/icon.jpg"
 
 
 flutter:
@@ -66,6 +66,6 @@ flutter:
   - assets/images/toyota.png
   - assets/images/ayuda1.png
   - assets/images/ayuda2.png
+  - assets/images/ayuda3.png
   - assets/images/icons/
-  - assets/images/icons/MAKER_ACURA.jpg
 

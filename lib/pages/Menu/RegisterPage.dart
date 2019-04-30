@@ -48,6 +48,7 @@ class _RegistrarseState extends State<Registrarse> {
   String _valueModelSend = '';
   String _valueYear = '';
   String _valueCombustible = '';
+  String logo;
 
   String _valueIdMarca = '';
   String _valueIdModelo = '';
@@ -66,18 +67,26 @@ class _RegistrarseState extends State<Registrarse> {
 
   Maker maker ;
 
+
   MarkElement({List<Marca2> marca}) {
     return Container(
       child: ListView.builder(
         itemCount: marca.length,
         itemBuilder: (context, index) {
-          return ListTile(
 
+       /*   if(widget.carmarks[index].logo == widget.carmarks[index].name )
+            {
+               logo = widget.carmarks[index].logo;
+            }else{
+              logo = 'assets/images/icons/negro.jpg';
+          }*/
+          return ListTile(
             title: Text(ModificarCamel(widget.carmarks[index].name.toString())),
-            leading: Image.asset('assets/images/icons/MAKER_ASIA.jpg', height: 50),
+            leading: Image.asset(widget.carmarks[index].logo , height: 60,width: 60),
             onTap: () {
-              setState(() {
-                _valueMarca= ModificarCamel(marca[index].name.toString());
+                setState(() {
+                  logo = widget.carmarks[index].logo;
+                  _valueMarca= ModificarCamel(marca[index].name.toString());
                 _valueMarcaSend = marca[index].name;
                 _valueIdMarca = marca[index].id;
                 _valueModel ='Desconocido';
@@ -133,7 +142,7 @@ class _RegistrarseState extends State<Registrarse> {
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(modelo[index].name),
-            leading: Image.asset('assets/images/icono_gas.png', height: 50),
+            leading: Image.asset(logo, height: 50),
 
             onTap: () {
               setState(() {
@@ -180,7 +189,7 @@ class _RegistrarseState extends State<Registrarse> {
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(years[index].name),
-            leading: Image.asset('assets/images/icono_gas.png', height: 50),
+            leading: Image.asset(logo, height: 50),
             onTap: () {
               setState(() {
                 _valueYear = years[index].name;
@@ -208,6 +217,20 @@ class _RegistrarseState extends State<Registrarse> {
       ),
     );
   }
+  cargarLogo() async{
+    carropull = await db.getCarro();
+    print(carropull.logo.toString());
+  }
+  Widget logoOut(String logo) {
+
+    if(logo == null)
+      {
+        return Image.asset('assets/images/icono_gas.png',height: 80,width: 80,);
+
+      }else{
+      return Image.asset(logo, height: 80,width: 80,);
+    }
+  }
 
   cargaryears(){initYears();}
 
@@ -218,7 +241,7 @@ class _RegistrarseState extends State<Registrarse> {
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(combustible[index].name),
-            leading: Image.asset('assets/images/icono_gas.png', height: 50),
+            leading: Image.asset(logo, height: 50),
             onTap: () {
               setState(() {
                 _valueCombustible= combustible[index].name;
@@ -256,6 +279,7 @@ class _RegistrarseState extends State<Registrarse> {
     _valueIdModelo = carropull.idModelo;
     _valueIdYears = carropull.idYears;
     _valueIdCombustible = carropull.idCombustible;
+     logo = carropull.logo;
   });
 
     }catch(e){}
@@ -301,7 +325,6 @@ class _RegistrarseState extends State<Registrarse> {
   }
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
@@ -358,12 +381,15 @@ class _RegistrarseState extends State<Registrarse> {
 
                                   ),
                                 ),
-                                //==============ICONOOOO
+
+
                               ],
+
                             ),
 
                           ),
-
+                          //==============ICONOOOO
+                          logoOut(logo),
                         ],
                       ),
                     ),
@@ -473,7 +499,7 @@ class _RegistrarseState extends State<Registrarse> {
                               onPressed: () async {
                                 if (await db.queryRowCountCarro() != 0) {
                                   Vehiculo vehiculoUp = null;
-                                  vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible);
+                                  vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible,logo);
                                   db.updateCarro(vehiculoUp);
                                   Navigator.pop(context);
 

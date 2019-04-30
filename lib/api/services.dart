@@ -152,8 +152,9 @@ class services{
       List<Maker> listaMarcas = Maker.values;
       for(var value in listaMarcas){
         String MarcasNombre = value.name;
+
         MarcasNombre = MarcasNombre.replaceRange(0, 6, '');
-        var_marca = Marca2(id: '1', name: MarcasNombre,logo: '');
+        var_marca = Marca2(id: '1', name: MarcasNombre,logo: 'assets/images/icons/$value.jpg');
         ListaMarcasNombres.add(var_marca);
       }
     }catch (e) {
