@@ -61,11 +61,10 @@ flutter:
 
   assets:
   - assets/images/icono_gas.png
+  - assets/images/1.png
   - assets/images/translade.png
   - assets/images/icono_shell.png
   - assets/images/toyota.png
   - assets/images/ayuda1.png
   - assets/images/ayuda2.png
-  - assets/images/icons/
-  - assets/images/icons/MAKER_ACURA.jpg
-
+  - assets/images/brand_icons/

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bencineragofast/api/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -226,11 +228,19 @@ class _MyHomePageState extends State<mapaHomePage> {
       }
       String url = '';
       String cod = place.image;
-      if(place.image == 'BRAND_UNMARK'){
-        url = "assets/images/1.png";
-      }else{
-        url = "assets/images/icono_gas.png";
+
+      try{
+        if(place.image == '1'){
+          url = "assets/images/brand_icons/1.png";
+        }else{
+          url = "assets/images/brand_icons/$cod.jpg";
+        }
+      }catch(e){
+        print('******************* $e');
       }
+
+
+
 
       mapController2.clearMarkers().then((val) async {
         final Marker marker = await mapController2.addMarker(

@@ -64,10 +64,10 @@ class services{
       for(var value in response.fuelStationsList){
         List<Brand> listaMarcas = Brand.values;
 
-        String ValorIdBenci = "BRAND_UNMARK";
+        int ValorIdBenci = 1;
         for(var valu in listaMarcas){
           if(valu.name.toString() == value.brand.toString()){
-            ValorIdBenci = valu.name;
+            ValorIdBenci = valu.value;
           }
         }
 
@@ -108,7 +108,7 @@ class services{
             marca: GetBrand(value.brand.toString()),
             favorito: false,
             OpenHr: value.openningHours,
-            image: ValorIdBenci);
+            image: ValorIdBenci.toString());
         lista_places.add(place);
       }
     } catch (e) {
