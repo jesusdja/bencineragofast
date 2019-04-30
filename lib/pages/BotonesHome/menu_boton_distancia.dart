@@ -163,7 +163,6 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
         }
       }
     }
-
     String url = '';
     String cod = place.image;
 
