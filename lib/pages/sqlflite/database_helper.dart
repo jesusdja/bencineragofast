@@ -48,7 +48,7 @@ class DatabaseHelper {
         "CREATE TABLE Usersx(idTable INT PRIMARY KEY, deviceId TEXT, botonDisGas TEXT , botonTipoGas TEXT)");
 
     await db.execute(
-        "CREATE TABLE Carro(idTable INT PRIMARY KEY, marcaVehiculo TEXT, modeloVehiculo TEXT , yearsVehiculo TEXT,combustible TEXT, idMarca TEXT,idModelo TEXT,idYears TEXT,idCombustible TEXT)");
+        "CREATE TABLE Carro(idTable INT PRIMARY KEY, marcaVehiculo TEXT, modeloVehiculo TEXT , yearsVehiculo TEXT,combustible TEXT, idMarca TEXT,idModelo TEXT,idYears TEXT,idCombustible TEXT,logo TEXT)");
 
     await db.execute(
         "CREATE TABLE Favoritos(idGasolinera INT)");

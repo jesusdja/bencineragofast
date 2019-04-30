@@ -219,10 +219,10 @@ class _RegistrarseState extends State<Registrarse> {
   }
   cargarLogo() async{
     carropull = await db.getCarro();
-    print(carropull.logo.toString());
+   return carropull.logo;
   }
   Widget logoOut(String logo) {
-
+      logo = cargarLogo().toString();
     if(logo == null)
       {
         return Image.asset('assets/images/icono_gas.png',height: 80,width: 80,);
@@ -498,8 +498,9 @@ class _RegistrarseState extends State<Registrarse> {
 
                               onPressed: () async {
                                 if (await db.queryRowCountCarro() != 0) {
+                                  String logoGuardar = 'assets/images/icons/$logo.jpg';
                                   Vehiculo vehiculoUp = null;
-                                  vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible,logo);
+                                  vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible,logoGuardar);
                                   db.updateCarro(vehiculoUp);
                                   Navigator.pop(context);
 
