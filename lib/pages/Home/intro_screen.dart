@@ -49,12 +49,12 @@ class intro_screenState extends State<intro_screen> {
                   imageIcon: 'assets/images/ayuda1.png',
                 ),
                 Walkthrough(
-                  title: 'Rutas optimas',
+                  title: 'Rutas Óptimas',
                   content: 'Visualice la ruta mas eficiente.',
                   imageIcon: 'assets/images/ayuda2.png',
                 ),
                 Walkthrough(
-                  title: 'Registar Vehiculo propio',
+                  title: ' Registrar Vehículo Propio',
                   content: 'Facilitando busquedas y obteniendo mejores beneficios',
                   imageIcon: 'assets/images/ayuda3.png',
                 ),

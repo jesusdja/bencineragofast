@@ -224,9 +224,9 @@ class _RegistrarseState extends State<Registrarse> {
   }
   Widget logoOut(String logo) {
 
-    if(logo == null)
+    if(logo == 'assets/images/icons/sinfondo.jpg')
       {
-        return Image.asset('assets/images/icons/sinfondo.jpg',height: 80,width: 80,);
+        return Image.asset('assets/images/icons/sinfondo.jpg',height: 1,width: 1,scale: 3,);
 
       }else{
       return Image.asset(logo, height: 80,width: 80,);
@@ -295,7 +295,7 @@ class _RegistrarseState extends State<Registrarse> {
         context: context,
         // ignore: deprecated_member_use
         child: SimpleDialog(
-            title: Text('Marcas de Vehiculo'),
+            title: Text('Marcas de Vehículo'),
             children: <Widget>[
               Marca(),
             ]
@@ -306,7 +306,7 @@ class _RegistrarseState extends State<Registrarse> {
     await showDialog(
         context: context,
         child: SimpleDialog(
-            title: Text('Model de Vehiculo'),
+            title: Text('Modelo de Vehículo'),
             children: <Widget>[
               Model(),
             ]
@@ -317,7 +317,7 @@ class _RegistrarseState extends State<Registrarse> {
     await showDialog(
         context: context,
         child: SimpleDialog(
-            title: Text('Año del Vehiculo'),
+            title: Text('Año del Vehículo'),
             children: <Widget>[
               Years(),
             ]
@@ -330,7 +330,7 @@ class _RegistrarseState extends State<Registrarse> {
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         backgroundColor: PrimaryColor,
-        title: new Text('Registrar Vehiculo'),
+        title: new Text('Registrar Vehículo'),
       ),
       body: Container(
               height: MediaQuery.of(context).size.height,
@@ -510,7 +510,7 @@ class _RegistrarseState extends State<Registrarse> {
                               },
                               child: Center(
                                   child: Center(
-                                      child: Text('Guardar Vehiculo',)
+                                      child: Text('Guardar Vehículo',)
 
                                   )
                               ),

@@ -338,7 +338,7 @@ class _opcionesState extends State<opciones> {
                           }
                         Navigator.pop(context);
                       },
-                      child: Center(child: Center(child: Text('Establecer Configuracion'))),
+                      child: Center(child: Center(child: Text('Establecer Configuración'))),
                     ),
                   ),
                 ),

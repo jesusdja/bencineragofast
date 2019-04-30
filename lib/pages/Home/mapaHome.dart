@@ -93,7 +93,7 @@ class _MyHomePageState extends State<mapaHomePage> {
       if(Nombrecarro.idMarca == 'Desconocido')
       {
         setState(() {
-          NameVehiculo = 'Vehiculo No Registrado';
+          NameVehiculo = 'Vehículo No Registrado';
         });
       }else{
         setState(() {
@@ -323,7 +323,7 @@ class _MyHomePageState extends State<mapaHomePage> {
             new UserAccountsDrawerHeader(
                 decoration: new BoxDecoration(color: PrimaryColor,
                  ),
-                accountName: new Text('Vehiculo:',
+                accountName: new Text('Vehículo:',
                   style: TextStyle(
                     fontSize: 18,
                   ),
@@ -333,7 +333,7 @@ class _MyHomePageState extends State<mapaHomePage> {
                   fontSize: 17,
                 ),),),
             new ListTile(
-              title: new Text('Registrar Vehiculo'),
+              title: new Text('Registrar Vehículo'),
               trailing: new Icon(Icons.directions_car),
               onTap: () {
                 Navigator.of(context).pop();

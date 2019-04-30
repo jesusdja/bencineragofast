@@ -212,7 +212,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     await showDialog(
         context: context,
         child: SimpleDialog(
-            title: Text('Marcas de Vehiculo'),
+            title: Text('Marcas de Vehículo'),
             children: <Widget>[
               Vehiculos(),
             ]
