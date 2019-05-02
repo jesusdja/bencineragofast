@@ -6,6 +6,7 @@ import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:recase/recase.dart';
 import 'dart:math' as math;
 import 'package:vector_math/vector_math_64.dart' as math64;
 import 'package:location/location.dart' as LocationManager;
@@ -137,10 +138,12 @@ class _displayState extends State<marcador_precio> {
             }
           }
           if(te != ''){
+            String iconoName = places[index].image;
             return ListTile(
-              title: Text(places_individuales[index].brand),
+
+              title: Text(ModificarCamel(places_individuales[index].brand)),
               subtitle: Text(te + ' ' + places_individuales[index].address), //MODIFICAR
-              leading: Image.asset('assets/images/icono_gas.png',height: 50),
+              leading: Image.asset('assets/images/brand_icons/$iconoName.png',height: 50, width: 50,),
               onTap: () {
                 Navigator.push(
                   context,
@@ -156,6 +159,12 @@ class _displayState extends State<marcador_precio> {
       );
 
     }
+  }
+  ModificarCamel(String cadena) {
+    ReCase rc = ReCase(cadena);
+    String ret;
+    ret =  rc.titleCase.toString();
+    return ret;
   }
 
   @override

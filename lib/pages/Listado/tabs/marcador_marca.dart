@@ -8,6 +8,7 @@ import 'package:bencineragofast/pages/sqlflite/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:bencineragofast/pages/Listado/Details_markers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:recase/recase.dart';
 import 'dart:math' as math;
 import 'package:vector_math/vector_math_64.dart' as math64;
 import 'package:location/location.dart' as LocationManager;
@@ -150,10 +151,11 @@ class _displayState extends State<marcador_marca> {
         itemBuilder: (context, index) {
 
           if(places[index].marca != '0202'){
+            String iconoName = places[index].image;
             return ListTile(
-              title: Text(places[index].marca + ' - ' + places[index].OpenHr),
+              title: Text(ModificarCamel(places[index].marca) + ' - ' + places[index].OpenHr),
               subtitle: Text(places[index].address),//MODIFICAR
-              leading: Image.asset('assets/images/icono_gas.png',height: 50),
+              leading: Image.asset('assets/images/brand_icons/$iconoName.png',height: 50,width: 50,),
               onTap: () {
                 Navigator.push(
                   context,
@@ -167,7 +169,7 @@ class _displayState extends State<marcador_marca> {
           }else{
             return Container(
               color: PrimaryColor,
-              child: Text(places[index].brand,textAlign: TextAlign.center,style: TextStyle(height: 1.5,fontSize: 20,color: Colors.white),),
+              child: Text(ModificarCamel(places[index].brand),textAlign: TextAlign.center,style: TextStyle(height: 1.5,fontSize: 20,color: Colors.white),),
               //subtitle: Text(places[index].marca),//MODIFICAR
             );
           }
@@ -175,6 +177,12 @@ class _displayState extends State<marcador_marca> {
       );
 
     }
+  }
+  ModificarCamel(String cadena) {
+    ReCase rc = ReCase(cadena);
+    String ret;
+    ret =  rc.titleCase.toString();
+    return ret;
   }
   @override
   Widget build(BuildContext context) {

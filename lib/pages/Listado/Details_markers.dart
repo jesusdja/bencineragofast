@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:bencineragofast/pages/Home/place.dart';
+import 'package:recase/recase.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -279,6 +280,13 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       ],
     );
   }
+  ModificarCamel(String cadena) {
+    ReCase rc = ReCase(cadena);
+    String ret;
+    ret =  rc.titleCase.toString();
+    return ret;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -286,7 +294,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
       resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         backgroundColor:PrimaryColor,
-        title: new Text('Bencinera - ' + widget.place.brand),
+        title: new Text('Bencinera - ' + ModificarCamel(widget.place.brand)),
       ),
       body: GestureDetector(
         onTap: () {
