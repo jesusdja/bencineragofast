@@ -226,9 +226,12 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   }
 
-  ModificarCamel(String cadena){
+  ModificarCamel(String cadena) {
     ReCase rc = ReCase(cadena);
-    return rc;
+    String ret;
+    ret =  rc.titleCase.toString();
+
+    return ret;
   }
   initMarker(Place place,LatLng Mela) async {
 
@@ -237,7 +240,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
       String te = '';
       for(int i=0; i < place.prices.length;i++){
-        te =  te + ' / ' + place.tiposgas[i];
+        te =  te + ' / ' + ModificarCamel(place.tiposgas[i]);
       }
       String url = '';
       String cod = place.image;
@@ -249,7 +252,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           url = "assets/images/brand_icons/$cod.png";
         }
       }catch(e){
-        print('******************* $e');
+
       }
 
       mapController2.clearMarkers().then((val) async {
@@ -259,7 +262,7 @@ class _MyHomePageState extends State<mapaHomePage> {
           draggable: true,
           flat: false,
           position: place.latLng,
-          infoWindowText: InfoWindowText(place.brand, te),
+          infoWindowText: InfoWindowText(ModificarCamel(place.brand), te),
           icon: BitmapDescriptor.fromAsset(url),
         )
         );

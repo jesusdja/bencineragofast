@@ -164,7 +164,6 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
         url = "assets/images/brand_icons/$cod.png";
       }
     }catch(e){
-      print('******************* $e');
     }
 
     borrarMarcadores();
