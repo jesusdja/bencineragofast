@@ -240,7 +240,7 @@ class _MyHomePageState extends State<mapaHomePage> {
         te =  te + ' / ' + place.tiposgas[i];
       }
       String url = '';
-      String cod = place.image;
+      String cod = place.image + 'gim';
 
       try{
         if(place.image == '1'){
