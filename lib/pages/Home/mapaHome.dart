@@ -138,6 +138,7 @@ class _MyHomePageState extends State<mapaHomePage> {
 
 
   List<Place> Lista_places_ok = new List<Place>();
+  bool EstatusCirculo = false;
   //AGREGAR MARCADORES
   Future initMarkers() async {
 
@@ -164,12 +165,18 @@ class _MyHomePageState extends State<mapaHomePage> {
     try{
       Mela = await  getUserLocation();
       while(Lista_places_ok.length == 0){
+        EstatusCirculo = false;
         Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude,double.parse('20'));
+        print('Es false');
       }
 
     }catch(e){ }
 
     if(cantidad_elementos != Lista_places_ok.length){
+      EstatusCirculo= true;
+      setState(() {
+        EstatusCirculo;
+      });
       markerMap.clear();
       if(Lista_places_ok.length != 0){
         for(Place p in Lista_places_ok){
@@ -388,6 +395,11 @@ class _MyHomePageState extends State<mapaHomePage> {
                 rotateGesturesEnabled: true, //Activar gestos de rotación
                 scrollGesturesEnabled: true, //Puede o no mover el mapa
             ),
+          ),
+          Container(
+            child: EstatusCirculo ?  Container() : Center(
+              child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(PrimaryColor)),
+            )
           ),
           Positioned(
             right: 10.0,
