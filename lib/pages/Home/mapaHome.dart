@@ -153,6 +153,9 @@ class _MyHomePageState extends State<mapaHomePage> {
       );
     }*/
 
+    Lista_places_ok = new List<Place>();
+    cantidad_elementos = 0;
+
     try{
       User u = await retornarUser();
       KmActual = u.botonDisGas;
@@ -166,8 +169,10 @@ class _MyHomePageState extends State<mapaHomePage> {
       Mela = await  getUserLocation();
       while(Lista_places_ok.length == 0){
         EstatusCirculo = false;
+        setState(() {
+          EstatusCirculo;
+        });
         Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude,double.parse('20'));
-        print('Es false');
       }
 
     }catch(e){ }
@@ -301,16 +306,22 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    //initMarkers();
-
     return Scaffold(
       appBar: new AppBar(
         title: new Text("Smart Fuel",style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.047),),
         backgroundColor: PrimaryColor ,
           actions: <Widget>[
+
             IconButton(
-              iconSize: 40,
+              iconSize: 30,
+              icon: Icon(Icons.autorenew),
+              tooltip: 'Actualizar',
+              onPressed: (){
+                initMarkers();
+              },
+            ),
+            IconButton(
+              iconSize: 30,
               icon: Icon(Icons.map),
               tooltip: 'Lista de Gasolineras',
               onPressed: (){
