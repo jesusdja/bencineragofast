@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as mate;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as LocationManager;
+import 'package:recase/recase.dart';
 import 'dart:math' as math;
 import 'package:vector_math/vector_math_64.dart';
 
@@ -147,6 +148,13 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
   borrarMarcadores(){
     widget.mapController.clearMarkers().then((val){});
   }
+  ModificarCamel(String cadena) {
+    ReCase rc = ReCase(cadena);
+    String ret;
+    ret =  rc.titleCase.toString();
+
+    return ret;
+  }
 
 
   initMarker(Place place,String tipoDegas) async{
@@ -154,12 +162,12 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
     String te = '';
     if(tipoDegas == 'All'){
       for(int i=0; i < place.prices.length;i++){
-        te =  te + ' - ' + place.tiposgas[i];
+        te =  te + ' - ' +ModificarCamel(place.tiposgas[i]) ;
       }
     }else{
       for(int i=0; i < place.prices.length;i++){
         if(place.tiposgas[i] == tipoDegas){
-          te =' - ' + place.tiposgas[i] + ' = ' + place.prices[i] + ' CLP';
+          te =' - ' + ModificarCamel(place.tiposgas[i]) + ' = ' + place.prices[i] + ' CLP';
         }
       }
     }
@@ -173,7 +181,6 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
         url = "assets/images/brand_icons/$cod.png";
       }
     }catch(e){
-      print(e);
     }
 
     borrarMarcadores();
@@ -183,7 +190,7 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
       draggable: true,
       flat: false,
       position: LatLng(place.latitude,place.longitude),
-      infoWindowText: InfoWindowText(place.brand, te),
+      infoWindowText: InfoWindowText(ModificarCamel(place.brand), te),
       icon: BitmapDescriptor.fromAsset(url),
     )
     );
