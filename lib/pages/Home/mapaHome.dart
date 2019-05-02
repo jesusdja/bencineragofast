@@ -163,7 +163,12 @@ class _MyHomePageState extends State<mapaHomePage> {
     LatLng Mela;
     try{
       Mela = await  getUserLocation();
-      Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude,double.parse('20'));
+      while(Lista_places_ok.length == 0){
+        Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude,double.parse('20'));
+        int jlkjlkn = Lista_places_ok.length;
+        print('Cantidad $jlkjlkn');
+      }
+
     }catch(e){ }
 
     if(cantidad_elementos != Lista_places_ok.length){

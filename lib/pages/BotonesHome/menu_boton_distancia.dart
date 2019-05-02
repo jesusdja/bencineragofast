@@ -173,7 +173,7 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
         url = "assets/images/brand_icons/$cod.png";
       }
     }catch(e){
-      print('******************* $e');
+      print(e);
     }
 
     borrarMarcadores();
@@ -226,7 +226,7 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
   Widget add({String text, int tagg, double zoom, String dis}) {
     return Container(
       child: FloatingActionButton(
-        onPressed: (){animate(); name_gas_button = text;refresh(zoom);initMarkers(dis);},
+        onPressed: (){animate(); name_gas_button = text;refresh(zoom);initMarkers(dis); UltimoPress = dis.toString() + 'Km'; EstadoBottonToggle = true;},
         tooltip: 'Add',
         heroTag: tagg,
         backgroundColor: mate.Colors.green[700],
@@ -241,13 +241,25 @@ class _MenuFABState extends State<Menu_bdis> with SingleTickerProviderStateMixin
     );
   }
 
+  bool EstadoBottonToggle = true;
+  String UltimoPress = '2Km';
+  void Presstoggle(){
+    if(EstadoBottonToggle){
+      EstadoBottonToggle = false;
+      name_gas_button = 'Km';
+    }else{
+      name_gas_button = UltimoPress;
+      EstadoBottonToggle = true;
+    }
+  }
+
   //AGREGAR BOTON INICIAL
   Widget toggle() {
 
     return Container(
       child: FloatingActionButton(
         backgroundColor: mate.Colors.green[700],
-        onPressed: animate,
+        onPressed: (){animate(); Presstoggle();},
         heroTag: 4,
         tooltip: 'Toggle',
         child: Text(

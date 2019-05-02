@@ -73,13 +73,6 @@ class _RegistrarseState extends State<Registrarse> {
       child: ListView.builder(
         itemCount: marca.length,
         itemBuilder: (context, index) {
-
-       /*   if(widget.carmarks[index].logo == widget.carmarks[index].name )
-            {
-               logo = widget.carmarks[index].logo;
-            }else{
-              logo = 'assets/images/icons/negro.jpg';
-          }*/
           return ListTile(
             title: Text(ModificarCamel(widget.carmarks[index].name.toString())),
             leading: Image.asset(widget.carmarks[index].logo , height: 60,width: 60),
@@ -109,17 +102,13 @@ class _RegistrarseState extends State<Registrarse> {
     );
   }
 
-
   Marca() {
     var y = widget.carmarks.length;
     return new Container(
-
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.7,
       child: MarkElement(marca: List.generate(y, (i) => widget.carmarks[i],
-
       ),),
-
     );
   }
   ModificarCamel(String cadena) {
@@ -130,8 +119,7 @@ class _RegistrarseState extends State<Registrarse> {
         modf = Marca2(id: '1', name: rc.titleCase.toString(),logo: '');
       }else{
         modf = Marca2(id: '1', name: rc.constantCase.toString(),logo:'');
-          }
-
+      }
     return modf.name.toString();
   }
 
@@ -172,7 +160,6 @@ class _RegistrarseState extends State<Registrarse> {
       height: MediaQuery.of(context).size.height * 0.7,
       child: _ElementosModel(modelo: List.generate(y, (i) => carmodels[i],
       ),),
-
     );
   }
 
@@ -223,21 +210,15 @@ class _RegistrarseState extends State<Registrarse> {
     return logo;
   }
   Widget logoOut() {
-
     try{
       String sinlogo = 'assets/images/icons/sinfondo.jpg';
       if(logo == sinlogo)
       {
         return Image.asset(sinlogo,scale: 2,width: 10,height: 10,);
-
       }else{
         return Image.asset(logo, height: 80,width: 80,);
       }
-
-    }catch(e)
-    {
-    }
-
+    }catch(e){}
   }
 
   cargaryears(){initYears();}
@@ -266,7 +247,6 @@ class _RegistrarseState extends State<Registrarse> {
     );
   }
 
-
   void initvalues() async {
     try{
   carropull = await db.getCarro();
@@ -290,12 +270,8 @@ class _RegistrarseState extends State<Registrarse> {
       _valueIdCombustible = carropull.idCombustible;
       logo = carropull.logo;
 
-    }catch(e){
-
-    }
-
+    }catch(e){}
   });
-
     }catch(e){}
   }
   @override
@@ -395,18 +371,13 @@ class _RegistrarseState extends State<Registrarse> {
 
                                   ),
                                 ),
-
-
                               ],
-
                             ),
-
                           ),
                           //==============ICONOOOO
                           Container(
                             child: logoOut(),
                           ),
-
                         ],
                       ),
                     ),
@@ -432,7 +403,6 @@ class _RegistrarseState extends State<Registrarse> {
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width * .5,
                               child: FlatButton(
-
                                   child: Text(_valueModel),
                                   splashColor: Colors.black,
                                   padding: const EdgeInsets.all(25.0),
@@ -498,7 +468,6 @@ class _RegistrarseState extends State<Registrarse> {
                         ],
                       ),
                     ),
-
                     Container(
                         margin: EdgeInsets.only(
                             left: 30.0, top: 70.0),
@@ -521,15 +490,11 @@ class _RegistrarseState extends State<Registrarse> {
                                     db.updateCarro(vehiculoUp);
                                     Navigator.pop(context);
                                   }
-                                }catch(e){
-
-                                }
-
+                                }catch(e){ }
                               },
                               child: Center(
                                   child: Center(
                                       child: Text('Guardar Vehículo',)
-
                                   )
                               ),
                             ),
@@ -539,9 +504,7 @@ class _RegistrarseState extends State<Registrarse> {
                   ],
                 ),
               ),
-
             ),
-
     );
   }
 }
