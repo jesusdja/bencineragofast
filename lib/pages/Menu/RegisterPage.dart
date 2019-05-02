@@ -211,7 +211,7 @@ class _RegistrarseState extends State<Registrarse> {
   }
   Widget logoOut() {
     try{
-      String sinlogo = 'assets/images/icons/sinfondo.jpg';
+      String sinlogo = 'assets/images/icons/sinfondo.png';
       if(logo == sinlogo)
       {
         return Image.asset(sinlogo,scale: 2,width: 10,height: 10,);
