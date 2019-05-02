@@ -121,12 +121,12 @@ class _MyHomePageState extends State<mapaHomePage> {
     if(await db.queryRowCountFavoritos != 0) {
     }
     if(await db.queryRowCount() != 0){
-      User userUp = new User(1,_deviceid,"20","All");
+      User userUp = new User(1,_deviceid,"2","All");
       db.updatebtngas(userUp);
       db.updateBtnDis(userUp);
     }else{
       TipoGasActual = "All";
-      KmActual = "20";
+      KmActual = "2";
       var user = new User(1,_deviceid,KmActual,TipoGasActual);
       db.saveUser(user);
     }
@@ -165,8 +165,6 @@ class _MyHomePageState extends State<mapaHomePage> {
       Mela = await  getUserLocation();
       while(Lista_places_ok.length == 0){
         Lista_places_ok = await Servicios.TrarBencineras(Mela.latitude,Mela.longitude,double.parse('20'));
-        int jlkjlkn = Lista_places_ok.length;
-        print('Cantidad $jlkjlkn');
       }
 
     }catch(e){ }
@@ -180,8 +178,6 @@ class _MyHomePageState extends State<mapaHomePage> {
       }
       cantidad_elementos = Lista_places_ok.length;
     }
-
-
 
     /*//10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
