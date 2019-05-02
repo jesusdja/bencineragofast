@@ -214,7 +214,7 @@ class _RegistrarseState extends State<Registrarse> {
       String sinlogo = 'assets/images/icons/sinfondo.png';
       if(logo == sinlogo)
       {
-        return Image.asset(sinlogo,scale: 2,width: 10,height: 10,);
+        return Image.asset(sinlogo,scale: 2,width: 1,height: 1,);
       }else{
         return Image.asset(logo, height: 80,width: 80,);
       }
