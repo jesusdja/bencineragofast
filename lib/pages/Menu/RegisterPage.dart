@@ -222,15 +222,22 @@ class _RegistrarseState extends State<Registrarse> {
      logo = carropull.logo;
     return logo;
   }
-  Widget logoOut(String logo) {
+  Widget logoOut() {
 
-    if(logo == 'assets/images/icons/sinfondo.jpg')
+    try{
+      String sinlogo = 'assets/images/icons/sinfondo.jpg';
+      if(logo == sinlogo)
       {
-        return Image.asset('assets/images/icons/sinfondo.jpg',height: 1,width: 1,scale: 3,);
+        return Image.asset(sinlogo,scale: 2,width: 10,height: 10,);
 
       }else{
-      return Image.asset(logo, height: 80,width: 80,);
+        return Image.asset(logo, height: 80,width: 80,);
+      }
+
+    }catch(e)
+    {
     }
+
   }
 
   cargaryears(){initYears();}
@@ -264,23 +271,29 @@ class _RegistrarseState extends State<Registrarse> {
     try{
   carropull = await db.getCarro();
   setState(() {
-    if(carropull.idMarca != 'Desconocido'){
-      _activatebutton1 = false;
-      _activatebutton2 = false;
-      _activatesave = false;
-      _isButtonDisabledmodel = false;
-      _isButtonDisabledyear = false;
-      _isButtonDisabledSave = false;
+    try{
+      if(carropull.idMarca != 'Desconocido'){
+        _activatebutton1 = false;
+        _activatebutton2 = false;
+        _activatesave = false;
+        _isButtonDisabledmodel = false;
+        _isButtonDisabledyear = false;
+        _isButtonDisabledSave = false;
+      }
+      _valueMarca = carropull.marcaVehiculo;
+      _valueModel = carropull.modeloVehiculo;
+      _valueYear = carropull.yearsVehiculo;
+      _valueCombustible = carropull.combustible;
+      _valueIdMarca = carropull.idMarca;
+      _valueIdModelo = carropull.idModelo;
+      _valueIdYears = carropull.idYears;
+      _valueIdCombustible = carropull.idCombustible;
+      logo = carropull.logo;
+
+    }catch(e){
+
     }
-    _valueMarca = carropull.marcaVehiculo;
-    _valueModel = carropull.modeloVehiculo;
-    _valueYear = carropull.yearsVehiculo;
-    _valueCombustible = carropull.combustible;
-    _valueIdMarca = carropull.idMarca;
-    _valueIdModelo = carropull.idModelo;
-    _valueIdYears = carropull.idYears;
-    _valueIdCombustible = carropull.idCombustible;
-     logo = carropull.logo;
+
   });
 
     }catch(e){}
@@ -390,7 +403,10 @@ class _RegistrarseState extends State<Registrarse> {
 
                           ),
                           //==============ICONOOOO
-                          logoOut(logo),
+                          Container(
+                            child: logoOut(),
+                          ),
+
                         ],
                       ),
                     ),
@@ -498,15 +514,17 @@ class _RegistrarseState extends State<Registrarse> {
                               splashColor: Colors.black,
 
                               onPressed: () async {
-                                if (await db.queryRowCountCarro() != 0) {
-                                  Vehiculo vehiculoUp = null;
-                                  vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible,logo);
+                                try{
+                                  if (await db.queryRowCountCarro() != 0) {
+                                    Vehiculo vehiculoUp = null;
+                                    vehiculoUp = new Vehiculo(1, _valueMarca, _valueModel, _valueYear,_valueCombustible,_valueIdMarca,_valueIdModelo,_valueIdYears,_valueIdCombustible,logo);
+                                    db.updateCarro(vehiculoUp);
+                                    Navigator.pop(context);
+                                  }
+                                }catch(e){
 
-                                  db.updateCarro(vehiculoUp);
-                                  Navigator.pop(context);
-
-                                } else {
                                 }
+
                               },
                               child: Center(
                                   child: Center(

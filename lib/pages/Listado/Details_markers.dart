@@ -73,12 +73,15 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
   @override
 
   void onMapCreated(controller) {
+
+    String url = widget.place.image;
+
     mapController = controller;
     mapController.clearMarkers().then((val) async {
       final Marker marker = await mapController.addMarker(MarkerOptions(
         visible: true,
         position: widget.place.latLng,
-        icon: BitmapDescriptor.fromAsset("assets/images/icono_gas.png"),
+        icon: BitmapDescriptor.fromAsset("assets/images/brand_icons/$url.png"),
       )
       );
     });

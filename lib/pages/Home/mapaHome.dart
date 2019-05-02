@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bencineragofast/api/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -79,6 +78,8 @@ class _MyHomePageState extends State<mapaHomePage> {
 
   //Inicializar variable de Id del telefono
   void initDeviceId() async {
+    //CARGA LAS MARCAS DE VEHICULOS
+    Marcasdecarros = await Servicios.TraerMarcaVehiculos();
     String deviceid;
     deviceid = await DeviceId.getID;
     if (!mounted) return;
@@ -111,8 +112,8 @@ class _MyHomePageState extends State<mapaHomePage> {
       String _idModelo = 'Desconocido';
       String _idYears = 'Desconocido';
       String _idCombustible = 'Desconocido';
-
       String _logo = 'assets/images/icons/sinfondo.jpg';
+
       var carro = new Vehiculo(1, _marcaVehiculo, _modeloVehiculo, _years_vehiculo, _combustible,_idMarca,_idModelo,_idYears,_idCombustible,_logo);
       db.saveCarro(carro);
 
@@ -175,7 +176,7 @@ class _MyHomePageState extends State<mapaHomePage> {
       cantidad_elementos = Lista_places_ok.length;
     }
 
-    Marcasdecarros = await Servicios.TraerMarcaVehiculos();
+
 
     /*//10 KM
     LatLng latlo = LatLng(8.270346,-62.7579366);
@@ -210,12 +211,10 @@ class _MyHomePageState extends State<mapaHomePage> {
     var_marca = Marca2(id: '2', name: 'Toyota');Marcasdecarros.add(var_marca);
     var_marca = Marca2(id: '3', name: 'Ferrari');Marcasdecarros.add(var_marca);*/
 
-
   }
 
   ModificarCamel(String cadena){
     ReCase rc = ReCase(cadena);
-    print(rc.titleCase);
     return rc;
   }
   initMarker(Place place,LatLng Mela) async {
@@ -234,14 +233,11 @@ class _MyHomePageState extends State<mapaHomePage> {
         if(place.image == '1'){
           url = "assets/images/brand_icons/1.png";
         }else{
-          url = "assets/images/brand_icons/$cod.jpg";
+          url = "assets/images/brand_icons/$cod.png";
         }
       }catch(e){
         print('******************* $e');
       }
-
-
-
 
       mapController2.clearMarkers().then((val) async {
         final Marker marker = await mapController2.addMarker(
