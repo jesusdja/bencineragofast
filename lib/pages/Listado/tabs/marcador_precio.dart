@@ -138,7 +138,7 @@ class _displayState extends State<marcador_precio> {
             }
           }
           if(te != ''){
-            String iconoName = places[index].image;
+            String iconoName = places[index].image + 'gim';
             return ListTile(
 
               title: Text(ModificarCamel(places_individuales[index].brand)),

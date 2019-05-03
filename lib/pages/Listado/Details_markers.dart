@@ -75,7 +75,7 @@ class _DetailsMarkersState extends State<DetailsMarkers> {
 
   void onMapCreated(controller) {
 
-    String url = widget.place.image;
+    String url = widget.place.image + 'gim';
 
     mapController = controller;
     mapController.clearMarkers().then((val) async {

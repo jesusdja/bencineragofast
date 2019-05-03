@@ -148,7 +148,7 @@ class _displayState extends State<marcador_distancia> {
       return  ListView.builder(
         itemCount: places.length,
         itemBuilder: (context, index) {
-          String iconoName = places[index].image;
+          String iconoName = places[index].image + 'gim';
           return ListTile(
             title: Text(ModificarCamel(places[index].brand) + ' - ' + calcularDistancia(places[index].latitude,places[index].longitude).toStringAsFixed(2) + ' Km'),
             subtitle: Text(places[index].address), //MODIFICAR

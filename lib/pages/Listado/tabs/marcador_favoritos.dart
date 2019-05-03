@@ -136,7 +136,7 @@ class _displayState extends State<marcador_fav> {
       return ListView.builder(
         itemCount: places.length,
         itemBuilder: (context, index) {
-          String iconoName = places[index].image;
+          String iconoName = places[index].image + 'gim';
           return ListTile(
             title: Text(ModificarCamel(places[index].brand)),
             subtitle: Text(places[index].address),// MODIFICAR

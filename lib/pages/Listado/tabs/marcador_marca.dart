@@ -151,7 +151,7 @@ class _displayState extends State<marcador_marca> {
         itemBuilder: (context, index) {
 
           if(places[index].marca != '0202'){
-            String iconoName = places[index].image;
+            String iconoName = places[index].image + 'gim';
             return ListTile(
               title: Text(ModificarCamel(places[index].marca) + ' - ' + places[index].OpenHr),
               subtitle: Text(places[index].address),//MODIFICAR

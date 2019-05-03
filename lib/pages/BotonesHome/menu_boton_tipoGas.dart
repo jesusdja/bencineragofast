@@ -155,7 +155,7 @@ class _MenuFABState extends State<Menu_tgas> with SingleTickerProviderStateMixin
     }
 
     String url = '';
-    String cod = place.image;
+    String cod = place.image + 'gim';
 
     try{
       if(place.image == '1'){
